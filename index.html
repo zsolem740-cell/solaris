@@ -121,7 +121,7 @@ body.alert #tiles .t{border-color:#ef444477}
 <div id="bottom" class="min">
 <div style="display:flex;gap:6px;margin-bottom:6px"><button id="bToggle" style="margin:0;flex:1">▴ Több (keresés, kedvencek, AI konzol)</button><button id="bHide" style="flex:none;padding:6px 14px;font-size:11px" aria-label="Panel elrejtése">⌄ Gömb</button></div>
 <div id="legend"></div>
-<div id="skyCard"><div id="skyBrief">⏳ számolás... ▾</div><div id="skyAu" data-topic="aurora">🌌 Sarki fény: számolás...</div><div id="skyIss" data-topic="iss">🛰 ISS: adat betöltése...</div><div id="skySky" data-topic="sky">🔭 Esti égbolt: számolás...</div><div id="skyEnv" data-topic="air">🌫 Levegő: betöltés...</div><div id="skyRiver" data-topic="river">🌊 Folyó: betöltés...</div><div id="skyAc" data-topic="ac">✈ Repülők: kapcsold be a ✈ gombbal</div><div id="skyPass" data-topic="iss">🛰 Átvonulás: számolás...</div><div id="skyOval" data-topic="aurora">🌌 OVATION: betöltés...</div><div id="skyBuoy" data-topic="buoy">🛟 Bóják: betöltés...</div><div id="skyFc" data-topic="forecast">🌡 Előrejelzés: betöltés...</div><div id="skySun" data-topic="solar">☀ Űridőjárás: betöltés...</div><div id="skyQuake" data-topic="quake">🌋 Földrengések: betöltés...</div><div id="skyHf" data-topic="hf">📡 HF-rádió: betöltés...</div><div id="skySch" data-topic="schumann">〰 Schumann-rezonancia: a tomszki mért 3 napos spektrogram (koppints)</div><div id="skyFoot" style="color:#8193a5;text-align:center">▴ koppints egy sorra a részletekért · ide az összecsukáshoz</div></div>
+<div id="skyCard"><div id="skyBrief">⏳ számolás... ▾</div><div id="skyWarn" data-topic="forecast">⚠ Figyelmeztetések: betöltés...</div><div id="skyAu" data-topic="aurora">🌌 Sarki fény: számolás...</div><div id="skyIss" data-topic="iss">🛰 ISS: adat betöltése...</div><div id="skySky" data-topic="sky">🔭 Esti égbolt: számolás...</div><div id="skyEnv" data-topic="air">🌫 Levegő: betöltés...</div><div id="skyRiver" data-topic="river">🌊 Folyó: betöltés...</div><div id="skyAc" data-topic="ac">✈ Repülők: kapcsold be a ✈ gombbal</div><div id="skyPass" data-topic="iss">🛰 Átvonulás: számolás...</div><div id="skyOval" data-topic="aurora">🌌 OVATION: betöltés...</div><div id="skyBuoy" data-topic="buoy">🛟 Bóják: betöltés...</div><div id="skyFc" data-topic="forecast">🌡 Előrejelzés: betöltés...</div><div id="skySun" data-topic="solar">☀ Űridőjárás: betöltés...</div><div id="skyQuake" data-topic="quake">🌋 Földrengések: betöltés...</div><div id="skyHf" data-topic="hf">📡 HF-rádió: betöltés...</div><div id="skySch" data-topic="schumann">〰 Schumann-rezonancia: a tomszki mért 3 napos spektrogram (koppints)</div><div id="skyFoot" style="color:#8193a5;text-align:center">▴ koppints egy sorra a részletekért · ide az összecsukáshoz</div></div>
 <div id="aiBar" role="button" tabindex="0" aria-label="Háttérelemző állapota, koppints a részletekért">🤖 Elemző indul...</div>
 <div id="favBar"></div>
 <div id="sbar"><input id="q" type="text" placeholder="Hely keresése (pl. Körmend)" aria-label="Hely keresése"><button id="bQ">Keres</button></div>
@@ -2068,6 +2068,20 @@ async function pollISS(){
 }
 pollISS();setInterval(pollISS,15000);
 
+/* --- figyelmeztetések a háttérfigyelőből (fekete jég, heves eső, hőség, folyóparti széllökés) --- */
+var RULEBRIEF="";
+async function loadRuleBrief(){
+ const w=$("skyWarn");
+ try{
+  const r=await fetch("data/rules.json?t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);
+  const j=await r.json(),act=(j.active||[]).filter(a=>a.end>Date.now());
+  RULEBRIEF=act.length?"⚠ "+act.map(a=>a.text.replace(" óra között"," óra")).join(", "):"";
+  if(w){w.textContent=act.length?"⚠ "+act.map(a=>a.text).join(" · "):"⚠ Figyelmeztetések (24 óra): nincs jelzés";w.style.color=act.length?(act.some(a=>a.severe)?"#ef4444":"#f59e0b"):""}
+ }catch(e){RULEBRIEF="";if(w){w.textContent="⚠ Figyelmeztetések: még nem érhető el";w.style.color="#8193a5"}}
+ try{updateSky()}catch(e){}
+}
+setTimeout(loadRuleBrief,2500);setInterval(loadRuleBrief,6e5);
+
 /* --- sarki fény, ISS, esti égbolt --- */
 function updateSky(){
  if(!$("skyAu"))return;
@@ -2117,7 +2131,7 @@ function updateSky(){
  try{
   const ob3=observer(),dk2=ISS?Math.round(distKm2(ob3.lat,ob3.lon,ISS.lat,ISS.lon)):null;
   const rl=!rv?"--":rv.none?"nincs adat":(rv.q>rv.mx?"rekord":rv.fmax>rv.mx?"előrejelzés: rekord":rv.q>rv.p75?"átlag felett":"normál");
-  $("skyBrief").textContent=`🌌 ${code==="no"?"sarki fény nem valószínű":"sarki fény: "+txt} · 🛰 ISS ${dk2===null?"--":dk2+" km"} · 🔭 ${sc}/100 · 🌫 AQI ${aq===null||aq===undefined?"--":aq} · 🌊 ${rl}  ▾ (koppints a részletekért)`;
+  $("skyBrief").textContent=`${RULEBRIEF?RULEBRIEF+" · ":""}🌌 ${code==="no"?"sarki fény nem valószínű":"sarki fény: "+txt} · 🛰 ISS ${dk2===null?"--":dk2+" km"} · 🔭 ${sc}/100 · 🌫 AQI ${aq===null||aq===undefined?"--":aq} · 🌊 ${rl}  ▾ (koppints a részletekért)`;
  }catch(e){}
 }
 
@@ -3396,7 +3410,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v19 · 2026-10-30";
+const APP_VER="v20 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};

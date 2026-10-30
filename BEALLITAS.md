@@ -42,3 +42,7 @@ A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branc
 ## v18
 - **Figyelmeztetések:** nem kell beállítani, az alapértelmezett küszöbök a kódban vannak. Átírni az `alert-config.json` fájl `rules` részével lehet, például: `"rules": { "riverCorridor": false, "heavyRainMmH": 20 }`.
 - **Ellenőrzés:** az Előrejelzés nézet alján, a modellek összevetése után a „Figyelmeztetések a következő 24 órára” szakasz; nyugodt időben azt írja, hogy nincs jelzés.
+
+## v20
+- **Heti jelentés:** nem kell beállítani. Vasárnap 8:00-kor ntfy-üzenetet kapsz. **Ha egy vasárnap nem érkezik meg, a háttérfigyelő leállt**: nézd meg az Actions fület, és indítsd újra a Háttérfigyelőt (Run workflow).
+- **Főképernyő:** az összkép-sor elején megjelenik a ⚠ jelzés, ha van aktív figyelmeztetés; kinyitva külön sorban látszik, koppintásra az Előrejelzés nézet nyílik.
