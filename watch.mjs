@@ -4,7 +4,8 @@
    Nem hivatalos figyelmeztetés, csak tájékoztatás. */
 import fs from "node:fs";
 import { computeCSI } from "./csi.mjs";
-import { recordForecast, verifyForecasts } from "./score.mjs";
+import { recordForecast, verifyForecasts, eraTruth, TRACKS } from "./score.mjs";
+import { updateObs, obsTruth } from "./obs.mjs";
 
 const CFG = JSON.parse(fs.readFileSync("alert-config.json", "utf8"));
 const TH = CFG.thresholds, CD = CFG.cooldownHours;
@@ -202,20 +203,39 @@ if (STATE.lastHist !== hourKey) {
 }
 
 let SCORE = readJ("data/scorecard.json", { models: {}, verified: 0 });
+let SCORE_OBS = readJ("data/scorecard_obs.json", { models: {}, verified: 0 });
 let PENDING = readJ("data/forecasts.json", []);
+let PENDING_OBS = readJ("data/forecasts_obs.json", []);
+let OBS = readJ("data/obs.json", null);
+const note = (name, ok, ms, err) => { SOURCES[name] = { ok, ms, ...(err ? { error: err } : {}) }; };
 if (STATE.lastScore !== hourKey) {
-  /* óránként: a 4 modell jóslatának elmentése, naponta többször a 7 napnál régebbiek kiértékelése */
+  /* óránként: a HungaroMet mérések frissítése, a 4 modell jóslatának elmentése és kiértékelése (ERA5 és mért állomás) */
+  try { OBS = await updateObs({ CFG, NOW, prev: OBS, note }); } catch (e) { note("hungaromet", false, 0, String((e && e.message) || e)); }
+  const scs = [{ id: "obs", sc: SCORE_OBS }, { id: "era5", sc: SCORE }];
   try {
-    const rf = await recordForecast({ get, CFG, NOW, sc: SCORE });
+    const rf = await recordForecast({ get, CFG, NOW, scs, track: TRACKS.era5 });
     if (rf) { PENDING.push(rf.rec); fs.writeFileSync("data/blend.json", JSON.stringify(rf.blend)); }
-    const v = await verifyForecasts({ get, CFG, NOW, pending: PENDING, sc: SCORE });
+    const v = await verifyForecasts({ get, CFG, NOW, pending: PENDING, sc: SCORE, track: TRACKS.era5, truth: eraTruth(get, CFG) });
     PENDING = v.pending; SCORE = v.sc;
   } catch (e) { SOURCES.score = { ok: false, ms: 0, error: String((e && e.message) || e) }; }
+  if (OBS && OBS.station && OBS.rows && OBS.rows.length) {
+    try {   /* a mért állomás pontjára külön jóslat, hogy a mérés és a modell ugyanarra a helyre vonatkozzon */
+      const tag = String(OBS.station.id);
+      const rf2 = await recordForecast({ get, CFG, NOW, scs: [{ id: "obs", sc: SCORE_OBS }], track: TRACKS.obs, lat: OBS.station.lat, lon: OBS.station.lon, tag });
+      if (rf2) PENDING_OBS.push(rf2.rec);
+      const v2 = await verifyForecasts({ get, CFG, NOW, pending: PENDING_OBS, sc: SCORE_OBS, track: TRACKS.obs, truth: obsTruth(OBS), lagMs: 25 * 36e5, maxAgeMs: 5 * 864e5, tag });
+      PENDING_OBS = v2.pending; SCORE_OBS = v2.sc;
+    } catch (e) { SOURCES.score_obs = { ok: false, ms: 0, error: String((e && e.message) || e) }; }
+  }
   PENDING = PENDING.slice(-24 * 21);
+  PENDING_OBS = PENDING_OBS.slice(-24 * 6);
   STATE.lastScore = hourKey;
 }
 fs.writeFileSync("data/forecasts.json", JSON.stringify(PENDING));
 fs.writeFileSync("data/scorecard.json", JSON.stringify(SCORE));
+fs.writeFileSync("data/forecasts_obs.json", JSON.stringify(PENDING_OBS));
+fs.writeFileSync("data/scorecard_obs.json", JSON.stringify(SCORE_OBS));
+if (OBS) fs.writeFileSync("data/obs.json", JSON.stringify(OBS));
 
 const anyOk = Object.values(SOURCES).some(s => s.ok);
 const status = {
@@ -225,6 +245,8 @@ const status = {
   current: { kp: C.kp, kpMax24: C.kpMax24, flux: C.flux, flare: C.flux ? fcls(C.flux) : null, speed: C.speed, bz: C.bz, tmin12: C.tmin12 ?? null, gust12: C.gust12 ?? null, dp3: C.dp3 ?? null, pressure: C.p0 ?? null },
   csi: STATE.lastCsi,
   score: { records: PENDING.length, verified: SCORE.verified || 0, since: SCORE.since || null },
+  scoreObs: { records: PENDING_OBS.length, verified: SCORE_OBS.verified || 0, since: SCORE_OBS.since || null },
+  obs: OBS ? { station: OBS.station, last: OBS.rows && OBS.rows.length ? OBS.rows[OBS.rows.length - 1].h : null, rows: OBS.rows ? OBS.rows.length : 0, via: OBS.via, stale: !!OBS.stale, error: OBS.error || null } : null,
   quiet: { enabled: !!Q.enabled, from: Q.from, to: Q.to, now: IS_QUIET },
   history: { rows: HIST.length, withCsi: HIST.filter(h => typeof h.csi === "number").length, since: HIST[0] ? HIST[0].t : null },
   recent: STATE.recent,

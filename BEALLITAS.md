@@ -12,7 +12,7 @@ A figyelő a GitHub szerverén fut (GitHub Actions), a telefonod és az app zár
 2. Name: `NTFY_TOPIC` · Secret: ugyanaz a téma-név. Mentés.
 
 ## 3. Fájlok feltöltése
-A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branch): `index.html`, `watch.mjs`, `csi.mjs`, `score.mjs`, `alert-config.json`, `LEIRAS.md`, `BEALLITAS.md`. A `watch.yml` fájlt NEM kell feltölteni, azt a 4. lépésben kézzel hozod létre.
+A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branch): `index.html`, `watch.mjs`, `csi.mjs`, `score.mjs`, `obs.mjs`, `alert-config.json`, `LEIRAS.md`, `BEALLITAS.md`. A `watch.yml` fájlt NEM kell feltölteni, azt a 4. lépésben kézzel hozod létre.
 
 ## 4. A munkafolyamat létrehozása
 1. Tároló főoldal, **Add file**, **Create new file**.
@@ -34,6 +34,7 @@ A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branc
 - **Csendes órák:** az `alert-config.json` `quiet` részében (`from`, `to`, `enabled`) állítható. Éjjel a kisebb riasztások hangtalanul jönnek (ntfy 1-es prioritás), a nagyok megszólalnak.
 - **Modell-skórkártya:** nem kell beállítani. Az első ranglista kb. 8 nap múlva jelenik meg az app Előrejelzés nézetében (a jóslatokat az ERA5 újraelemzéshez méri, ami nem állomási mérés).
 
-## v16
-- **Javított előrejelzés:** nem kell beállítani. Az app Előrejelzés nézetében látszik (+3, +6, +12, +24 óra). A kalibráció kb. 11 nap után indul, és kb. 3 hét után van saját pontszáma a skórkártyán.
-- **Több adat:** az óránkénti mentés mostantól a felhőzetet, a szelet, a csapadékot és a páratartalmat is rögzíti, a későbbi tanuláshoz.
+## v17
+- **Mért adat (HungaroMet):** nem kell beállítani. A háttérfigyelő magától választja a legközelebbi állomást. Ha az automatikus keresés nem működik, az `alert-config.json` fájlba felvehető egy `"obsStation": "15310"` sor (az állomás 5 jegyű száma).
+- **Ellenőrzés:** a 📶 Források nézetben megjelenik a „HungaroMet mért adat” sor az állomás nevével, távolságával és az utolsó mérés idejével. Ha nem elérhető, ott a hiba oka.
+- **Skórkártya:** az Előrejelzés nézet alján a „Mért összevetés” szakasz mutatja a modellek hibáját a valódi állomási méréshez képest.

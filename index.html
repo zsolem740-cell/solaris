@@ -3396,7 +3396,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v16 · 2026-10-30";
+const APP_VER="v17 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3482,6 +3482,8 @@ function sourcesRows(){
    vRow(`Utolsó mért állapot: Kp ${fnum(c.kp,1)} · napszél ${fnum(c.speed,0)} km/s · Bz ${fnum(c.bz,1)} nT · napkitörés ${c.flare||"nincs"} · 12 órás min ${fnum(c.tmin12,1,"°C")}`);
    const bad=Object.entries(s.sources||{}).filter(([k,v])=>!v.ok).map(([k])=>k);
    vRow("Háttér-források: "+(bad.length?"hiba: "+bad.join(", "):"mind elérhető"),bad.length?"#f59e0b":null);
+   if(s.obs&&s.obs.station)vRow(`📍 HungaroMet mért adat: ${s.obs.station.name} (${s.obs.station.distKm.toFixed(0)} km) · ${s.obs.rows} órányi mérés · utolsó: ${s.obs.last?new Date(s.obs.last+":00:00Z").toLocaleString("hu-HU",{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}):"--"}${s.obs.stale?" · elavult":""}`,s.obs.stale?"#f59e0b":null);
+   else if(s.sources&&s.sources.hungaromet&&!s.sources.hungaromet.ok)vRow("📍 HungaroMet mért adat: nem elérhető ("+String(s.sources.hungaromet.error||"").slice(0,110)+")","#f59e0b");
    if(s.history)vRow(`Tanuló adat a szerverről: ${s.history.rows} óránkénti mérés, ebből ${s.history.withCsi} CSI-vel${s.history.since?" · kezdet: "+new Date(s.history.since).toLocaleString("hu-HU"):""}`+(s.csi?" · utolsó CSI: "+s.csi.csi+" σ":""));
    (s.recent||[]).slice(0,8).forEach(a=>vRow("🔔 "+new Date(a.t).toLocaleString("hu-HU")+" · "+a.title));
    if(!(s.recent||[]).length)vRow("Még nem ment ki riasztás (nyugodt a helyzet, vagy még nem volt küszöbátlépés).","#8193a5");
@@ -3506,8 +3508,8 @@ setInterval(()=>loadWatch().then(w=>{SRCST.watch=w;verUpdate()}),6e5);
 /* ===== MODELL-SKÓRKÁRTYA (a háttérfigyelő adataiból) ===== */
 async function loadScore(){
  const g=async f=>{try{const r=await fetch("data/"+f+"?t="+Date.now(),{cache:"no-store"});return r.ok?await r.json():null}catch(e){return null}};
- const [sc,st,bl]=await Promise.all([g("scorecard.json"),g("status.json"),g("blend.json")]);
- return{sc,st,bl};
+ const [sc,st,bl,so,ob]=await Promise.all([g("scorecard.json"),g("status.json"),g("blend.json"),g("scorecard_obs.json"),g("obs.json")]);
+ return{sc,st,bl,so,ob};
 }
 function scoreSummary(sc,st){
  const out=[];
@@ -3529,7 +3531,31 @@ function blendSummary(b){
  const iss=b.issued?new Date(b.issued).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"}):"--";
  out.push({t:`🎯 Javított előrejelzés (kiadva: ${iss}) · ${b.calibrated?"súlyozva és torzításmentesítve a skórkártya alapján ("+b.verifiedRuns+" kiértékelt futás)":"egyelőre egyszerű átlag, a kalibrálás legalább ~4 nap kiértékelt adat után indul"}`,c:b.calibrated?"#34d399":"#a7f3d0"});
  [3,6,12,24].forEach(h=>{const x=pick(h);if(x)out.push({t:`+${h} óra: ${f(x.temp,1," °C")} (modell-szórás ±${f(x.tempSp/2,1,"")}) · ${f(x.pres,0," hPa")} · felhő ${f(x.cloud,0,"%")}`,c:null})});
+ if(b.calibrated&&b.calSrc){const nm={obs:"HungaroMet mérés",era5:"ERA5 újraelemzés","obs+era5":"HungaroMet mérés és ERA5","era5+obs":"HungaroMet mérés és ERA5"},lab={temp:"hőmérséklet",pres:"légnyomás",cloud:"felhő"};out.push({t:"Kalibráció alapja: "+Object.entries(b.calSrc).filter(([k,v])=>lab[k]&&v).map(([k,v])=>lab[k]+": "+(nm[v]||v)).join(" · "),c:"#8193a5"})}
  out.push({t:"A modellek szórása azt mutatja, mennyire értenek egyet. Nagy szórásnál az előrejelzés bizonytalanabb.",c:"#8193a5"});
+ return out;
+}
+function obsSummary(so,ob,st){
+ const out=[],SRC="Forrás: HungaroMet Nonprofit Zrt., Meteorológiai Adattár (odp.met.hu).";
+ if(!ob||!ob.station){
+  const e=st&&st.obs&&st.obs.error?st.obs.error:(st&&st.sources&&st.sources.hungaromet&&st.sources.hungaromet.error)||"";
+  out.push({t:"A HungaroMet mért állomási adata még nem érkezett meg a háttérfigyelőhöz."+(e?" ("+String(e).slice(0,140)+")":" A következő óra eleji futás próbálja újra."),c:"#f59e0b"});
+  return out;
+ }
+ const s=ob.station,last=ob.rows&&ob.rows.length?ob.rows[ob.rows.length-1]:null;
+ out.push({t:`📍 Mért összevetés: ${s.name} állomás (${s.distKm.toFixed(0)} km-re a helyedtől${s.distKm>25?", ezért a tanult javítás az állomás környékére szól, nem pontosan a te helyedre":""})${last?" · utolsó mérés: "+new Date(last.h+":00:00Z").toLocaleString("hu-HU",{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}):""}${ob.stale?" · az adat több mint 6 órás":""}`,c:ob.stale?"#f59e0b":"#a7f3d0"});
+ if(last)out.push({t:`Legutóbbi mérés: ${last.t===null?"--":last.t.toFixed(1)} °C · ${last.p0===null?"--":last.p0.toFixed(0)} hPa (tengerszinti) · ${last.u===null?"--":last.u.toFixed(0)}% páratartalom · szél ${last.f===null?"--":last.f.toFixed(1)} m/s${last.fx!==null?" (lökés "+last.fx.toFixed(1)+")":""}`,c:null});
+ if(!so||!so.verified){
+  const n=st&&st.scoreObs?st.scoreObs.records:null;
+  out.push({t:`Még nincs mért kiértékelés. A modellek jóslatát az állomás pontjára mentem${n!==null?" ("+n+" vár)":""}, és 25 óra múlva a mért értékhez mérem. Az első ranglista kb. 1 nap múlva jelenik meg.`,c:"#a7f3d0"});
+ }else{
+  const g=(m,L,k)=>{const x=m.lead&&m.lead[L]&&m.lead[L][k];return x&&x.n?{mae:x.sumAbs/x.n,bias:x.sumErr/x.n,n:x.n}:null};
+  const rows=Object.values(so.models||{}).map(m=>({name:m.name,t:g(m,"24","temp"),p:g(m,"24","pres"),h:g(m,"24","hum"),w:g(m,"24","wind")})).filter(r=>r.t).sort((a,b)=>a.t.mae-b.t.mae);
+  const sg=v=>(v>=0?"+":"")+v.toFixed(1);
+  rows.forEach((r,i)=>out.push({t:`${i===0?"★ ":""}${r.name}: 24 órás hőmérséklet átl. hiba ${r.t.mae.toFixed(2)} °C (torzítás ${sg(r.t.bias)}) · légnyomás ${r.p?r.p.mae.toFixed(1):"--"} hPa · páratartalom ${r.h?r.h.mae.toFixed(0):"--"}% · szél ${r.w?r.w.mae.toFixed(1):"--"} m/s · ${r.t.n} jóslat`,c:i===0?"#34d399":null}));
+  out.push({t:`Alap: ${so.verified} kiértékelt jóslat-futás, valódi állomási mérés ellen. A rangsor a 24 órás hőmérséklet-hiba szerint készült.`,c:"#8193a5"});
+ }
+ out.push({t:SRC,c:"#8193a5"});
  return out;
 }
 function scoreRows(){
@@ -3539,6 +3565,7 @@ function scoreRows(){
  blendSummary(c.v.bl).forEach(r=>vRow(r.t,r.c));
  vRow("🏆 Modell-skórkártya: melyik modell a legpontosabb a helyeden?","#8193a5");
  scoreSummary(c.v.sc,c.v.st).forEach(r=>vRow(r.t,r.c));
+ obsSummary(c.v.so,c.v.ob,c.v.st).forEach(r=>vRow(r.t,r.c));
 }
 
 /* ===== INDÍTÁS ===== */
