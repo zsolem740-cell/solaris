@@ -126,7 +126,7 @@ body.alert #tiles .t{border-color:#ef444477}
 <div id="favBar"></div>
 <div id="sbar"><input id="q" type="text" placeholder="Hely keresése (pl. Körmend)" aria-label="Hely keresése"><button id="bQ">Keres</button></div>
 <div id="tiles"></div>
-<div id="btns"><button id="bRef">⟳ Frissítés</button><button id="bRot" class="on">⟲ Önforgás</button><button id="bPick">◎ Kijelöl</button><button id="bQuake">🌋 Rengések</button><button id="bAi" class="on">🤖 Elemző</button><button id="bOcean">🌊 Óceán</button><button id="bNotif">🔔 Értesítés</button><button id="bWake">☀ Ébren</button><button id="bLog">📈 Napló</button><button id="bEonet">🌍 Események</button><button id="bAc">✈ Repülők</button><button id="bOv">🌌 Oval</button><button id="bWx">☁ Időjárás: ki</button><button id="bGps">📍 GPS</button><button id="bBuoy">🛟 Bóják</button><button id="bFc">🌡 Előrejelzés</button><button id="bNight">🌃 Éj-fények</button><button id="bBloom">✨ Fény</button><button id="bSon">🔊 Hangok: ki</button><button id="bHf">📡 HF-csend</button><button id="bPerf">📊 Teljesítmény</button><button id="bTwin">🧬 Twin</button></div>
+<div id="btns"><button id="bRef">⟳ Frissítés</button><button id="bRot" class="on">⟲ Önforgás</button><button id="bPick">◎ Kijelöl</button><button id="bQuake">🌋 Rengések</button><button id="bAi" class="on">🤖 Elemző</button><button id="bOcean">🌊 Óceán</button><button id="bNotif">🔔 Értesítés</button><button id="bWake">☀ Ébren</button><button id="bLog">📈 Napló</button><button id="bEonet">🌍 Események</button><button id="bAc">✈ Repülők</button><button id="bOv">🌌 Oval</button><button id="bWx">☁ Időjárás: ki</button><button id="bGps">📍 GPS</button><button id="bBuoy">🛟 Bóják</button><button id="bFc">🌡 Előrejelzés</button><button id="bNight">🌃 Éj-fények</button><button id="bBloom">✨ Fény</button><button id="bSon">🔊 Hangok: ki</button><button id="bHf">📡 HF-csend</button><button id="bPerf">📊 Teljesítmény</button><button id="bTwin">🧬 Twin</button><button id="bSrc">📶 Források</button></div>
 <div id="aiConsole"><div class="hdr">🤖 AI konzol <select id="aiProv" aria-label="AI szolgáltató"><option value="auto">Auto (legjobb)</option><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="openai">OpenAI</option><option value="openrouter">OpenRouter</option><option value="local">Helyi AI (offline)</option><option value="all">Összehasonlít (mind)</option></select></div><div class="log" id="aiCmdLog">AI konzol kész. Helyi parancsok: állapot, gíza, körmend, európa. Kulcs nélkül is válaszol: kp, napszél, bz, napkitörés, nyomás, hullám, rengés, hold, nap. Több AI: /kulcs claude|gemini|openai|openrouter &lt;kulcs&gt;, a választóval te döntesz, az Auto a feladathoz illőt veszi. A Claude a Claude appon belül kulcs nélkül is megy. A Helyi AI kulcs és szerver nélkül, az eszközön fut (WebGPU kell).</div><div class="inpRow"><input id="aiCmdInp" type="text" placeholder="Kérdés vagy parancs..." aria-label="AI parancs"><button id="aiCmdBtn">Küld</button><button id="aiTestBtn">Teszt</button></div>
 <div class="inpRow" style="margin-top:4px"><button id="aiMicBtn" style="flex:1">🎤 Beszélj</button><button id="aiSpkBtn" style="flex:1">🔊 Felolvas: ki</button></div>
 <div class="inpRow" style="margin-top:4px"><button id="aiSumBtn" style="flex:1">📰 Napi összefoglaló</button></div></div>
@@ -2543,7 +2543,7 @@ function renderView(topic){
  vBtn("📋 Cím másolása",()=>{try{navigator.clipboard.writeText(VIEW.src);flash("Cím másolva: "+VIEW.src,3000)}catch(e){flash(VIEW.src,6000)}});
 }
 $("vSrc").onclick=()=>window.open(VIEW.src,"_blank","noopener");
-setInterval(()=>{if($("view").style.display==="flex"&&VIEW.topic&&VIEW.topic!=="forecast"&&VIEW.topic!=="buoy"&&VIEW.tab!=="map")renderView(VIEW.topic)},6000);
+setInterval(()=>{if($("view").style.display==="flex"&&VIEW.topic&&VIEW.topic!=="forecast"&&VIEW.topic!=="buoy"&&VIEW.topic!=="sources"&&VIEW.tab!=="map")renderView(VIEW.topic)},6000);
 $("skyCard").onclick=e=>{
  const c=$("skyCard"),r=e.target.closest("[data-topic]");
  if(c.classList.contains("open")&&r)openView(r.dataset.topic);else c.classList.toggle("open");
@@ -2908,7 +2908,8 @@ function modelRows(){
 /* --- kiegészítő sorok minden nézethez --- */
 function extraRows(topic){
  const ob=observer();
- if(topic==="hf"){hfRows()}
+ if(topic==="sources"){sourcesRows()}
+ else if(topic==="hf"){hfRows()}
  else if(topic==="schumann"){schRows()}
  else if(topic==="solar"){solarRows()}
  else if(topic==="quake"){quakeRows()}
@@ -3394,6 +3395,113 @@ $("bPerf").onclick=()=>{
  $("perf").style.display=PERF.on?"block":"none";
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
+/* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
+const APP_VER="v13 · 2026-10-30";
+SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
+PRE.sources=[];
+const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
+const PROBES=[
+ ["NOAA Kp",()=>NOAA+"products/noaa-planetary-k-index.json"],
+ ["NOAA napszél (2 órás)",()=>PLA2],
+ ["NOAA mágneses tér (2 órás)",()=>MAG2],
+ ["NOAA 1 perces folyam (tartalék)",()=>NOAA+"json/rtsw/rtsw_wind_1m.json"],
+ ["NOAA napkitörés (GOES)",()=>NOAA+"json/goes/primary/xrays-6-hour.json"],
+ ["Open-Meteo időjárás",()=>"https://api.open-meteo.com/v1/forecast?latitude=47&longitude=16.6&current=temperature_2m"],
+ ["Open-Meteo árvíz",()=>"https://flood-api.open-meteo.com/v1/flood?latitude=47&longitude=16.6&daily=river_discharge&forecast_days=1"],
+ ["Open-Meteo levegő",()=>"https://air-quality-api.open-meteo.com/v1/air-quality?latitude=47&longitude=16.6&current=european_aqi"],
+ ["USGS földrengések",()=>"https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson"],
+ ["EMSC földrengések",()=>"https://www.seismicportal.eu/fdsnws/event/1/query?limit=1&format=json"],
+ ["ISS-pozíció (wheretheiss.at)",()=>"https://api.wheretheiss.at/v1/satellites/25544"],
+ ["GFZ Kp",()=>{const e=new Date(),s=new Date(e-432e5),f=x=>x.toISOString().slice(0,19)+"Z";return"https://kp.gfz-potsdam.de/app/json/?start="+f(s)+"&end="+f(e)+"&index=Kp"}],
+ ["MET Norway",()=>"https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=47&lon=16.6"],
+ ["ADSB.lol repülők",()=>"https://api.adsb.lol/v2/point/47/16.6/10"]
+];
+async function probe(name,url){
+ const t0=performance.now(),ac=new AbortController(),to=setTimeout(()=>ac.abort(),9000);
+ try{
+  const r=await fetch(url,{signal:ac.signal,cache:"no-store"});
+  clearTimeout(to);try{r.body&&r.body.cancel()}catch(e){}
+  return{name,ok:r.ok,code:r.status,ms:Math.round(performance.now()-t0)};
+ }catch(e){
+  clearTimeout(to);
+  return{name,ok:false,code:0,ms:Math.round(performance.now()-t0),err:e&&e.name==="AbortError"?"időtúllépés":"elérhetetlen vagy a böngésző blokkolja"};
+ }
+}
+function ago(ms){
+ const m=Math.round(ms/6e4);
+ return m<2?"most":m<90?m+" perce":m<2880?Math.round(m/60)+" órája":Math.round(m/1440)+" napja";
+}
+async function loadWatch(){
+ try{
+  const r=await fetch("data/status.json?t="+Date.now(),{cache:"no-store"});
+  if(!r.ok)return{ok:false,code:r.status};
+  return{ok:true,data:await r.json()};
+ }catch(e){return{ok:false,code:0}}
+}
+async function swInfo(){
+ try{
+  const reg=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();
+  const keys=window.caches?await caches.keys():[];
+  return (reg?"aktív":"nincs regisztrálva")+" · gyorsítótár: "+(keys.join(", ")||"üres");
+ }catch(e){return"nem elérhető"}
+}
+function verUpdate(){
+ const v=$("ver");if(!v)return;
+ const w=SRCST.watch;
+ let t=APP_VER;
+ if(w&&w.ok&&w.data&&w.data.updated){const age=Date.now()-Date.parse(w.data.updated);t+=" · háttérfigyelő: "+ago(age)+(age>3*36e5?" ⚠":"")}
+ else if(w&&!w.ok)t+=" · háttérfigyelő: nincs beállítva";
+ v.textContent=t;
+}
+async function runProbes(){
+ if(SRCST.busy)return;SRCST.busy=true;
+ try{
+  const [res,watch,sw]=await Promise.all([Promise.all(PROBES.map(([n,u])=>probe(n,u()))),loadWatch(),swInfo()]);
+  SRCST.res=res;SRCST.watch=watch;SRCST.sw=sw;SRCST.at=Date.now();verUpdate();
+ }catch(e){}
+ SRCST.busy=false;
+ if(VIEW.topic==="sources"&&$("view").style.display==="flex"&&VIEW.tab!=="map")renderView("sources");
+}
+function sourcesRows(){
+ vRow("Verzió: "+APP_VER+" · "+(navigator.onLine?"online":"OFFLINE"),"#a7f3d0");
+ vRow("Service worker: "+(SRCST.sw||"..."));
+ if(!SRCST.res){
+  if(!SRCST.busy)runProbes();
+  vRow("Források ellenőrzése folyamatban (legfeljebb 10 másodperc)...");
+ }else{
+  const ok=SRCST.res.filter(r=>r.ok).length;
+  vRow(`Források: ${ok}/${SRCST.res.length} elérhető · ellenőrizve: ${new Date(SRCST.at).toLocaleTimeString("hu-HU")}`,ok===SRCST.res.length?"#34d399":"#f59e0b");
+  SRCST.res.forEach(r=>vRow((r.ok?"✓ ":"✗ ")+r.name+" · "+(r.ok?r.ms+" ms":(r.code?"HTTP "+r.code:r.err)),r.ok?null:"#f59e0b"));
+  vRow("A lista azt mutatja, amit ez a telefon és ez a böngésző valóban elér. Ha egy forrás ✗, az app a tartalék útvonalát használja, vagy a kártyáján jelzi a hiányt.","#8193a5");
+  const w=SRCST.watch;
+  vRow("Háttérfigyelő (GitHub Actions, a telefon nélkül is fut):","#8193a5");
+  if(w&&w.ok&&w.data){
+   const s=w.data,age=Date.now()-Date.parse(s.updated),c=s.current||{};
+   vRow(`Utolsó mentett futás: ${new Date(s.updated).toLocaleString("hu-HU")} (${ago(age)}) · értesítés: ${s.notify&&s.notify.configured?"be van állítva":"NINCS beállítva"}`,age>3*36e5?"#f59e0b":"#34d399");
+   if(age>3*36e5)vRow("⚠ A háttérfigyelő több mint 3 órája nem mentett adatot. Nézd meg a GitHub Actions fület (lásd a Fő forrás gombot).","#f59e0b");
+   vRow(`Utolsó mért állapot: Kp ${fnum(c.kp,1)} · napszél ${fnum(c.speed,0)} km/s · Bz ${fnum(c.bz,1)} nT · napkitörés ${c.flare||"nincs"} · 12 órás min ${fnum(c.tmin12,1,"°C")}`);
+   const bad=Object.entries(s.sources||{}).filter(([k,v])=>!v.ok).map(([k])=>k);
+   vRow("Háttér-források: "+(bad.length?"hiba: "+bad.join(", "):"mind elérhető"),bad.length?"#f59e0b":null);
+   (s.recent||[]).slice(0,8).forEach(a=>vRow("🔔 "+new Date(a.t).toLocaleString("hu-HU")+" · "+a.title));
+   if(!(s.recent||[]).length)vRow("Még nem ment ki riasztás (nyugodt a helyzet, vagy még nem volt küszöbátlépés).","#8193a5");
+  }else{
+   vRow("Még nincs háttérfigyelő-adat"+(w&&w.code?" (HTTP "+w.code+")":"")+". Beállítás: lásd a BEALLITAS.md fájlt a tárolóban. Addig a riasztások csak akkor működnek, amikor az app nyitva van.","#f59e0b");
+  }
+ }
+ vBtn("↻ Ellenőrzés újra",()=>{SRCST.res=null;renderView("sources")});
+ vBtn("🧹 Gyorsítótár törlése és újratöltés",async()=>{
+  try{const rs=await navigator.serviceWorker.getRegistrations();for(const r of rs)await r.unregister();for(const k of await caches.keys())await caches.delete(k)}catch(e){}
+  location.href=location.pathname+"?r="+Date.now();
+ });
+}
+(function(){
+ const v=document.createElement("div");v.id="ver";v.className="s";v.style.cssText="font-size:9px;opacity:.65";v.textContent=APP_VER;
+ const t=$("top");if(t)t.appendChild(v);
+})();
+$("bSrc").onclick=()=>openView("sources");
+setTimeout(()=>loadWatch().then(w=>{SRCST.watch=w;verUpdate()}),3500);
+setInterval(()=>loadWatch().then(w=>{SRCST.watch=w;verUpdate()}),6e5);
+
 /* ===== INDÍTÁS ===== */
 $("bRef").onclick=async()=>{const b=$("bRef");b.disabled=true;b.textContent="⟳ Lekérés...";await Promise.allSettled([fetchGlobal(),fetchLocal()]);b.disabled=false;b.textContent="⟳ Frissítés"};
 $("bRot").onclick=()=>{autoRot=!autoRot;$("bRot").classList.toggle("on",autoRot)};

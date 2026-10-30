@@ -1,0 +1,28 @@
+{
+  "place": "Körmend",
+  "lat": 46.9833,
+  "lon": 16.6,
+  "timezone": "Europe/Budapest",
+  "appUrl": "https://zsolem740-cell.github.io/solaris/",
+  "thresholds": {
+    "kp": 5,
+    "kpForecast": 5,
+    "flareClass": "M1.0",
+    "bz": -10,
+    "frostC": 0,
+    "pressureDrop3h": -4,
+    "gustKmh": 60,
+    "quakeMag": 3.5,
+    "quakeRadiusKm": 600
+  },
+  "cooldownHours": {
+    "kp": 6,
+    "kpForecast": 12,
+    "flare": 3,
+    "bz": 3,
+    "frost": 12,
+    "pressure": 8,
+    "gust": 8
+  },
+  "digest": { "enabled": true, "hour": 7 }
+}
