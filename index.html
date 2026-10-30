@@ -930,11 +930,7 @@ async function fetchSolarFlareAndCME(){
  try{
   const a=await fetchJSON(NOAA.alerts);
   if(Array.isArray(a)&&a.length){
-   const msg=a.slice(0,5).map(x=>String(x.message||"")).join(" ");
-   let st="Stabil";
-   if(/G[345]/.test(msg))st="Erős vihar (G3+)";
-   else if(/G[12]/.test(msg))st="Mérsékelt vihar (G1–G2)";
-   else if(/CME|WATCH/.test(msg))st="CME figyelmeztetés";
+   const st=stormLabel(a);
    liveData.cmeAlert=st;setText("cmeStatus",st);
   }
  }catch(e){setText("cmeStatus","N/A")}
@@ -952,6 +948,19 @@ async function fetchSolarFlareAndCME(){
  }catch(e){setText("kpForecast","Előrejelzés nem elérhető")}
 }
 
+function stormLabel(a){
+ const now0=Date.now(),names=["","gyenge","mérsékelt","erős","súlyos","extrém"];
+ const msgs=a.filter(x=>{const t=Date.parse(String(x.issue_datetime||"").replace(" ","T")+"Z");return !Number.isFinite(t)||now0-t<864e5}).map(x=>String(x.message||""));
+ let g=0,kind="";
+ for(const m of msgs){
+  const m1=m.match(/Geomagnetic Storm Category G([1-5])/i),m2=m.match(/K-index of (\d)/i);
+  let lv=0;if(m1)lv=+m1[1];else if(m2&&+m2[1]>=5)lv=+m2[1]-4;
+  if(lv>g){g=lv;kind=/(ALERT|SUMMARY):/i.test(m)?"észlelt":"előrejelzett"}
+ }
+ if(g>0)return `${names[g]} vihar (G${g}), ${kind}`;
+ if(msgs.some(m=>/CME|WATCH/i.test(m)))return "CME figyelmeztetés";
+ return "Stabil (24 órán belül nincs vihar-riasztás)";
+}
 function compass(d){return["É","ÉK","K","DK","D","DNY","NY","ÉNY"][Math.round(d/45)%8]}
 function seaState(h){return h<0.5?"nyugodt tenger":h<1.25?"enyhe hullámzás":h<2.5?"mérsékelt hullámzás":h<4?"durva tenger":h<6?"nagyon durva tenger":"viharos tenger"}
 async function fetchMarineData(){
@@ -996,11 +1005,19 @@ async function refreshAllLiveData(){
  try{
   await Promise.allSettled([fetchSeismicData(),fetchWeatherForZone(),fetchSolarFlareAndCME(),fetchMarineData()]);
   updateAstronomicalModules();
-  const res=await Promise.allSettled([fetchJSON(NOAA.mag),fetchJSON(NOAA.wind),fetchJSON(NOAA.density),fetchJSON(NOAA.kp),fetchJSON(NOAA.f107)]);
+  const pWind=fetchJSON(NOAA.wind,20000);
+  const res=await Promise.allSettled([fetchJSON(NOAA.mag,20000),pWind,pWind,fetchJSON(NOAA.kp),fetchJSON(NOAA.f107)]);
   let ok=0;const now=new Date();
   const val=i=>res[i].status==="fulfilled"?res[i].value:null;
+  let magAlt=null,windAlt=null;
+  if(!val(0)||!val(1)){
+   const alt=await Promise.allSettled([val(0)?null:fetchJSON("https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json",20000),val(1)?null:fetchJSON("https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json",20000)]);
+   if(alt[0].status==="fulfilled")magAlt=alt[0].value;
+   if(alt[1].status==="fulfilled")windAlt=alt[1].value;
+   if(magAlt||windAlt)logEvent("NOAA tartalék-csatorna (1 perces folyam) használva.");
+  }
   try{
-   const rows0=rowsToObjects(val(0)),o=[...rows0].reverse().find(r=>findValue(r,["bz_gsm"])!==null)||null,bt=findValue(o,["bt"]),bz=findValue(o,["bz_gsm"]);
+   const rows0=rowsToObjects(val(0)||magAlt),o=[...rows0].reverse().find(r=>findValue(r,["bz_gsm"])!==null)||null,bt=findValue(o,["bt"]),bz=findValue(o,["bz_gsm"]);
    if(bt!==null||bz!==null){
     if(bt!==null){liveData.bt=bt;setLiveMetric("liveBt",bt);appendHistory("bt",bt,now)}
     if(bz!==null){liveData.bz=bz;setLiveMetric("liveBz",bz);appendHistory("bz",bz,now)}
@@ -1008,11 +1025,11 @@ async function refreshAllLiveData(){
    }
   }catch(e){logEvent("Mágneses mező hiba: "+e.message)}
   try{
-   const rows1=rowsToObjects(val(1)),o1=[...rows1].reverse().find(r=>findValue(r,["speed"])!==null)||null,s=findValue(o1,["speed"]);
+   const rows1=rowsToObjects(val(1)||windAlt),o1=[...rows1].reverse().find(r=>findValue(r,["speed","proton_speed"])!==null)||null,s=findValue(o1,["speed","proton_speed"]);
    if(s!==null){liveData.speed=s;setLiveMetric("liveSpeed",s,0);appendHistory("speed",s,now);ok++}
   }catch(e){logEvent("Napszél sebesség hiba: "+e.message)}
   try{
-   const rows=rowsToObjects(val(2));
+   const rows=rowsToObjects(val(2)||windAlt);
    const o=[...rows].reverse().find(r=>findValue(r,["density"])!==null)||null;
    const d=findValue(o,["density","proton_density"]);
    if(d!==null){liveData.density=d;setLiveMetric("liveDensity",d);appendHistory("density",d,now);ok++}
@@ -1217,9 +1234,9 @@ function renderCards(){
   setText("cWxInfo",w.n+" rácspont betöltve."+(w.near?" Legközelebbi: "+w.near.km+" km-re.":""));
   const f=(x,u,d)=>x===null||x===undefined?"--":x.toFixed(d===undefined?0:d)+u;
   m.innerHTML=(w.near?`<div class="metric">Itt (legközelebbi rácspont)<div class="value" style="font-size:13px">${f(w.near.cl,"%")} felhő</div><div class="small">${f(w.near.t,"°C",1)} · szél ${f(w.near.w," km/h")}</div></div>`:"")+
-   (w.warm?`<div class="metric">Legmelegebb pont<div class="value" style="font-size:13px">${f(w.warm.t,"°C",1)}</div><div class="small">${w.warm.la}°, ${w.warm.lo}°</div></div>`:"")+
-   (w.cold?`<div class="metric">Leghidegebb pont<div class="value" style="font-size:13px">${f(w.cold.t,"°C",1)}</div><div class="small">${w.cold.la}°, ${w.cold.lo}°</div></div>`:"")+
-   (w.wind?`<div class="metric">Legerősebb szél<div class="value" style="font-size:13px">${f(w.wind.w," km/h")}</div><div class="small">${w.wind.la}°, ${w.wind.lo}°</div></div>`:"");
+   (w.warm?`<div class="metric">Legmelegebb pont<div class="value" style="font-size:13px">${f(w.warm.t,"°C",1)}</div><div class="small">${Number(w.warm.la).toFixed(1)}°, ${Number(w.warm.lo).toFixed(1)}°</div></div>`:"")+
+   (w.cold?`<div class="metric">Leghidegebb pont<div class="value" style="font-size:13px">${f(w.cold.t,"°C",1)}</div><div class="small">${Number(w.cold.la).toFixed(1)}°, ${Number(w.cold.lo).toFixed(1)}°</div></div>`:"")+
+   (w.wind?`<div class="metric">Legerősebb szél<div class="value" style="font-size:13px">${f(w.wind.w," km/h")}</div><div class="small">${Number(w.wind.la).toFixed(1)}°, ${Number(w.wind.lo).toFixed(1)}°</div></div>`:"");
  }
  if(c.summary){setText("cSum",c.summary.text);setText("cSumInfo",new Date(c.summary.t).toLocaleString("hu-HU")+" · forrás: "+c.summary.src)}
 }
