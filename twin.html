@@ -11,13 +11,15 @@
 body,html{width:100%;height:100%;overflow:hidden;background:var(--bg-color);font-family:var(--font-mono);color:var(--text-main)}
 #globe-container{position:absolute;inset:0;z-index:1}
 #topbar{position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);left:10px;right:10px;z-index:10;display:flex;justify-content:space-between;align-items:center;font-size:.7rem;color:var(--text-dim)}
-#topbar a{color:var(--accent-gold);text-decoration:none;border:1px solid rgba(212,175,55,.35);border-radius:6px;padding:6px 10px;background:var(--card-bg)}
+#topbar a{flex:none;white-space:nowrap;color:var(--accent-gold);text-decoration:none;border:1px solid rgba(212,175,55,.35);border-radius:6px;padding:6px 10px;background:var(--card-bg)}
 #hud-overlay{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);left:50%;transform:translateX(-50%);width:94%;max-width:720px;max-height:62vh;overflow-y:auto;padding:14px 16px;background:var(--card-bg);border:1px solid rgba(212,175,55,.3);border-radius:8px;backdrop-filter:blur(12px);z-index:10;box-shadow:0 8px 32px rgba(0,0,0,.6)}
 .hud-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:.72rem;color:var(--accent-gold);letter-spacing:1px;text-transform:uppercase}
 .hud-status{display:inline-block;width:8px;height:8px;border-radius:50%;background:#00ff88;margin-right:6px;box-shadow:0 0 8px #00ff88}
 .hud-status.breakout{background:var(--alert-red);box-shadow:0 0 12px var(--alert-red);animation:pulse 1s infinite alternate}
 #summary-text{font-size:.86rem;line-height:1.45}
 .cascade-chain{margin-top:10px;padding-top:8px;border-top:1px dashed rgba(255,255,255,.1);font-size:.74rem;color:var(--text-dim)}
+#zone-tag{flex:1;text-align:right;margin-left:10px;font-size:.62rem}
+.cascade-chain:empty{display:none}
 #modules{margin-top:10px;padding-top:8px;border-top:1px dashed rgba(255,255,255,.1);font-size:.7rem;line-height:1.55;color:var(--text-dim);white-space:pre-wrap}
 #foot{margin-top:8px;font-size:.62rem;color:#5b6b80}
 #audio-unlock{position:absolute;inset:0;background:rgba(5,7,10,.92);z-index:100;display:flex;flex-direction:column;gap:14px;justify-content:center;align-items:center;text-align:center;padding:20px}

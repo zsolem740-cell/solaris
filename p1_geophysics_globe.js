@@ -60,12 +60,37 @@ function flareClass(d){
  const k=f>=1e-4?["X",1e-4]:f>=1e-5?["M",1e-5]:f>=1e-6?["C",1e-6]:f>=1e-7?["B",1e-7]:["A",1e-8];
  return k[0]+(f/k[1]).toFixed(1);
 }
+const num=v=>{if(v===null||v===undefined||v==="")return null;const n=Number(v);return Number.isFinite(n)?n:null};
+function lastRow(d,key){
+ if(!Array.isArray(d)||d.length<2||!Array.isArray(d[0]))return null;
+ const h=d[0].map(x=>String(x).toLowerCase()),i=h.indexOf(key);if(i<0)return null;
+ for(let k=d.length-1;k>0;k--){const v=num(d[k][i]);if(v!==null)return v}
+ return null;
+}
+function pickMag(d){
+ if(Array.isArray(d)&&Array.isArray(d[0]))return lastRow(d,"bz_gsm");
+ if(Array.isArray(d)){for(let i=d.length-1;i>=0;i--){const o=d[i];if(o&&o.active!==false&&num(o.bz_gsm)!==null)return num(o.bz_gsm)}return null}
+ if(d&&num(d.Bz??d.bz)!==null)return num(d.Bz??d.bz);
+ return null;
+}
+function pickSpeed(d){
+ if(Array.isArray(d)&&Array.isArray(d[0]))return lastRow(d,"speed");
+ if(Array.isArray(d)){for(let i=d.length-1;i>=0;i--){const o=d[i],v=o&&num(o.proton_speed??o.speed);if(o&&o.active!==false&&v!==null)return v}return null}
+ if(d){const v=num(d.WindSpeed??d.speed);if(v!==null)return v}
+ return null;
+}
+async function firstOK(urls,pick){
+ for(const u of urls){try{const v=pick(await YC.getJSON(u,20000));if(v!==null&&v!==undefined)return v}catch(e){}}
+ return null;
+}
+const MAG_URLS=[NOAA+"products/solar-wind/mag-2-hour.json",NOAA+"json/rtsw/rtsw_mag_1m.json","https://services.swpc.woc.noaa.gov/products/solar-wind/mag-2-hour.json",NOAA+"products/summary/solar-wind-mag-field.json"];
+const PLA_URLS=[NOAA+"products/solar-wind/plasma-2-hour.json",NOAA+"json/rtsw/rtsw_wind_1m.json","https://services.swpc.woc.noaa.gov/products/solar-wind/plasma-2-hour.json",NOAA+"products/summary/solar-wind-speed.json"];
 const GEO={kpIndex:null,windSpeed:null,bz:null,flareClass:null};
 async function pollGeo(){
  await Promise.allSettled([
   YC.getJSON(NOAA+"products/noaa-planetary-k-index.json").then(d=>{GEO.kpIndex=lastNum(toObjs(d),["Kp","kp","estimated_kp"])}),
-  YC.getJSON(NOAA+"products/solar-wind/plasma-2-hour.json").then(d=>{GEO.windSpeed=lastNum(toObjs(d),["speed"])}),
-  YC.getJSON(NOAA+"products/solar-wind/mag-2-hour.json").then(d=>{GEO.bz=lastNum(toObjs(d),["bz_gsm","bz"])}),
+  firstOK(PLA_URLS,pickSpeed).then(v=>{if(v!==null)GEO.windSpeed=v}),
+  firstOK(MAG_URLS,pickMag).then(v=>{if(v!==null)GEO.bz=v}),
   YC.getJSON(NOAA+"json/goes/primary/xrays-6-hour.json").then(d=>{GEO.flareClass=flareClass(d)})
  ]);
  YC.send({pillar:1,type:"P1_GEO_UPDATE",metrics:{...GEO}});
@@ -95,9 +120,15 @@ function initGlobe(){
  const el=document.getElementById("globe-container");
  if(!el||!window.THREE){return}
  const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,.1,100);
- cam.position.set(0,0,3.6);
  let ren;try{ren=new THREE.WebGLRenderer({antialias:true,alpha:true})}catch(e){console.warn("[P1] WebGL nem elérhető");return}
  ren.setPixelRatio(Math.min(2,devicePixelRatio||1));ren.setSize(innerWidth,innerHeight);el.appendChild(ren.domElement);
+ function fit(){
+  const a=innerWidth/innerHeight;cam.aspect=a;
+  cam.position.set(0,0,a<.8?YC.clamp(2.5/(.828*a),3.6,9):3.6);
+  if(a<.8)cam.setViewOffset(innerWidth,innerHeight,0,Math.round(innerHeight*.17),innerWidth,innerHeight);else cam.clearViewOffset();
+  cam.updateProjectionMatrix();
+ }
+ fit();
  const grp=new THREE.Group();scene.add(grp);
  const earth=new THREE.Mesh(new THREE.SphereGeometry(1,64,48),new THREE.MeshPhongMaterial({color:0x2a4a6a,shininess:6}));
  earth.rotation.y=-Math.PI/2;grp.add(earth);
@@ -127,7 +158,7 @@ function initGlobe(){
  cv.addEventListener("pointerdown",e=>{dragging=true;spin=false;lx=e.clientX});
  addEventListener("pointerup",()=>{dragging=false;setTimeout(()=>{if(!dragging)spin=true},4000)});
  addEventListener("pointermove",e=>{if(dragging){grp.rotation.y+=(e.clientX-lx)*.006;lx=e.clientX}});
- addEventListener("resize",()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();ren.setSize(innerWidth,innerHeight)});
+ addEventListener("resize",()=>{fit();ren.setSize(innerWidth,innerHeight)});
  YC.onZone(()=>placeMarker());
  (function loop(){
   requestAnimationFrame(loop);if(document.hidden)return;
