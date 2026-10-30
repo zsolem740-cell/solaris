@@ -1,0 +1,64 @@
+{
+ "updated": "2026-10-30T14:04:02.034Z",
+ "ok": true,
+ "place": "Körmend",
+ "notify": {
+  "configured": false,
+  "attempted": 1,
+  "sent": 0
+ },
+ "sources": {
+  "noaa_mag": {
+   "ok": true,
+   "ms": 32
+  },
+  "noaa_kp_forecast": {
+   "ok": true,
+   "ms": 121
+  },
+  "noaa_kp": {
+   "ok": true,
+   "ms": 184
+  },
+  "noaa_goes_flux": {
+   "ok": true,
+   "ms": 129
+  },
+  "noaa_wind": {
+   "ok": true,
+   "ms": 28
+  },
+  "open_meteo": {
+   "ok": true,
+   "ms": 367
+  },
+  "usgs": {
+   "ok": true,
+   "ms": 464
+  }
+ },
+ "current": {
+  "kp": 1.67,
+  "kpMax24": 5,
+  "flux": 7.317989343391673e-7,
+  "flare": "B7.3",
+  "speed": 351.8,
+  "bz": -0.8410000000000002,
+  "tmin12": 6.6,
+  "gust12": 28.4,
+  "dp3": -0.40000000000009095,
+  "pressure": 1026.7
+ },
+ "recent": [],
+ "thresholds": {
+  "kp": 5,
+  "kpForecast": 5,
+  "flareClass": "M1.0",
+  "bz": -10,
+  "frostC": 0,
+  "pressureDrop3h": -4,
+  "gustKmh": 60,
+  "quakeMag": 3.5,
+  "quakeRadiusKm": 600
+ }
+}
