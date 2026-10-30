@@ -3396,7 +3396,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v18 · 2026-10-30";
+const APP_VER="v19 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3405,6 +3405,7 @@ const PROBES=[
  ["NOAA napszél (2 órás)",()=>PLA2],
  ["NOAA mágneses tér (2 órás)",()=>MAG2],
  ["NOAA 1 perces folyam (tartalék)",()=>NOAA+"json/rtsw/rtsw_wind_1m.json"],
+ ["NOAA 1 perces mágneses folyam (tartalék)",()=>NOAA+"json/rtsw/rtsw_mag_1m.json"],
  ["NOAA napkitörés (GOES)",()=>NOAA+"json/goes/primary/xrays-6-hour.json"],
  ["Open-Meteo időjárás",()=>"https://api.open-meteo.com/v1/forecast?latitude=47&longitude=16.6&current=temperature_2m"],
  ["Open-Meteo árvíz",()=>"https://flood-api.open-meteo.com/v1/flood?latitude=47&longitude=16.6&daily=river_discharge&forecast_days=1"],
@@ -3470,8 +3471,16 @@ function sourcesRows(){
   vRow("Források ellenőrzése folyamatban (legfeljebb 10 másodperc)...");
  }else{
   const ok=SRCST.res.filter(r=>r.ok).length;
-  vRow(`Források: ${ok}/${SRCST.res.length} elérhető · ellenőrizve: ${new Date(SRCST.at).toLocaleTimeString("hu-HU")}`,ok===SRCST.res.length?"#34d399":"#f59e0b");
-  SRCST.res.forEach(r=>vRow((r.ok?"✓ ":"✗ ")+r.name+" · "+(r.ok?r.ms+" ms":(r.code?"HTTP "+r.code:r.err)),r.ok?null:"#f59e0b"));
+  const FB={"NOAA napszél (2 órás)":"NOAA 1 perces folyam (tartalék)","NOAA mágneses tér (2 órás)":"NOAA 1 perces mágneses folyam (tartalék)"},NOTE={"GFZ Kp":"csak keresztellenőrzés, a Kp a NOAA-ból jön"};
+  const up=n=>{const x=SRCST.res.find(q=>q.name===n);return !!(x&&x.ok)};
+  const cov=SRCST.res.filter(r=>!r.ok&&FB[r.name]&&up(FB[r.name])).length;
+  vRow(`Források: ${ok}/${SRCST.res.length} elérhető${cov?" · "+cov+" kiesőnek él a tartaléka":""} · ellenőrizve: ${new Date(SRCST.at).toLocaleTimeString("hu-HU")}`,(ok+cov)>=SRCST.res.length?"#34d399":"#f59e0b");
+  SRCST.res.forEach(r=>{
+   const why=r.ok?r.ms+" ms":(r.code?"HTTP "+r.code:r.err);
+   if(!r.ok&&FB[r.name]&&up(FB[r.name]))vRow("↪ "+r.name+" · "+why+" · tartalék aktív: "+FB[r.name].replace(" (tartalék)",""),"#a7f3d0");
+   else if(!r.ok&&NOTE[r.name])vRow("✗ "+r.name+" · "+why+" · "+NOTE[r.name],"#f59e0b");
+   else vRow((r.ok?"✓ ":"✗ ")+r.name+" · "+why,r.ok?null:"#f59e0b");
+  });
   vRow("A lista azt mutatja, amit ez a telefon és ez a böngésző valóban elér. Ha egy forrás ✗, az app a tartalék útvonalát használja, vagy a kártyáján jelzi a hiányt.","#8193a5");
   const w=SRCST.watch;
   vRow("Háttérfigyelő (GitHub Actions, a telefon nélkül is fut):","#8193a5");
@@ -3544,7 +3553,8 @@ function obsSummary(so,ob,st){
  }
  const s=ob.station,last=ob.rows&&ob.rows.length?ob.rows[ob.rows.length-1]:null;
  out.push({t:`📍 Mért összevetés: ${s.name} állomás (${s.distKm.toFixed(0)} km-re a helyedtől${s.distKm>25?", ezért a tanult javítás az állomás környékére szól, nem pontosan a te helyedre":""})${last?" · utolsó mérés: "+new Date(last.h+":00:00Z").toLocaleString("hu-HU",{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}):""}${ob.stale?" · az adat több mint 6 órás":""}`,c:ob.stale?"#f59e0b":"#a7f3d0"});
- if(last)out.push({t:`Legutóbbi mérés: ${last.t===null?"--":last.t.toFixed(1)} °C · ${last.p0===null?"--":last.p0.toFixed(0)} hPa (tengerszinti) · ${last.u===null?"--":last.u.toFixed(0)}% páratartalom · szél ${last.f===null?"--":last.f.toFixed(1)} m/s${last.fx!==null?" (lökés "+last.fx.toFixed(1)+")":""}`,c:null});
+ if(last)out.push({t:`Legutóbbi mérés: ${last.t===null?"--":last.t.toFixed(1)} °C · ${last.p0===null?"--":last.p0.toFixed(0)} hPa (tengerszinti) · ${last.u===null?"--":last.u.toFixed(0)}% páratartalom · szél ${last.f===null?"--":last.f.toFixed(1)} m/s${last.fx!==null?" (lökés "+last.fx.toFixed(1)+")":""}${last.r!==null?" · csapadék "+last.r.toFixed(1)+" mm":""}`,c:null});
+ if(ob.rows&&ob.rows.length&&ob.rows.every(r=>r.r===null))out.push({t:"Ez az állomás nem ad csapadékadatot, ezért a heves eső figyelmeztetés mért ellenőrzése nem lehetséges (a többi szabályé igen).",c:"#f59e0b"});
  if(!so||!so.verified){
   const n=st&&st.scoreObs?st.scoreObs.records:null;
   out.push({t:`Még nincs mért kiértékelés. A modellek jóslatát az állomás pontjára mentem${n!==null?" ("+n+" vár)":""}, és 25 óra múlva a mért értékhez mérem. Az első ranglista kb. 1 nap múlva jelenik meg.`,c:"#a7f3d0"});

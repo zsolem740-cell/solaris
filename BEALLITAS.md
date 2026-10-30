@@ -41,4 +41,4 @@ A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branc
 
 ## v18
 - **Figyelmeztetések:** nem kell beállítani, az alapértelmezett küszöbök a kódban vannak. Átírni az `alert-config.json` fájl `rules` részével lehet, például: `"rules": { "riverCorridor": false, "heavyRainMmH": 20 }`.
-- **Ellenőrzés:** az Előrejelzés nézet tetején „Figyelmeztetések a következő 24 órára” szakasz; nyugodt időben azt írja, hogy nincs jelzés.
+- **Ellenőrzés:** az Előrejelzés nézet alján, a modellek összevetése után a „Figyelmeztetések a következő 24 órára” szakasz; nyugodt időben azt írja, hogy nincs jelzés.
