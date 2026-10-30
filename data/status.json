@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T14:33:22.015Z",
+ "updated": "2026-10-30T14:55:07.376Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
@@ -8,48 +8,53 @@
   "sent": 1
  },
  "sources": {
-  "noaa_mag": {
-   "ok": true,
-   "ms": 55
-  },
-  "noaa_wind": {
-   "ok": true,
-   "ms": 62
-  },
   "noaa_kp": {
    "ok": true,
-   "ms": 247
+   "ms": 277
   },
   "noaa_kp_forecast": {
    "ok": true,
-   "ms": 187
+   "ms": 219
+  },
+  "noaa_mag": {
+   "ok": true,
+   "ms": 38
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 189
+   "ms": 227
   },
-  "usgs": {
+  "noaa_wind": {
    "ok": true,
-   "ms": 285
+   "ms": 61
   },
   "open_meteo": {
    "ok": true,
-   "ms": 543
+   "ms": 323
+  },
+  "usgs": {
+   "ok": true,
+   "ms": 365
   }
  },
  "current": {
   "kp": 1.67,
   "kpMax24": 5,
-  "flux": 3.8954470937824226e-7,
-  "flare": "B3.9",
-  "speed": 341.3,
-  "bz": 1.1,
-  "tmin12": 6.6,
+  "flux": 3.1913964448904153e-7,
+  "flare": "B3.2",
+  "speed": 341.8,
+  "bz": 1.205,
+  "tmin12": 6.2,
   "gust12": 28.4,
   "dp3": -0.40000000000009095,
   "pressure": 1026.7
  },
  "recent": [
+  {
+   "t": "2026-10-30T14:55:07.376Z",
+   "key": "kpForecast",
+   "title": "Kp 5 várható 24 órán belül"
+  },
   {
    "t": "2026-10-30T14:33:22.015Z",
    "key": "test",
