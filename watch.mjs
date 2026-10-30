@@ -3,6 +3,7 @@
    Az ntfy-téma titok: a GitHub "NTFY_TOPIC" titkából jön, a kódban sehol nem szerepel.
    Nem hivatalos figyelmeztetés, csak tájékoztatás. */
 import fs from "node:fs";
+import { computeCSI } from "./csi.mjs";
 
 const CFG = JSON.parse(fs.readFileSync("alert-config.json", "utf8"));
 const TH = CFG.thresholds, CD = CFG.cooldownHours;
@@ -13,7 +14,7 @@ const NOAA = "https://services.swpc.noaa.gov/";
 
 fs.mkdirSync("data", { recursive: true });
 const readJ = (f, d) => { try { return JSON.parse(fs.readFileSync(f, "utf8")); } catch (e) { return d; } };
-const STATE = Object.assign({ cool: {}, seenQuakes: [], lastDigest: "", lastHist: "", recent: [] }, readJ("data/state.json", {}));
+const STATE = Object.assign({ cool: {}, seenQuakes: [], lastDigest: "", lastHist: "", recent: [], lastCsi: null }, readJ("data/state.json", {}));
 const HIST = readJ("data/history.json", []);
 const SOURCES = {};
 
@@ -165,8 +166,17 @@ STATE.seenQuakes = STATE.seenQuakes.slice(-200);
 STATE.recent = [...sent, ...(STATE.recent || [])].slice(0, 20);
 
 const hourKey = new Date(NOW).toISOString().slice(0, 13);
+let climUpdated = false;
 if (STATE.lastHist !== hourKey) {
-  HIST.push({ t: new Date(NOW).toISOString().slice(0, 16) + "Z", kp: C.kp, speed: C.speed !== null ? Math.round(C.speed) : null, bz: C.bz !== null ? +C.bz.toFixed(2) : null, flux: C.flux, p: C.p0 ?? null, tmp: C.t0 ?? null });
+  /* óránként egyszer: az összevont stresszindex (CSI) a P8 tanuló modul számára */
+  try {
+    const r = await computeCSI({ get, CFG, NOW, kp: C.kp, clim: readJ("data/clim.json", null) });
+    if (r.climUpdated && r.clim) { fs.writeFileSync("data/clim.json", JSON.stringify(r.clim)); climUpdated = true; }
+    STATE.lastCsi = r.csi !== null ? { t: new Date(NOW).toISOString(), csi: r.csi, comp: r.comp } : null;
+  } catch (e) { SOURCES.csi = { ok: false, ms: 0, error: String((e && e.message) || e) }; STATE.lastCsi = null; }
+  const row = { t: new Date(NOW).toISOString().slice(0, 16) + "Z", kp: C.kp, speed: C.speed !== null ? Math.round(C.speed) : null, bz: C.bz !== null ? +C.bz.toFixed(2) : null, flux: C.flux, p: C.p0 ?? null, tmp: C.t0 ?? null };
+  if (STATE.lastCsi) { row.csi = STATE.lastCsi.csi; row.comp = STATE.lastCsi.comp; }
+  HIST.push(row);
   while (HIST.length > 24 * 14) HIST.shift();
   STATE.lastHist = hourKey;
 }
@@ -177,6 +187,8 @@ const status = {
   notify: { configured: !!TOPIC, attempted: alerts.length, sent: sent.length },
   sources: SOURCES,
   current: { kp: C.kp, kpMax24: C.kpMax24, flux: C.flux, flare: C.flux ? fcls(C.flux) : null, speed: C.speed, bz: C.bz, tmin12: C.tmin12 ?? null, gust12: C.gust12 ?? null, dp3: C.dp3 ?? null, pressure: C.p0 ?? null },
+  csi: STATE.lastCsi,
+  history: { rows: HIST.length, withCsi: HIST.filter(h => typeof h.csi === "number").length, since: HIST[0] ? HIST[0].t : null },
   recent: STATE.recent,
   thresholds: TH
 };
@@ -184,6 +196,6 @@ fs.writeFileSync("data/status.json", JSON.stringify(status, null, 1));
 fs.writeFileSync("data/state.json", JSON.stringify(STATE));
 fs.writeFileSync("data/history.json", JSON.stringify(HIST));
 
-const commit = new Date(NOW).getUTCMinutes() < 30 || sent.length > 0 || TEST;
+const commit = new Date(NOW).getUTCMinutes() < 30 || sent.length > 0 || TEST || climUpdated;
 if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `commit=${commit}\n`);
 console.log(`Kész: források ${Object.values(SOURCES).filter(s => s.ok).length}/${Object.keys(SOURCES).length}, riasztás ${alerts.length}, elküldve ${sent.length}, ntfy ${TOPIC ? "beállítva" : "NINCS beállítva"}.`);

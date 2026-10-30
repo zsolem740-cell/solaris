@@ -58,7 +58,7 @@ function renderModules(){
  if(last[3]){const m=last[3].metrics;L.push(m?`P3 trend        ${fmt(m.currentPressure,1)} hPa · dp/dt ${fmt(m.pressureDerivative,2)} hPa/h · ${last[3].signal.regime} · Z ${fmt(m.zScore,2)}`:`P3 trend        nincs adat (${last[3].reason||"?"})`)}else L.push("P3 trend        betöltés...");
  if(last[4]&&last[4].metrics){const m=last[4].metrics;L.push(`P4 agrár        ASI ${fmt(m.asiIndex,1)} · ${m.stressClass} stressz`)}else L.push("P4 agrár        vár a P2/P3 adatra...");
  if(last[5]&&last[5].metrics){const m=last[5].metrics;L.push(`P5 energia      GSI ${fmt(m.gridStressIndex,2)} · CDD-arány ${fmt(m.cddRatio,2)} · vízhozam-arány ${fmt(m.riverFlowRatio,2)} · GIC ${fmt(m.gicRisk,2)}`)}else L.push("P5 energia      vár a P1/P2 adatra...");
- if(last[8]&&last[8].stats){const s=last[8].stats;L.push(`P8 tanulás      24 h-s CSI-előrejelzés ${fmt(last[8].forecast24h,2)} σ · gyűjtve ${s.collected} · ellenőrzött pár ${s.n}`+(s.n>=10?` · hiba ${fmt(s.maeL,2)} vs naiv ${fmt(s.maeP,2)} (${s.skill===null?"--":(s.skill*100).toFixed(0)+"% javulás"})`:" · tanulás: gyűjtés folyamatban (kb. 1 nap nyitott oldal kell az első párhoz)"))}else L.push("P8 tanulás      gyűjtés indul...");
+ if(last[8]&&last[8].stats){const s=last[8].stats;L.push(`P8 tanulás      24 h-s CSI-előrejelzés ${fmt(last[8].forecast24h,2)} σ · gyűjtve ${s.collected} (szerverről ${s.srv||0}) · ellenőrzött pár ${s.n}`+(s.n>=10?` · hiba ${fmt(s.maeL,2)} vs naiv ${fmt(s.maeP,2)} (${s.skill===null?"--":(s.skill*100).toFixed(0)+"% javulás"})`:" · tanulás: gyűjtés folyamatban (a szerver óránként ment, az első pár 24 óra múlva áll össze)"))}else L.push("P8 tanulás      gyűjtés indul...");
  document.getElementById("modules").textContent=L.join("\n");
 }
 function updateHUD(p6){

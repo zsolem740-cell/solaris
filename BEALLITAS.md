@@ -12,7 +12,7 @@ A figyelő a GitHub szerverén fut (GitHub Actions), a telefonod és az app zár
 2. Name: `NTFY_TOPIC` · Secret: ugyanaz a téma-név. Mentés.
 
 ## 3. Fájlok feltöltése
-A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branch): `index.html`, `watch.mjs`, `alert-config.json`, `LEIRAS.md`, `BEALLITAS.md`. A `watch.yml` fájlt NEM kell feltölteni, azt a 4. lépésben kézzel hozod létre.
+A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branch): `index.html`, `watch.mjs`, `csi.mjs`, `alert-config.json`, `LEIRAS.md`, `BEALLITAS.md`. A `watch.yml` fájlt NEM kell feltölteni, azt a 4. lépésben kézzel hozod létre.
 
 ## 4. A munkafolyamat létrehozása
 1. Tároló főoldal, **Add file**, **Create new file**.

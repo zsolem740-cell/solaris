@@ -3396,7 +3396,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v13 · 2026-10-30";
+const APP_VER="v14 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3482,6 +3482,7 @@ function sourcesRows(){
    vRow(`Utolsó mért állapot: Kp ${fnum(c.kp,1)} · napszél ${fnum(c.speed,0)} km/s · Bz ${fnum(c.bz,1)} nT · napkitörés ${c.flare||"nincs"} · 12 órás min ${fnum(c.tmin12,1,"°C")}`);
    const bad=Object.entries(s.sources||{}).filter(([k,v])=>!v.ok).map(([k])=>k);
    vRow("Háttér-források: "+(bad.length?"hiba: "+bad.join(", "):"mind elérhető"),bad.length?"#f59e0b":null);
+   if(s.history)vRow(`Tanuló adat a szerverről: ${s.history.rows} óránkénti mérés, ebből ${s.history.withCsi} CSI-vel${s.history.since?" · kezdet: "+new Date(s.history.since).toLocaleString("hu-HU"):""}`+(s.csi?" · utolsó CSI: "+s.csi.csi+" σ":""));
    (s.recent||[]).slice(0,8).forEach(a=>vRow("🔔 "+new Date(a.t).toLocaleString("hu-HU")+" · "+a.title));
    if(!(s.recent||[]).length)vRow("Még nem ment ki riasztás (nyugodt a helyzet, vagy még nem volt küszöbátlépés).","#8193a5");
   }else{

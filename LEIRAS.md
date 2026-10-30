@@ -2,7 +2,7 @@
 
 Fő app: `index.html` (3D földgömb, élő adatok, AI-konzol, 📶 Források nézet) · Digital Twin: `twin.html` + `p1`–`p8` modulok.
 Gyorsítótár: `sw.js` (saját fájlok hálózat-előszörös, így a frissítés azonnal látszik).
-Háttérfigyelő: `watch.mjs` + `alert-config.json` + `.github/workflows/watch.yml` (lásd `BEALLITAS.md`), adatai a `data/` mappában.
+Háttérfigyelő: `watch.mjs` + `csi.mjs` + `alert-config.json` + `.github/workflows/watch.yml` (lásd `BEALLITAS.md`), adatai a `data/` mappában.
 
 Fontos:
 - A tárolóban NINCS API-kulcs és ntfy-téma. Az AI-kulcsot az app konzoljában add meg (`/kulcs gemini ...`), az ntfy-témát GitHub-titokként (`NTFY_TOPIC`).

@@ -11,7 +11,7 @@ const lsGet=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d
 const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 let W=lsGet("yc8:weights",null);
 if(!W||KEYS.some(k=>!(k in W)))W={...REF};
-let ST=lsGet("yc8:stats",{n:0,collected:0,maeL:null,maeP:null});
+let ST=lsGet("yc8:stats",{n:0,collected:0,srv:0,maeL:null,maeP:null});
 let store=null,busy=false,lastSave=0,lastPub=0,latest=null;
 
 /* --- tároló (IndexedDB) --- */
@@ -78,7 +78,7 @@ function publish(force){
  const now=Date.now();if(!force&&now-lastPub<6e4)return;lastPub=now;
  if(!latest)return;
  const skill=ST.n>=CFG.minPairs&&ST.maeP>0?1-ST.maeL/ST.maeP:null;
- YC.send({pillar:8,type:"P8_FORECAST",forecast24h:+predict(latest).toFixed(3),weights:{...W},stats:{n:ST.n,collected:ST.collected,maeL:ST.maeL===null?null:+ST.maeL.toFixed(3),maeP:ST.maeP===null?null:+ST.maeP.toFixed(3),skill:skill===null?null:+skill.toFixed(3)}});
+ YC.send({pillar:8,type:"P8_FORECAST",forecast24h:+predict(latest).toFixed(3),weights:{...W},stats:{n:ST.n,collected:ST.collected,srv:ST.srv||0,maeL:ST.maeL===null?null:+ST.maeL.toFixed(3),maeP:ST.maeP===null?null:+ST.maeP.toFixed(3),skill:skill===null?null:+skill.toFixed(3)}});
 }
 async function ingest(m){
  if(!m||!m.components)return;
@@ -91,15 +91,36 @@ async function ingest(m){
  publish(false);
 }
 
+/* A GitHub háttérfigyelő óránként elmenti a CSI-t és a pillér-értékeket (data/history.json).
+   Ezeket betöltjük, így a tanulás akkor is halad, amikor az oldal zárva volt. */
+async function pullServerHistory(){
+ if(!store)return 0;
+ try{
+  const r=await fetch("data/history.json?t="+Date.now(),{cache:"no-store"});
+  if(!r.ok)return 0;
+  const rows=await r.json();
+  let last=lsGet("yc8:srvLast",0),n=0;
+  for(const h of rows){
+   const t=Date.parse(h.t);
+   if(!Number.isFinite(t)||t<=last||!h.comp||typeof h.csi!=="number")continue;
+   await store.add({t,csi:h.csi,comp:fullComp(h.comp),used:false,src:"server"});
+   last=t;n++;
+  }
+  if(n){ST.srv=(ST.srv||0)+n;lsSet("yc8:srvLast",last);lsSet("yc8:stats",ST)}
+  return n;
+ }catch(e){return 0}
+}
 window.yantraLearning={
- ingest,verify,
+ ingest,verify,pullServerHistory,
  state:()=>({weights:{...W},stats:{...ST}}),
- reset(){W={...REF};ST={n:0,collected:0,maeL:null,maeP:null};lsSet("yc8:weights",W);lsSet("yc8:stats",ST)}
+ reset(){W={...REF};ST={n:0,collected:0,srv:0,maeL:null,maeP:null};lsSet("yc8:weights",W);lsSet("yc8:stats",ST);lsSet("yc8:srvLast",0)}
 };
 
 YC.ready(async()=>{
  try{store=window.__P8_STORE||await idbStore()}catch(e){console.warn("[P8] tároló nem elérhető:",e&&e.message||e)}
  YC.listen(m=>{if(m.pillar===6)ingest(m)});
- setTimeout(verify,5000);setInterval(verify,10*60*1000);
+ await pullServerHistory();
+ setTimeout(verify,3000);setInterval(verify,10*60*1000);
+ setInterval(()=>pullServerHistory().then(verify),30*60*1000);
 });
 })();

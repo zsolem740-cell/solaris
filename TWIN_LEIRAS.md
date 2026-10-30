@@ -28,3 +28,8 @@ A modulok egy közös adatbuszon (`BroadcastChannel("solaris_yantra_core")`) bes
 - A P6 jelentett indexe nem változik. A P8 külön 24 órás előrejelzést ad, és a kiértékelést a naiv becslés mellett mutatja.
 - Csak akkor gyűjt, amikor a Twin oldal nyitva van; az első kiértékelt pár kb. 1 nap nyitva tartás után jön. Visszaállítás: `yantraLearning.reset()` a böngészőkonzolban.
 - Eltérés az eredeti tervtől: ott semmi nem szolgáltatta a „tényleges stresszt", a súlyfrissítés pedig minden súlyt ugyanazzal az arányszámmal skálázott volna (a normalizálás kiejtette volna), így nem tanult volna semmit; a napló csak breakout esetén íródott volna.
+
+## P8 · tanulás szerver-adatból (v14)
+- A GitHub háttérfigyelő óránként kiszámolja a CSI-t és a P1–P5 pillér-értékeket (`csi.mjs`, ugyanazok a képletek, mint a P2–P6 böngészős moduloké, egymás mellett ellenőrizve), és a `data/history.json` sorai közé menti.
+- A P8 megnyitáskor beolvassa az új sorokat (egyszer minden sort), így a tanulás akkor is halad, amikor az oldal zárva volt. Az első ellenőrzött pár a szerver első CSI-sora után 24 órával áll össze.
+- A klimatológia (11 év napi adata) a `data/clim.json` fájlban van, évente egyszer frissül.
