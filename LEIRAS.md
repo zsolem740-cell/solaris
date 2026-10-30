@@ -16,3 +16,4 @@ Fontos:
 - Források nézet (v19): ha egy elsődleges forrás kiesik, de a tartaléka él (például a 2 órás NOAA fájl helyett az 1 perces folyam), a sor „↪ tartalék aktív” jelzést kap, nem hibát. A csapadékot nem mérő állomásnál a heves eső ellenőrzése „nincs adat” lesz, nem tévedés.
 - Főképernyős jelzés (v20): az összkép-sor elejére (és a kinyitott kártya külön sorába) kerül a háttérfigyelő aktív figyelmeztetése, például „⚠ fekete jég ma 02–06 óra”. Adatforrás: `data/rules.json`.
 - Heti jelentés (v20): vasárnap 8:00-kor ntfy-üzenet (életjel + összefoglaló: mérések száma, modell-ranglista, figyelmeztetések találati aránya, mért állomás, források). Az `alert-config.json` `weekly` részével állítható: `{ "enabled": true, "day": 0, "hour": 8 }`.
+- Folyó (v21): a hely körüli 5×5-ös GloFAS rácspontból (kb. 11 km-en belül) a legnagyobb hozamút választja, kiírja a távolságát; ha csak kis vízfolyás van a közelben (1 m³/s alatt), nem jelez szintet és „rekordot” sem.

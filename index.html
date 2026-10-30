@@ -1424,6 +1424,18 @@ async function fetchGlobal(){
  visuals();updateHud();showStatus();
  if($("quakeList").textContent==="Lekérés...")$("quakeList").textContent="Nincs adat.";
 }
+function riverPick(d,at){
+ const arr=Array.isArray(d)?d:[d];let best=null;
+ for(const r of arr){
+  const dd=(r&&r.daily)||{},a=dd.river_discharge||[],q0=num(a[0]);
+  if(q0===null||q0<=0)continue;
+  if(!best||q0>best.q0)best={r,dd,a,q0};
+ }
+ if(!best)return{none:true};
+ const dd=best.dd,fm=Math.max(...best.a.map(x=>num(x)??0)),p75=num((dd.river_discharge_p75||[])[0]),mx=num((dd.river_discharge_max||[])[0]);
+ const dist=best.r.latitude!==undefined&&best.r.longitude!==undefined&&at?Math.round(distKm2(at.lat,at.lon,best.r.latitude,best.r.longitude)):0;
+ return{q:best.q0,med:num((dd.river_discharge_median||[])[0]),p75:p75===null?Infinity:p75,mx:mx===null?Infinity:mx,fmax:fm,dist,small:best.q0<1,cells:arr.length};
+}
 async function fetchLocal(){
  const my=++tok,q=`latitude=${loc.lat}&longitude=${loc.lon}`;
  D.pres=D.wind=D.wave=D.sst=D.cloud=null;D.aqi=D.pm25=D.uv=D.pollen=D.river=null;updateHud();
@@ -1436,12 +1448,16 @@ async function fetchLocal(){
    const P=[["éger",c.alder_pollen],["nyír",c.birch_pollen],["fű",c.grass_pollen],["üröm",c.mugwort_pollen],["parlagfű",c.ragweed_pollen],["olajfa",c.olive_pollen]].map(x=>[x[0],num(x[1])]).filter(x=>x[1]!==null).sort((a,b)=>b[1]-a[1]);
    D.pollen=P.length?(P[0][1]>0?P[0][0]+" "+P[0][1].toFixed(0)+" szem/m³":"jelenleg nincs"):null;
   }),
-  J(`https://flood-api.open-meteo.com/v1/flood?${q}&daily=river_discharge,river_discharge_median,river_discharge_p75,river_discharge_max&forecast_days=7`).then(d=>{
-   if(my!==tok)return;const dd=d.daily||{},a=dd.river_discharge||[],q0=num(a[0]);
-   if(q0===null||q0<=0){D.river={none:true};return}
-   const fm=Math.max(...a.map(x=>num(x)??0)),p75=num((dd.river_discharge_p75||[])[0]),mx=num((dd.river_discharge_max||[])[0]);
-   D.river={q:q0,med:num((dd.river_discharge_median||[])[0]),p75:p75===null?Infinity:p75,mx:mx===null?Infinity:mx,fmax:fm};
-  })
+  (async()=>{
+   /* a modell ~5 km-es rácsán a pont sokszor egy kis mellékvízfolyásra esik: 5×5 rácspontot kérünk le (kb. ±11 km), és a legnagyobb hozamút választjuk */
+   const fl="daily=river_discharge,river_discharge_median,river_discharge_p75,river_discharge_max&forecast_days=7",LA=[],LO=[];
+   for(let i=-2;i<=2;i++)for(let j=-2;j<=2;j++){LA.push(clamp(loc.lat+i*.05,-89.9,89.9).toFixed(3));LO.push((loc.lon+j*.05).toFixed(3))}
+   let d;
+   try{d=await J(`https://flood-api.open-meteo.com/v1/flood?latitude=${LA.join(",")}&longitude=${LO.join(",")}&${fl}`)}
+   catch(e){d=await J(`https://flood-api.open-meteo.com/v1/flood?${q}&${fl}`)}
+   if(my!==tok)return;
+   D.river=riverPick(d,loc);
+  })()
  ]);
  if(my===tok){updateHud();showStatus();aiLocal()}
 }
@@ -2119,9 +2135,10 @@ function updateSky(){
  else if(rv.none)$("skyRiver").textContent="🌊 Folyó: nincs adat ezen a ponton (a modell ~5 km-es rácson a legközelebbi folyót nézi)";
  else{
   const f=x=>x===null||x===undefined?"--":x.toFixed(x<10?1:0);
-  const lvl=rv.q>rv.mx?"rekord feletti":rv.fmax>rv.mx?"az előrejelzés rekordszint fölé megy":rv.q>rv.p75?"átlag feletti":"normál";
-  $("skyRiver").textContent=`🌊 Folyó (GloFAS modell, nem mérőállomás): ${f(rv.q)} m³/s · szokásos ${f(rv.med)} · 7 napos csúcs ${f(rv.fmax)} · ${lvl}`;
-  if(lvl!==lastRiver){if(lastRiver!==""&&(lvl==="rekord feletti"||lvl.startsWith("az előrejelzés"))){logEv("folyó",lvl);notifyAlert("Folyó: "+lvl,f(rv.q)+" m³/s")}lastRiver=lvl}
+  const lvl=rv.small?"kis vízfolyás":rv.q>rv.mx?"rekord feletti":rv.fmax>rv.mx?"az előrejelzés rekordszint fölé megy":rv.q>rv.p75?"átlag feletti":"normál";
+  if(rv.small)$("skyRiver").textContent=`🌊 Folyó: a közelben (kb. 11 km-en belül) csak kis vízfolyás van, a legnagyobb hozam ${f(rv.q)} m³/s. Ilyen kis hozamnál a modell nem megbízható, ezért nem jelez szintet.`;
+  else $("skyRiver").textContent=`🌊 Folyó (GloFAS modell, nem mérőállomás, ${rv.dist>0?rv.dist+" km-re a pontodtól":"a pontodnál"}): ${f(rv.q)} m³/s · szokásos ${f(rv.med)} · 7 napos csúcs ${f(rv.fmax)} · ${lvl}`;
+  if(!rv.small&&lvl!==lastRiver){if(lastRiver!==""&&(lvl==="rekord feletti"||lvl.startsWith("az előrejelzés"))){logEv("folyó",lvl);notifyAlert("Folyó: "+lvl,f(rv.q)+" m³/s")}lastRiver=lvl}
  }
  try{$("skyAc").textContent=AC.on?(AC.msg||"✈ Repülők: betöltés..."):"✈ Repülők: kapcsold be a ✈ gombbal"}catch(e){}
  try{$("skyPass").textContent=PASS.msg;$("skyOval").textContent=ovText()}catch(e){}
@@ -2130,7 +2147,7 @@ function updateSky(){
  try{updateExtra2()}catch(e){}
  try{
   const ob3=observer(),dk2=ISS?Math.round(distKm2(ob3.lat,ob3.lon,ISS.lat,ISS.lon)):null;
-  const rl=!rv?"--":rv.none?"nincs adat":(rv.q>rv.mx?"rekord":rv.fmax>rv.mx?"előrejelzés: rekord":rv.q>rv.p75?"átlag felett":"normál");
+  const rl=!rv?"--":rv.none?"nincs adat":rv.small?"kis vízfolyás":(rv.q>rv.mx?"rekord":rv.fmax>rv.mx?"előrejelzés: rekord":rv.q>rv.p75?"átlag felett":"normál");
   $("skyBrief").textContent=`${RULEBRIEF?RULEBRIEF+" · ":""}🌌 ${code==="no"?"sarki fény nem valószínű":"sarki fény: "+txt} · 🛰 ISS ${dk2===null?"--":dk2+" km"} · 🔭 ${sc}/100 · 🌫 AQI ${aq===null||aq===undefined?"--":aq} · 🌊 ${rl}  ▾ (koppints a részletekért)`;
  }catch(e){}
 }
@@ -3410,7 +3427,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v20 · 2026-10-30";
+const APP_VER="v21 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
