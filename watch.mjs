@@ -77,7 +77,7 @@ async function collect() {
     get("noaa_goes_flux", NOAA + "json/goes/primary/xrays-6-hour.json"),
     chain("noaa_wind", PLA, ["speed", "proton_speed"], 3),
     chain("noaa_mag", MAG, ["bz_gsm"], 10),
-    get("open_meteo", `https://api.open-meteo.com/v1/forecast?latitude=${CFG.lat}&longitude=${CFG.lon}&hourly=temperature_2m,pressure_msl,wind_gusts_10m&past_days=1&forecast_days=2&timezone=UTC`),
+    get("open_meteo", `https://api.open-meteo.com/v1/forecast?latitude=${CFG.lat}&longitude=${CFG.lon}&hourly=temperature_2m,pressure_msl,wind_gusts_10m,cloud_cover,wind_speed_10m,precipitation,relative_humidity_2m&past_days=1&forecast_days=2&timezone=UTC`),
     get("usgs", `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&latitude=${CFG.lat}&longitude=${CFG.lon}&maxradiuskm=${TH.quakeRadiusKm}&minmagnitude=${TH.quakeMag}&starttime=${new Date(NOW - 3 * 36e5).toISOString()}`)
   ]);
   C.kp = kpD ? lastVals(kpD, ["Kp", "kp", "estimated_kp"], 1)[0] ?? null : null;
@@ -107,6 +107,8 @@ async function collect() {
     for (let i = i0; i <= Math.min(i0 + 9, tm.length - 4); i++) { const d = h.pressure_msl[i + 3] - h.pressure_msl[i]; if (Number.isFinite(d)) dp = dp === null ? d : Math.min(dp, d); }
     C.dp3 = dp;
     C.p0 = h.pressure_msl[i0]; C.t0 = h.temperature_2m[i0];
+    C.cl0 = h.cloud_cover ? h.cloud_cover[i0] : null; C.ws0 = h.wind_speed_10m ? h.wind_speed_10m[i0] : null;
+    C.gu0 = h.wind_gusts_10m[i0]; C.pr0 = h.precipitation ? h.precipitation[i0] : null; C.rh0 = h.relative_humidity_2m ? h.relative_humidity_2m[i0] : null;
   }
   C.quakes = (qk && qk.features) || [];
   return C;
@@ -191,7 +193,7 @@ if (STATE.lastHist !== hourKey) {
     if (r.climUpdated && r.clim) { fs.writeFileSync("data/clim.json", JSON.stringify(r.clim)); climUpdated = true; }
     STATE.lastCsi = r.csi !== null ? { t: new Date(NOW).toISOString(), csi: r.csi, comp: r.comp } : null;
   } catch (e) { SOURCES.csi = { ok: false, ms: 0, error: String((e && e.message) || e) }; STATE.lastCsi = null; }
-  const row = { t: new Date(NOW).toISOString().slice(0, 16) + "Z", kp: C.kp, speed: C.speed !== null ? Math.round(C.speed) : null, bz: C.bz !== null ? +C.bz.toFixed(2) : null, flux: C.flux, p: C.p0 ?? null, tmp: C.t0 ?? null };
+  const row = { t: new Date(NOW).toISOString().slice(0, 16) + "Z", kp: C.kp, speed: C.speed !== null ? Math.round(C.speed) : null, bz: C.bz !== null ? +C.bz.toFixed(2) : null, flux: C.flux, p: C.p0 ?? null, tmp: C.t0 ?? null, cl: C.cl0 ?? null, ws: C.ws0 != null ? Math.round(C.ws0) : null, gu: C.gu0 != null ? Math.round(C.gu0) : null, pr: C.pr0 ?? null, rh: C.rh0 != null ? Math.round(C.rh0) : null };
   if (STATE.lastCsi) { row.csi = STATE.lastCsi.csi; row.comp = STATE.lastCsi.comp; }
   HIST.push(row);
   rowAdded = true;
@@ -204,8 +206,8 @@ let PENDING = readJ("data/forecasts.json", []);
 if (STATE.lastScore !== hourKey) {
   /* óránként: a 4 modell jóslatának elmentése, naponta többször a 7 napnál régebbiek kiértékelése */
   try {
-    const rec = await recordForecast({ get, CFG, NOW });
-    if (rec) PENDING.push(rec);
+    const rf = await recordForecast({ get, CFG, NOW, sc: SCORE });
+    if (rf) { PENDING.push(rf.rec); fs.writeFileSync("data/blend.json", JSON.stringify(rf.blend)); }
     const v = await verifyForecasts({ get, CFG, NOW, pending: PENDING, sc: SCORE });
     PENDING = v.pending; SCORE = v.sc;
   } catch (e) { SOURCES.score = { ok: false, ms: 0, error: String((e && e.message) || e) }; }

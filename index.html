@@ -3396,7 +3396,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v15 · 2026-10-30";
+const APP_VER="v16 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3506,8 +3506,8 @@ setInterval(()=>loadWatch().then(w=>{SRCST.watch=w;verUpdate()}),6e5);
 /* ===== MODELL-SKÓRKÁRTYA (a háttérfigyelő adataiból) ===== */
 async function loadScore(){
  const g=async f=>{try{const r=await fetch("data/"+f+"?t="+Date.now(),{cache:"no-store"});return r.ok?await r.json():null}catch(e){return null}};
- const [sc,st]=await Promise.all([g("scorecard.json"),g("status.json")]);
- return{sc,st};
+ const [sc,st,bl]=await Promise.all([g("scorecard.json"),g("status.json"),g("blend.json")]);
+ return{sc,st,bl};
 }
 function scoreSummary(sc,st){
  const out=[];
@@ -3523,11 +3523,21 @@ function scoreSummary(sc,st){
  out.push({t:`Alap: ${sc.verified} kiértékelt jóslat-futás a helyedre${sc.since?(", "+sc.since.slice(0,10)+" óta"):""}. Az összevetés az ERA5 újraelemzéshez történik (nem állomási mérés), a rangsor a 24 órás hőmérséklet-hiba szerint készült. Kevés adatnál a sorrend még változhat.`,c:"#8193a5"});
  return out;
 }
+function blendSummary(b){
+ if(!b||!b.hours||!b.hours.length)return[{t:"A javított előrejelzés még nem készült el (a háttérfigyelő óránként számolja).",c:"#8193a5"}];
+ const out=[],pick=h=>b.hours.find(x=>x.h===h),f=(v,d,u)=>v===undefined||v===null?"--":Number(v).toFixed(d)+u;
+ const iss=b.issued?new Date(b.issued).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"}):"--";
+ out.push({t:`🎯 Javított előrejelzés (kiadva: ${iss}) · ${b.calibrated?"súlyozva és torzításmentesítve a skórkártya alapján ("+b.verifiedRuns+" kiértékelt futás)":"egyelőre egyszerű átlag, a kalibrálás legalább ~4 nap kiértékelt adat után indul"}`,c:b.calibrated?"#34d399":"#a7f3d0"});
+ [3,6,12,24].forEach(h=>{const x=pick(h);if(x)out.push({t:`+${h} óra: ${f(x.temp,1," °C")} (modell-szórás ±${f(x.tempSp/2,1,"")}) · ${f(x.pres,0," hPa")} · felhő ${f(x.cloud,0,"%")}`,c:null})});
+ out.push({t:"A modellek szórása azt mutatja, mennyire értenek egyet. Nagy szórásnál az előrejelzés bizonytalanabb.",c:"#8193a5"});
+ return out;
+}
 function scoreRows(){
- vRow("🏆 Modell-skórkártya: melyik modell a legpontosabb a helyeden?","#8193a5");
  const c=need("score",loadScore,6e5);
  if(!c){vRow("Betöltés...");return}
  if(c.err){vRow("A skórkártya most nem tölthető be: "+c.err,"#f59e0b");return}
+ blendSummary(c.v.bl).forEach(r=>vRow(r.t,r.c));
+ vRow("🏆 Modell-skórkártya: melyik modell a legpontosabb a helyeden?","#8193a5");
  scoreSummary(c.v.sc,c.v.st).forEach(r=>vRow(r.t,r.c));
 }
 

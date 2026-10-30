@@ -33,3 +33,7 @@ A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branc
 ## Újdonságok (v15)
 - **Csendes órák:** az `alert-config.json` `quiet` részében (`from`, `to`, `enabled`) állítható. Éjjel a kisebb riasztások hangtalanul jönnek (ntfy 1-es prioritás), a nagyok megszólalnak.
 - **Modell-skórkártya:** nem kell beállítani. Az első ranglista kb. 8 nap múlva jelenik meg az app Előrejelzés nézetében (a jóslatokat az ERA5 újraelemzéshez méri, ami nem állomási mérés).
+
+## v16
+- **Javított előrejelzés:** nem kell beállítani. Az app Előrejelzés nézetében látszik (+3, +6, +12, +24 óra). A kalibráció kb. 11 nap után indul, és kb. 3 hét után van saját pontszáma a skórkártyán.
+- **Több adat:** az óránkénti mentés mostantól a felhőzetet, a szelet, a csapadékot és a páratartalmat is rögzíti, a későbbi tanuláshoz.
