@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T17:41:06.165Z",
+ "updated": "2026-10-30T18:45:33.258Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
@@ -10,74 +10,74 @@
  "sources": {
   "noaa_wind": {
    "ok": true,
-   "ms": 40
-  },
-  "noaa_kp": {
-   "ok": true,
-   "ms": 211
+   "ms": 47
   },
   "noaa_kp_forecast": {
    "ok": true,
-   "ms": 155
+   "ms": 124
+  },
+  "noaa_kp": {
+   "ok": true,
+   "ms": 187
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 157
-  },
-  "noaa_mag": {
-   "ok": true,
-   "ms": 35
+   "ms": 132
   },
   "usgs": {
    "ok": true,
-   "ms": 561
+   "ms": 171
+  },
+  "noaa_mag": {
+   "ok": true,
+   "ms": 23
   },
   "open_meteo": {
    "ok": true,
-   "ms": 711
+   "ms": 809
   },
   "om_daily": {
    "ok": true,
-   "ms": 644
+   "ms": 621
   },
   "om_pressure": {
    "ok": true,
-   "ms": 144
+   "ms": 193
   },
   "om_flood": {
    "ok": true,
-   "ms": 495
+   "ms": 643
   },
   "om_models": {
    "ok": true,
-   "ms": 210
+   "ms": 214
   }
  },
  "current": {
-  "kp": 2.33,
+  "kp": 1.67,
   "kpMax24": 5,
-  "flux": 3.1175491699286795e-7,
-  "flare": "B3.1",
-  "speed": 328,
-  "bz": 2.455,
-  "tmin12": 4.8,
-  "gust12": 19.1,
-  "dp3": -0.2999999999999545,
+  "flux": 2.293498795324922e-7,
+  "flare": "B2.3",
+  "speed": 322.5,
+  "bz": 1.4969999999999999,
+  "tmin12": 5.4,
+  "gust12": 18.4,
+  "dp3": -0.3000000000001819,
   "pressure": 1027.3
  },
  "csi": {
-  "t": "2026-10-30T17:41:06.165Z",
+  "t": "2026-10-30T18:45:33.258Z",
   "csi": 0.321,
   "comp": {
    "p1": 0,
    "p2": 0,
-   "p3": 1.138,
+   "p3": 1.142,
    "p4": 0,
    "p5": 1
   }
  },
  "score": {
-  "records": 2,
+  "records": 3,
   "verified": 0,
   "since": null
  },
@@ -88,8 +88,8 @@
   "now": false
  },
  "history": {
-  "rows": 3,
-  "withCsi": 2,
+  "rows": 4,
+  "withCsi": 3,
   "since": "2026-10-30T14:04Z"
  },
  "recent": [
