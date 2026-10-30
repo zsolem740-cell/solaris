@@ -3396,7 +3396,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v17 · 2026-10-30";
+const APP_VER="v18 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3508,8 +3508,8 @@ setInterval(()=>loadWatch().then(w=>{SRCST.watch=w;verUpdate()}),6e5);
 /* ===== MODELL-SKÓRKÁRTYA (a háttérfigyelő adataiból) ===== */
 async function loadScore(){
  const g=async f=>{try{const r=await fetch("data/"+f+"?t="+Date.now(),{cache:"no-store"});return r.ok?await r.json():null}catch(e){return null}};
- const [sc,st,bl,so,ob]=await Promise.all([g("scorecard.json"),g("status.json"),g("blend.json"),g("scorecard_obs.json"),g("obs.json")]);
- return{sc,st,bl,so,ob};
+ const [sc,st,bl,so,ob,ru]=await Promise.all([g("scorecard.json"),g("status.json"),g("blend.json"),g("scorecard_obs.json"),g("obs.json"),g("rules.json")]);
+ return{sc,st,bl,so,ob,ru};
 }
 function scoreSummary(sc,st){
  const out=[];
@@ -3558,10 +3558,24 @@ function obsSummary(so,ob,st){
  out.push({t:SRC,c:"#8193a5"});
  return out;
 }
+function rulesSummary(ru){
+ const out=[],NAME={roadIce:"fekete jég",heavyRain:"heves eső",trackHeat:"sínhőmérséklet",riverGust:"folyóparti széllökés"};
+ if(!ru){out.push({t:"A közlekedési és szabadtéri figyelmeztetések még nem készültek el (a háttérfigyelő óránként számolja).",c:"#8193a5"});return out}
+ const act=ru.active||[];
+ out.push({t:"⚠ Figyelmeztetések a következő 24 órára (előrejelzés, nem mérés)",c:"#8193a5"});
+ if(!act.length)out.push({t:"Most nincs jelzés: nem várható fekete jég, heves eső, nagy hőség sínekre vagy folyóparti erős széllökés.",c:"#34d399"});
+ else act.forEach(a=>out.push({t:a.message,c:a.severe?"#ef4444":"#f59e0b"}));
+ const st=ru.stats||{},ks=Object.keys(st).filter(k=>st[k].n>0);
+ if(ks.length)out.push({t:"Eddigi találati arány (a legközelebbi mért állomás szerint, tágabb küszöbbel): "+ks.map(k=>`${NAME[k]||k} ${st[k].hit}/${st[k].n}`).join(" · ")+". A fekete jégnél csak a hőmérsékleti feltétel mérhető.",c:"#8193a5"});
+ else out.push({t:"A találati arányt akkor látod, ha a mért állomási adat alapján már kiértékelhető figyelmeztetés van.",c:"#8193a5"});
+ out.push({t:"Heurisztikus szabályok (nedvesség, harmatpont, hőmérséklet, csapadék, napsugárzás, széllökés), nem hivatalos útellenőrzés.",c:"#8193a5"});
+ return out;
+}
 function scoreRows(){
  const c=need("score",loadScore,6e5);
  if(!c){vRow("Betöltés...");return}
  if(c.err){vRow("A skórkártya most nem tölthető be: "+c.err,"#f59e0b");return}
+ rulesSummary(c.v.ru).forEach(r=>vRow(r.t,r.c));
  blendSummary(c.v.bl).forEach(r=>vRow(r.t,r.c));
  vRow("🏆 Modell-skórkártya: melyik modell a legpontosabb a helyeden?","#8193a5");
  scoreSummary(c.v.sc,c.v.st).forEach(r=>vRow(r.t,r.c));

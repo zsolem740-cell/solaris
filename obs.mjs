@@ -142,7 +142,14 @@ export async function updateObs({ CFG, NOW, prev, note }) {
     note("hungaromet", false, ms, err);
     return prev ? { ...prev, error: err } : null;
   }
-  const mine = rows.filter(r => r.id === chosen.id || via.startsWith("állomási"));
+  let mine = rows.filter(r => r.id === chosen.id || via.startsWith("állomási"));
+  let backfill = false;
+  if (via.startsWith("SYNOP")) {   /* az órás SYNOP fájl csak az aktuális órát adja: a hiányzó előző órákat az állomás fix nevű „now” fájljából pótoljuk */
+    try {
+      const bf = parseCsv(unzipFirst(await fetchBuf(`${NOW_BASE}HABP_1H_${chosen.id}_now.zip`)).text).filter(r => !r.id || r.id === chosen.id);
+      if (bf.length) { mine = [...bf, ...mine]; backfill = true; }
+    } catch (e) { /* nem végzetes: az idősor óránként így is épül */ }
+  }
   const map = new Map();
   if (prev && prev.station && prev.station.id === chosen.id) for (const r of prev.rows || []) map.set(Date.parse(r.h + ":00:00Z"), r);
   for (const r of mine) map.set(r.ms, { h: new Date(r.ms).toISOString().slice(0, 13), t: r.t, p0: r.p0, u: r.u, r: r.r, f: r.f, fx: r.fx });
@@ -150,7 +157,7 @@ export async function updateObs({ CFG, NOW, prev, note }) {
   const last = out.length ? Date.parse(out[out.length - 1].h + ":00:00Z") : 0;
   const stale = NOW - last > 6 * 36e5;
   note("hungaromet", true, ms, stale ? "az utolsó mérés több mint 6 órás" : undefined);
-  return { source: OBS_SOURCE, updated: new Date(NOW).toISOString(), via, stale, station: chosen, rows: out };
+  return { source: OBS_SOURCE, updated: new Date(NOW).toISOString(), via, backfill, stale, station: chosen, rows: out };
 }
 
 /* A skórkártya valósága: a mért óránkénti érték a kért időpontra. */

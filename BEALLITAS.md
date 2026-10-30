@@ -12,7 +12,7 @@ A figyelő a GitHub szerverén fut (GitHub Actions), a telefonod és az app zár
 2. Name: `NTFY_TOPIC` · Secret: ugyanaz a téma-név. Mentés.
 
 ## 3. Fájlok feltöltése
-A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branch): `index.html`, `watch.mjs`, `csi.mjs`, `score.mjs`, `obs.mjs`, `alert-config.json`, `LEIRAS.md`, `BEALLITAS.md`. A `watch.yml` fájlt NEM kell feltölteni, azt a 4. lépésben kézzel hozod létre.
+A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branch): `index.html`, `watch.mjs`, `csi.mjs`, `score.mjs`, `obs.mjs`, `rules.mjs`, `alert-config.json`, `LEIRAS.md`, `BEALLITAS.md`. A `watch.yml` fájlt NEM kell feltölteni, azt a 4. lépésben kézzel hozod létre.
 
 ## 4. A munkafolyamat létrehozása
 1. Tároló főoldal, **Add file**, **Create new file**.
@@ -38,3 +38,7 @@ A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branc
 - **Mért adat (HungaroMet):** nem kell beállítani. A háttérfigyelő magától választja a legközelebbi állomást. Ha az automatikus keresés nem működik, az `alert-config.json` fájlba felvehető egy `"obsStation": "15310"` sor (az állomás 5 jegyű száma).
 - **Ellenőrzés:** a 📶 Források nézetben megjelenik a „HungaroMet mért adat” sor az állomás nevével, távolságával és az utolsó mérés idejével. Ha nem elérhető, ott a hiba oka.
 - **Skórkártya:** az Előrejelzés nézet alján a „Mért összevetés” szakasz mutatja a modellek hibáját a valódi állomási méréshez képest.
+
+## v18
+- **Figyelmeztetések:** nem kell beállítani, az alapértelmezett küszöbök a kódban vannak. Átírni az `alert-config.json` fájl `rules` részével lehet, például: `"rules": { "riverCorridor": false, "heavyRainMmH": 20 }`.
+- **Ellenőrzés:** az Előrejelzés nézet tetején „Figyelmeztetések a következő 24 órára” szakasz; nyugodt időben azt írja, hogy nincs jelzés.

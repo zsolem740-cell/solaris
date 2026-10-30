@@ -6,6 +6,7 @@ import fs from "node:fs";
 import { computeCSI } from "./csi.mjs";
 import { recordForecast, verifyForecasts, eraTruth, TRACKS } from "./score.mjs";
 import { updateObs, obsTruth } from "./obs.mjs";
+import { rulesConfig, evaluateRules, describeRule, verifyRules, RULE_COOLDOWN } from "./rules.mjs";
 
 const CFG = JSON.parse(fs.readFileSync("alert-config.json", "utf8"));
 const TH = CFG.thresholds, CD = CFG.cooldownHours;
@@ -78,7 +79,7 @@ async function collect() {
     get("noaa_goes_flux", NOAA + "json/goes/primary/xrays-6-hour.json"),
     chain("noaa_wind", PLA, ["speed", "proton_speed"], 3),
     chain("noaa_mag", MAG, ["bz_gsm"], 10),
-    get("open_meteo", `https://api.open-meteo.com/v1/forecast?latitude=${CFG.lat}&longitude=${CFG.lon}&hourly=temperature_2m,pressure_msl,wind_gusts_10m,cloud_cover,wind_speed_10m,precipitation,relative_humidity_2m&past_days=1&forecast_days=2&timezone=UTC`),
+    get("open_meteo", `https://api.open-meteo.com/v1/forecast?latitude=${CFG.lat}&longitude=${CFG.lon}&hourly=temperature_2m,pressure_msl,wind_gusts_10m,cloud_cover,wind_speed_10m,precipitation,relative_humidity_2m,dew_point_2m,shortwave_radiation,soil_temperature_0cm&past_days=1&forecast_days=2&timezone=UTC`),
     get("usgs", `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&latitude=${CFG.lat}&longitude=${CFG.lon}&maxradiuskm=${TH.quakeRadiusKm}&minmagnitude=${TH.quakeMag}&starttime=${new Date(NOW - 3 * 36e5).toISOString()}`)
   ]);
   C.kp = kpD ? lastVals(kpD, ["Kp", "kp", "estimated_kp"], 1)[0] ?? null : null;
@@ -107,6 +108,7 @@ async function collect() {
     let dp = null;
     for (let i = i0; i <= Math.min(i0 + 9, tm.length - 4); i++) { const d = h.pressure_msl[i + 3] - h.pressure_msl[i]; if (Number.isFinite(d)) dp = dp === null ? d : Math.min(dp, d); }
     C.dp3 = dp;
+    C.wxH = h; C.wxI0 = i0;
     C.p0 = h.pressure_msl[i0]; C.t0 = h.temperature_2m[i0];
     C.cl0 = h.cloud_cover ? h.cloud_cover[i0] : null; C.ws0 = h.wind_speed_10m ? h.wind_speed_10m[i0] : null;
     C.gu0 = h.wind_gusts_10m[i0]; C.pr0 = h.precipitation ? h.precipitation[i0] : null; C.rh0 = h.relative_humidity_2m ? h.relative_humidity_2m[i0] : null;
@@ -116,6 +118,10 @@ async function collect() {
 }
 
 const alerts = [];
+const RC = rulesConfig(CFG), RCD = { ...RULE_COOLDOWN, ...(CFG.cooldownHours || {}) };
+let RULES = {};
+const RULES_LOG = readJ("data/rules.json", { log: [], stats: {} });
+if (!Array.isArray(RULES_LOG.log)) RULES_LOG.log = [];
 function maybe(key, hours, make) {
   if (!TEST && NOW - (STATE.cool[key] || 0) < hours * 36e5) return;
   const a = make();
@@ -129,6 +135,16 @@ function evaluate(C) {
   maybe("frost", CD.frost, () => C.tmin12 !== undefined && C.tmin12 <= TH.frostC ? { title: `Fagyveszély: ${C.tmin12.toFixed(1)} °C`, message: `${CFG.place}: a következő 12 órában a legalacsonyabb előrejelzett hőmérséklet ${C.tmin12.toFixed(1)} °C (${hhmm(C.tminAt)}).`, priority: C.tmin12 <= -3 ? 4 : 3, tags: ["snowflake"] } : null);
   maybe("pressure", CD.pressure, () => C.dp3 !== null && C.dp3 !== undefined && C.dp3 <= TH.pressureDrop3h ? { title: `Gyors nyomásesés: ${C.dp3.toFixed(1)} hPa / 3 óra`, message: `${CFG.place}: a modell gyors légnyomásesést jelez a következő órákra, ami gyakran front vagy vihar előjele.`, priority: 3, tags: ["chart_with_downwards_trend"] } : null);
   maybe("gust", CD.gust, () => C.gust12 !== undefined && C.gust12 >= TH.gustKmh ? { title: `Erős széllökés: ${Math.round(C.gust12)} km/h`, message: `${CFG.place}: a következő 12 órában a modell szerint a széllökés elérheti a ${Math.round(C.gust12)} km/h-t.`, priority: 4, tags: ["dash"] } : null);
+  /* közlekedési és szabadtéri szabályok az óránkénti előrejelzésből */
+  RULES = C.wxH ? evaluateRules({ h: C.wxH, i0: C.wxI0, cfg: RC }) : {};
+  for (const [key, res] of Object.entries(RULES)) {
+    maybe(key, RCD[key] ?? 6, () => {
+      if (key === "riverGust" && (alerts.some(a => a.key === "gust") || NOW - (STATE.cool.gust || 0) < (CD.gust || 8) * 36e5)) return null;   /* nem kettőzi az általános széllökés-riasztást */
+      const d = describeRule(key, res, CFG, NOW);
+      if (!TEST) RULES_LOG.log.push({ key, issued: new Date(NOW).toISOString(), start: res.start, end: res.end, status: "pending" });
+      return d;
+    });
+  }
   let n = 0;
   for (const f of C.quakes) {
     if (STATE.seenQuakes.includes(f.id) || n >= 3) continue;
@@ -147,9 +163,11 @@ async function digest(C) {
   alerts.push({ key: "digest", digest: day, title: `Reggeli összefoglaló · ${CFG.place}`, priority: 2, tags: ["sunrise"], message:
     `Űridőjárás: Kp ${f(C.kp)} (24 h max ${f(C.kpMax24)}), napszél ${C.speed ? Math.round(C.speed) : "--"} km/s, Bz ${C.bz !== null ? C.bz.toFixed(1) : "--"} nT, napkitörés ${C.flux ? fcls(C.flux) : "nincs"}.\n` +
     `Időjárás (12 óra): ${C.tmin12 !== undefined ? C.tmin12.toFixed(0) + "…" + C.tmax12.toFixed(0) + " °C" : "--"}, széllökés max ${C.gust12 !== undefined ? Math.round(C.gust12) : "--"} km/h, nyomás ${C.p0 !== undefined ? Math.round(C.p0) : "--"} hPa.\n` +
-    `Fagy: ${C.tmin12 !== undefined && C.tmin12 <= TH.frostC ? "igen" : "nem várható"}.` });
+    `Fagy: ${C.tmin12 !== undefined && C.tmin12 <= TH.frostC ? "igen" : "nem várható"}.\n` +
+    `Közlekedés, szabadtér (24 óra): ${Object.keys(RULES).length ? Object.entries(RULES).map(([k, r]) => describeRule(k, r, CFG, NOW).short).join("; ") : "nincs jelzés"}.` });
 }
 function isLoud(a, C) {
+  if (a.severe) return true;
   if (a.key === "kp") return C.kp >= 7;
   if (a.key === "flare") return C.flux >= 5e-5;
   if (a.key === "bz") return C.bz <= -15;
@@ -211,6 +229,7 @@ const note = (name, ok, ms, err) => { SOURCES[name] = { ok, ms, ...(err ? { erro
 if (STATE.lastScore !== hourKey) {
   /* óránként: a HungaroMet mérések frissítése, a 4 modell jóslatának elmentése és kiértékelése (ERA5 és mért állomás) */
   try { OBS = await updateObs({ CFG, NOW, prev: OBS, note }); } catch (e) { note("hungaromet", false, 0, String((e && e.message) || e)); }
+  try { RULES_LOG.stats = verifyRules({ log: RULES_LOG.log, obsRows: OBS && OBS.rows, now: NOW, cfg: RC }); } catch (e) { SOURCES.rules = { ok: false, ms: 0, error: String((e && e.message) || e) }; }
   const scs = [{ id: "obs", sc: SCORE_OBS }, { id: "era5", sc: SCORE }];
   try {
     const rf = await recordForecast({ get, CFG, NOW, scs, track: TRACKS.era5 });
@@ -236,6 +255,10 @@ fs.writeFileSync("data/scorecard.json", JSON.stringify(SCORE));
 fs.writeFileSync("data/forecasts_obs.json", JSON.stringify(PENDING_OBS));
 fs.writeFileSync("data/scorecard_obs.json", JSON.stringify(SCORE_OBS));
 if (OBS) fs.writeFileSync("data/obs.json", JSON.stringify(OBS));
+RULES_LOG.log = RULES_LOG.log.slice(-80);
+RULES_LOG.updated = new Date(NOW).toISOString();
+RULES_LOG.active = Object.entries(RULES).map(([k, r]) => { const d = describeRule(k, r, CFG, NOW); return { key: k, title: d.title, text: d.short, message: d.message, start: r.start, end: r.end, severe: !!r.severe }; });
+fs.writeFileSync("data/rules.json", JSON.stringify(RULES_LOG));
 
 const anyOk = Object.values(SOURCES).some(s => s.ok);
 const status = {
@@ -245,6 +268,7 @@ const status = {
   current: { kp: C.kp, kpMax24: C.kpMax24, flux: C.flux, flare: C.flux ? fcls(C.flux) : null, speed: C.speed, bz: C.bz, tmin12: C.tmin12 ?? null, gust12: C.gust12 ?? null, dp3: C.dp3 ?? null, pressure: C.p0 ?? null },
   csi: STATE.lastCsi,
   score: { records: PENDING.length, verified: SCORE.verified || 0, since: SCORE.since || null },
+  rules: { active: Object.keys(RULES), stats: RULES_LOG.stats || {} },
   scoreObs: { records: PENDING_OBS.length, verified: SCORE_OBS.verified || 0, since: SCORE_OBS.since || null },
   obs: OBS ? { station: OBS.station, last: OBS.rows && OBS.rows.length ? OBS.rows[OBS.rows.length - 1].h : null, rows: OBS.rows ? OBS.rows.length : 0, via: OBS.via, stale: !!OBS.stale, error: OBS.error || null } : null,
   quiet: { enabled: !!Q.enabled, from: Q.from, to: Q.to, now: IS_QUIET },
