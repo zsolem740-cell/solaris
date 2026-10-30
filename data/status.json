@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T19:42:07.167Z",
+ "updated": "2026-10-30T19:45:47.924Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
@@ -8,33 +8,33 @@
   "sent": 1
  },
  "sources": {
-  "noaa_kp_forecast": {
-   "ok": true,
-   "ms": 154
-  },
-  "noaa_kp": {
-   "ok": true,
-   "ms": 201
-  },
   "noaa_wind": {
    "ok": true,
-   "ms": 47
-  },
-  "noaa_goes_flux": {
-   "ok": true,
-   "ms": 159
+   "ms": 78
   },
   "noaa_mag": {
    "ok": true,
-   "ms": 34
+   "ms": 51
   },
-  "open_meteo": {
+  "noaa_kp_forecast": {
    "ok": true,
-   "ms": 500
+   "ms": 142
+  },
+  "noaa_kp": {
+   "ok": true,
+   "ms": 202
+  },
+  "noaa_goes_flux": {
+   "ok": true,
+   "ms": 153
   },
   "usgs": {
    "ok": true,
-   "ms": 573
+   "ms": 492
+  },
+  "open_meteo": {
+   "ok": true,
+   "ms": 809
   }
  },
  "current": {
@@ -42,8 +42,8 @@
   "kpMax24": 5,
   "flux": 2.0490686836183158e-7,
   "flare": "B2.0",
-  "speed": 318.7,
-  "bz": 1.733,
+  "speed": 326.5,
+  "bz": 1.6649999999999998,
   "tmin12": 5.7,
   "gust12": 18,
   "dp3": -0.40000000000009095,
@@ -101,6 +101,11 @@
   "since": "2026-10-30T14:04Z"
  },
  "recent": [
+  {
+   "t": "2026-10-30T19:45:47.924Z",
+   "key": "test",
+   "title": "Teszt: a háttérfigyelő működik"
+  },
   {
    "t": "2026-10-30T19:42:07.167Z",
    "key": "test",
