@@ -183,7 +183,7 @@ STATE.seenQuakes = STATE.seenQuakes.slice(-200);
 STATE.recent = [...sent, ...(STATE.recent || [])].slice(0, 20);
 
 const hourKey = new Date(NOW).toISOString().slice(0, 13);
-let climUpdated = false;
+let climUpdated = false, rowAdded = false;
 if (STATE.lastHist !== hourKey) {
   /* óránként egyszer: az összevont stresszindex (CSI) a P8 tanuló modul számára */
   try {
@@ -194,6 +194,7 @@ if (STATE.lastHist !== hourKey) {
   const row = { t: new Date(NOW).toISOString().slice(0, 16) + "Z", kp: C.kp, speed: C.speed !== null ? Math.round(C.speed) : null, bz: C.bz !== null ? +C.bz.toFixed(2) : null, flux: C.flux, p: C.p0 ?? null, tmp: C.t0 ?? null };
   if (STATE.lastCsi) { row.csi = STATE.lastCsi.csi; row.comp = STATE.lastCsi.comp; }
   HIST.push(row);
+  rowAdded = true;
   while (HIST.length > 24 * 14) HIST.shift();
   STATE.lastHist = hourKey;
 }
@@ -231,6 +232,7 @@ fs.writeFileSync("data/status.json", JSON.stringify(status, null, 1));
 fs.writeFileSync("data/state.json", JSON.stringify(STATE));
 fs.writeFileSync("data/history.json", JSON.stringify(HIST));
 
-const commit = new Date(NOW).getUTCMinutes() < 30 || sent.length > 0 || TEST || climUpdated;
+/* mentés: óránként egyszer (az óra első futásánál, bármelyik percben), riasztásnál, teszt-módban és új klimatológiánál */
+const commit = rowAdded || sent.length > 0 || TEST || climUpdated;
 if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `commit=${commit}\n`);
 console.log(`Kész: források ${Object.values(SOURCES).filter(s => s.ok).length}/${Object.keys(SOURCES).length}, riasztás ${alerts.length}, elküldve ${sent.length}, ntfy ${TOPIC ? "beállítva" : "NINCS beállítva"}.`);
