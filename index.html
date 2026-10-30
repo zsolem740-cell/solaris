@@ -2913,7 +2913,7 @@ function extraRows(topic){
  else if(topic==="schumann"){schRows()}
  else if(topic==="solar"){solarRows()}
  else if(topic==="quake"){quakeRows()}
- else if(topic==="forecast"){vRow("Réteg a gömbön:","#8193a5");vBtn("☁ Felhő",()=>wxSet(1));vBtn("🌡 Hőmérséklet",()=>wxSet(2));vBtn("💨 Szél",()=>wxSet(3));modelRows()}
+ else if(topic==="forecast"){vRow("Réteg a gömbön:","#8193a5");vBtn("☁ Felhő",()=>wxSet(1));vBtn("🌡 Hőmérséklet",()=>wxSet(2));vBtn("💨 Szél",()=>wxSet(3));modelRows();scoreRows()}
  else if(topic==="aurora"){
   const c=need("solar",loadSolarX,18e4);
   vRow("Kp összevetés: NOAA "+fnum(D.kp,2)+" · GFZ "+(c&&c.v&&c.v.kpG?Number(c.v.kpG.v).toFixed(2):"betöltés...")+" · NOAA 24 órás előrejelzés max "+(kpFc?kpFc.max.toFixed(1):"--"),"#a7f3d0");
@@ -3396,7 +3396,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v14 · 2026-10-30";
+const APP_VER="v15 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3502,6 +3502,34 @@ function sourcesRows(){
 $("bSrc").onclick=()=>openView("sources");
 setTimeout(()=>loadWatch().then(w=>{SRCST.watch=w;verUpdate()}),3500);
 setInterval(()=>loadWatch().then(w=>{SRCST.watch=w;verUpdate()}),6e5);
+
+/* ===== MODELL-SKÓRKÁRTYA (a háttérfigyelő adataiból) ===== */
+async function loadScore(){
+ const g=async f=>{try{const r=await fetch("data/"+f+"?t="+Date.now(),{cache:"no-store"});return r.ok?await r.json():null}catch(e){return null}};
+ const [sc,st]=await Promise.all([g("scorecard.json"),g("status.json")]);
+ return{sc,st};
+}
+function scoreSummary(sc,st){
+ const out=[];
+ if(!sc||!sc.verified){
+  const n=st&&st.score?st.score.records:null;
+  out.push({t:`Még nincs kiértékelt előrejelzés. A háttérfigyelő óránként elmenti 4 modell (ECMWF, GFS, ICON, Météo-France) 6, 12 és 24 órás jóslatát${n!==null?" ("+n+" vár kiértékelésre)":""}, és 7 nap múlva az ERA5 újraelemzéshez méri. Az első ranglista a gyűjtés 8. napján jelenik meg.`,c:"#a7f3d0"});
+  return out;
+ }
+ const g=(m,L,k)=>{const x=m.lead&&m.lead[L]&&m.lead[L][k];return x&&x.n?{mae:x.sumAbs/x.n,bias:x.sumErr/x.n,n:x.n}:null};
+ const rows=Object.values(sc.models||{}).map(m=>({name:m.name,t24:g(m,"24","temp"),p24:g(m,"24","pres"),c24:g(m,"24","cloud"),t6:g(m,"6","temp")})).filter(r=>r.t24).sort((a,b)=>a.t24.mae-b.t24.mae);
+ const sg=v=>(v>=0?"+":"")+v.toFixed(1);
+ rows.forEach((r,i)=>out.push({t:`${i===0?"★ ":""}${r.name}: 24 órás hőmérséklet átl. hiba ${r.t24.mae.toFixed(2)} °C (torzítás ${sg(r.t24.bias)}) · 6 órás ${r.t6?r.t6.mae.toFixed(2):"--"} °C · légnyomás ${r.p24?r.p24.mae.toFixed(1):"--"} hPa · felhő ${r.c24?r.c24.mae.toFixed(0):"--"}% · ${r.t24.n} jóslat`,c:i===0?"#34d399":null}));
+ out.push({t:`Alap: ${sc.verified} kiértékelt jóslat-futás a helyedre${sc.since?(", "+sc.since.slice(0,10)+" óta"):""}. Az összevetés az ERA5 újraelemzéshez történik (nem állomási mérés), a rangsor a 24 órás hőmérséklet-hiba szerint készült. Kevés adatnál a sorrend még változhat.`,c:"#8193a5"});
+ return out;
+}
+function scoreRows(){
+ vRow("🏆 Modell-skórkártya: melyik modell a legpontosabb a helyeden?","#8193a5");
+ const c=need("score",loadScore,6e5);
+ if(!c){vRow("Betöltés...");return}
+ if(c.err){vRow("A skórkártya most nem tölthető be: "+c.err,"#f59e0b");return}
+ scoreSummary(c.v.sc,c.v.st).forEach(r=>vRow(r.t,r.c));
+}
 
 /* ===== INDÍTÁS ===== */
 $("bRef").onclick=async()=>{const b=$("bRef");b.disabled=true;b.textContent="⟳ Lekérés...";await Promise.allSettled([fetchGlobal(),fetchLocal()]);b.disabled=false;b.textContent="⟳ Frissítés"};

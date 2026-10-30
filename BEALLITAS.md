@@ -12,7 +12,7 @@ A figyelő a GitHub szerverén fut (GitHub Actions), a telefonod és az app zár
 2. Name: `NTFY_TOPIC` · Secret: ugyanaz a téma-név. Mentés.
 
 ## 3. Fájlok feltöltése
-A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branch): `index.html`, `watch.mjs`, `csi.mjs`, `alert-config.json`, `LEIRAS.md`, `BEALLITAS.md`. A `watch.yml` fájlt NEM kell feltölteni, azt a 4. lépésben kézzel hozod létre.
+A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branch): `index.html`, `watch.mjs`, `csi.mjs`, `score.mjs`, `alert-config.json`, `LEIRAS.md`, `BEALLITAS.md`. A `watch.yml` fájlt NEM kell feltölteni, azt a 4. lépésben kézzel hozod létre.
 
 ## 4. A munkafolyamat létrehozása
 1. Tároló főoldal, **Add file**, **Create new file**.
@@ -29,3 +29,7 @@ A kicsomagolt mappából a feltöltő oldalon (Commit directly to the main branc
 - A tároló nyilvános: a `data/status.json` és `data/history.json` nyilvános adatokat tartalmaz (Kp, napszél, Körmend időjárása). A téma-neved nem szerepel sehol, és a GPS-pozíciód sem kerül a tárolóba.
 - Az ütemezés órán belül késhet. A GitHub 60 nap tevékenység nélkül leállíthatja az ütemezést; a figyelő saját mentései ezt általában megelőzik.
 - Nem hivatalos figyelmeztetés, csak tájékoztatás. Nem helyettesíti a hivatalos viharjelzéseket.
+
+## Újdonságok (v15)
+- **Csendes órák:** az `alert-config.json` `quiet` részében (`from`, `to`, `enabled`) állítható. Éjjel a kisebb riasztások hangtalanul jönnek (ntfy 1-es prioritás), a nagyok megszólalnak.
+- **Modell-skórkártya:** nem kell beállítani. Az első ranglista kb. 8 nap múlva jelenik meg az app Előrejelzés nézetében (a jóslatokat az ERA5 újraelemzéshez méri, ami nem állomási mérés).

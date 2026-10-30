@@ -24,5 +24,13 @@
     "pressure": 8,
     "gust": 8
   },
-  "digest": { "enabled": true, "hour": 7 }
+  "digest": {
+    "enabled": true,
+    "hour": 7
+  },
+  "quiet": {
+    "enabled": true,
+    "from": 22,
+    "to": 7
+  }
 }

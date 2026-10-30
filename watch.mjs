@@ -4,6 +4,7 @@
    Nem hivatalos figyelmeztetés, csak tájékoztatás. */
 import fs from "node:fs";
 import { computeCSI } from "./csi.mjs";
+import { recordForecast, verifyForecasts } from "./score.mjs";
 
 const CFG = JSON.parse(fs.readFileSync("alert-config.json", "utf8"));
 const TH = CFG.thresholds, CD = CFG.cooldownHours;
@@ -11,6 +12,10 @@ const TOPIC = (process.env.NTFY_TOPIC || "").trim();
 const TEST = process.env.TEST === "1";
 const NOW = Date.now();
 const NOAA = "https://services.swpc.noaa.gov/";
+/* csendes órák: a kisebb riasztás ilyenkor hangtalanul (ntfy 1-es prioritás) érkezik, csak a nagyok szólalnak meg */
+const Q = CFG.quiet || { enabled: true, from: 22, to: 7 };
+const LOCAL_HOUR = Number(new Intl.DateTimeFormat("en-GB", { timeZone: CFG.timezone, hour: "2-digit", hour12: false }).format(NOW)) % 24;
+const IS_QUIET = !!Q.enabled && !TEST && (Q.from > Q.to ? (LOCAL_HOUR >= Q.from || LOCAL_HOUR < Q.to) : (LOCAL_HOUR >= Q.from && LOCAL_HOUR < Q.to));
 
 fs.mkdirSync("data", { recursive: true });
 const readJ = (f, d) => { try { return JSON.parse(fs.readFileSync(f, "utf8")); } catch (e) { return d; } };
@@ -125,7 +130,7 @@ function evaluate(C) {
   for (const f of C.quakes) {
     if (STATE.seenQuakes.includes(f.id) || n >= 3) continue;
     const m = f.properties.mag, [lo, la] = f.geometry.coordinates, d = Math.round(km(CFG.lat, CFG.lon, la, lo));
-    alerts.push({ key: "quake:" + f.id, quakeId: f.id, title: `Földrengés: M${m} (${d} km-re)`, message: `${f.properties.place}. Idő: ${hhmm(f.properties.time)}. Forrás: USGS.`, priority: m >= 5 ? 4 : 3, tags: ["earth_africa"] });
+    alerts.push({ key: "quake:" + f.id, quakeId: f.id, title: `Földrengés: M${m} (${d} km-re)`, message: `${f.properties.place}. Idő: ${hhmm(f.properties.time)}. Forrás: USGS.`, priority: m >= 5 ? 4 : 3, tags: ["earth_africa"], mag: m });
     n++;
   }
   if (TEST) alerts.splice(0, alerts.length, { key: "test", title: "Teszt: a háttérfigyelő működik", message: `Kp ${C.kp ?? "--"}, napszél ${C.speed ? Math.round(C.speed) : "--"} km/s, ${CFG.place}: ${C.t0 !== undefined ? C.t0.toFixed(1) + " °C" : "--"}. Ha ezt látod, az értesítések rendben vannak.`, priority: 3, tags: ["white_check_mark"] });
@@ -141,10 +146,21 @@ async function digest(C) {
     `Időjárás (12 óra): ${C.tmin12 !== undefined ? C.tmin12.toFixed(0) + "…" + C.tmax12.toFixed(0) + " °C" : "--"}, széllökés max ${C.gust12 !== undefined ? Math.round(C.gust12) : "--"} km/h, nyomás ${C.p0 !== undefined ? Math.round(C.p0) : "--"} hPa.\n` +
     `Fagy: ${C.tmin12 !== undefined && C.tmin12 <= TH.frostC ? "igen" : "nem várható"}.` });
 }
+function isLoud(a, C) {
+  if (a.key === "kp") return C.kp >= 7;
+  if (a.key === "flare") return C.flux >= 5e-5;
+  if (a.key === "bz") return C.bz <= -15;
+  if (a.key === "frost") return C.tmin12 <= -3;
+  if (a.key === "pressure") return C.dp3 <= -8;
+  if (a.key === "gust") return C.gust12 >= 90;
+  if (a.key && a.key.startsWith("quake:")) return a.mag >= 5;
+  return false;
+}
 async function ntfy(a) {
   if (!TOPIC) return false;
+  const quietNow = IS_QUIET && !a.loud && a.key !== "digest";
   try {
-    const r = await fetch("https://ntfy.sh", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ topic: TOPIC, title: a.title, message: a.message, priority: a.priority || 3, tags: a.tags || [], click: CFG.appUrl }) });
+    const r = await fetch("https://ntfy.sh", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ topic: TOPIC, title: a.title, message: a.message, priority: quietNow ? 1 : (a.priority || 3), tags: quietNow ? [...(a.tags || []), "zzz"] : (a.tags || []), click: CFG.appUrl }) });
     return r.ok;
   } catch (e) { return false; }
 }
@@ -152,6 +168,7 @@ async function ntfy(a) {
 const C = await collect();
 evaluate(C);
 await digest(C);
+for (const a of alerts) a.loud = isLoud(a, C);
 const sent = [];
 for (const a of alerts) {
   const ok = await ntfy(a);
@@ -181,6 +198,22 @@ if (STATE.lastHist !== hourKey) {
   STATE.lastHist = hourKey;
 }
 
+let SCORE = readJ("data/scorecard.json", { models: {}, verified: 0 });
+let PENDING = readJ("data/forecasts.json", []);
+if (STATE.lastScore !== hourKey) {
+  /* óránként: a 4 modell jóslatának elmentése, naponta többször a 7 napnál régebbiek kiértékelése */
+  try {
+    const rec = await recordForecast({ get, CFG, NOW });
+    if (rec) PENDING.push(rec);
+    const v = await verifyForecasts({ get, CFG, NOW, pending: PENDING, sc: SCORE });
+    PENDING = v.pending; SCORE = v.sc;
+  } catch (e) { SOURCES.score = { ok: false, ms: 0, error: String((e && e.message) || e) }; }
+  PENDING = PENDING.slice(-24 * 21);
+  STATE.lastScore = hourKey;
+}
+fs.writeFileSync("data/forecasts.json", JSON.stringify(PENDING));
+fs.writeFileSync("data/scorecard.json", JSON.stringify(SCORE));
+
 const anyOk = Object.values(SOURCES).some(s => s.ok);
 const status = {
   updated: new Date(NOW).toISOString(), ok: anyOk, place: CFG.place,
@@ -188,6 +221,8 @@ const status = {
   sources: SOURCES,
   current: { kp: C.kp, kpMax24: C.kpMax24, flux: C.flux, flare: C.flux ? fcls(C.flux) : null, speed: C.speed, bz: C.bz, tmin12: C.tmin12 ?? null, gust12: C.gust12 ?? null, dp3: C.dp3 ?? null, pressure: C.p0 ?? null },
   csi: STATE.lastCsi,
+  score: { records: PENDING.length, verified: SCORE.verified || 0, since: SCORE.since || null },
+  quiet: { enabled: !!Q.enabled, from: Q.from, to: Q.to, now: IS_QUIET },
   history: { rows: HIST.length, withCsi: HIST.filter(h => typeof h.csi === "number").length, since: HIST[0] ? HIST[0].t : null },
   recent: STATE.recent,
   thresholds: TH
