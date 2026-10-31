@@ -1419,7 +1419,7 @@ async function fetchGlobal(){
    if(f>0){const k=f>=1e-4?["X",1e-4]:f>=1e-5?["M",1e-5]:f>=1e-6?["C",1e-6]:f>=1e-7?["B",1e-7]:["A",1e-8];D.flare={c:k[0],n:(f/k[1]).toFixed(1)}}
   }),
   J("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_day.geojson").then(d=>{
-   qGeo.setFromPoints(d.features.map(f=>ll(f.geometry.coordinates[1],f.geometry.coordinates[0],1.012)));drawQuakeList(d.features);
+   qGeo.setFromPoints(d.features.map(f=>ll(f.geometry.coordinates[1],f.geometry.coordinates[0],1.012)));QKF=d.features;drawQuakeList(d.features);
   })
  ]);
  visuals();updateHud();showStatus();
@@ -1571,6 +1571,7 @@ function tap(x,y){
   if(d<bd){bd=d;best=m}
  });
  if(best){setAngle(best.userData.i*10);return}
+ if(typeof markerTap==="function"&&markerTap(x,y))return;
  const rc=new THREE.Raycaster();
  rc.setFromCamera(new THREE.Vector2(x/innerWidth*2-1,-(y/innerHeight)*2+1),cam);
  const h=rc.intersectObject(globe)[0];
@@ -2195,6 +2196,7 @@ async function loadEonet(){
  eoLines.geometry.dispose();const g3=new THREE.BufferGeometry();g3.setAttribute("position",new THREE.Float32BufferAttribute(trk,3));eoLines.geometry=g3;
  eoPts.geometry.dispose();
  const g2=new THREE.BufferGeometry();g2.setAttribute("position",new THREE.Float32BufferAttribute(pos,3));g2.setAttribute("color",new THREE.Float32BufferAttribute(col,3));eoPts.geometry=g2;
+ EOARR=arr;
  $("eoSum").textContent=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]).map(k=>(EV_HU[k]||k)+" "+cnt[k]).join(" · ")||"Nincs nyitott esemény.";
  const box=$("eoList");box.replaceChildren();
  arr.sort((a,b)=>b.t-a.t).slice(0,20).forEach(e=>{
@@ -3029,7 +3031,7 @@ async function loadAircraft(){
    (r.ac||[]).forEach(a=>{if(a.alt_baro==="ground")return;const alt=(num(a.alt_baro)??num(a.alt_geom)??0)*0.3048;add(a.hex,String(a.flight||"").trim(),num(a.lat),num(a.lon),alt,a.gs!=null&&num(a.gs)!==null?num(a.gs)*0.514444:null,"ADSB.lol");cnt.ad++});
   })().catch(e=>errs.push("ADSB.lol: "+e.message))
  ]);
- const list=[...all.values()],pos=[],col=[];
+ const list=[...all.values()],pos=[],col=[];AC.list=list;
  list.forEach(a=>{const p=ll(a.lat,a.lon,1.014);pos.push(p.x,p.y,p.z);const c=a.alt<3000?[1,.8,.2]:a.alt<9000?[.2,.9,1]:[1,1,1];col.push(c[0],c[1],c[2])});
  acPts.geometry.dispose();
  const g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.Float32BufferAttribute(pos,3));g.setAttribute("color",new THREE.Float32BufferAttribute(col,3));acPts.geometry=g;
@@ -3448,7 +3450,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v25 · 2026-10-30";
+const APP_VER="v26 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3750,6 +3752,43 @@ document.addEventListener("click",ev=>{
  ev.stopPropagation();ev.preventDefault();
  flash("❓ "+helpTextFor(helpKey(el)),20000);
 },true);
+
+/* ===== KOPPINTÁS A GÖMBÖN LÉVŐ JELRE: magyarázat (v26) ===== */
+var QKF=[],EOARR=[];
+function agoTxt(ms){const m=Math.round((Date.now()-ms)/6e4);return m<90?m+" perce":Math.round(m/60)+" órája"}
+function markerCandidates(){
+ const C=[],fx=(v,d)=>v===null||v===undefined||!Number.isFinite(Number(v))?"--":Number(v).toFixed(d);
+ try{QKF.forEach(f=>{const g=(f.geometry||{}).coordinates||[],pr=f.properties||{};if(g.length<2)return;
+  C.push({surf:1,p:ll(g[1],g[0],1.012),t:`🌋 Földrengés: M${fx(pr.mag,1)}, ${pr.place||"ismeretlen hely"}${g[2]!=null?", "+Math.round(g[2])+" km mélyen":""}${pr.time?", "+agoTxt(pr.time):""}. USGS élő adat; M5 fölött már jelentős rengés.`})})}catch(e){}
+ try{if(buoyPts.visible&&BU.list)BU.list.forEach(b=>C.push({surf:1,p:ll(b.lat,b.lon,1.016),t:`🛟 Bója ${b.id}${b.name?" – "+b.name:""}${b.sea?" ("+b.sea+")":""}: víz ${fx(b.sst,1)} °C, levegő ${fx(b.air,1)} °C, nyomás ${fx(b.bar,0)} hPa, szél ${fx(b.wind,1)} m/s, hullám ${fx(b.wave,1)} m. Mért adat (NOAA NDBC).`}))}catch(e){}
+ try{if(acPts.visible&&AC.list)AC.list.forEach(a=>C.push({surf:1,p:ll(a.lat,a.lon,1.014),t:`✈ ${a.call}: ${fx(a.alt/1000,1)} km magasan${a.v!=null?", "+Math.round(a.v*3.6)+" km/h":""}, ${Math.round(a.dist)} km-re tőled. Forrás: ${[...a.src].join(", ")}.`}))}catch(e){}
+ try{if(eoPts.visible&&EOARR)EOARR.forEach(e=>C.push({surf:1,p:ll(e.lat,e.lon,1.015),t:`🌍 ${EV_HU[e.cat]||e.cat}: ${e.title}${e.t?" ("+new Date(e.t).toLocaleDateString("hu-HU")+")":""}. NASA EONET, nyitott esemény.`}))}catch(e){}
+ try{if(WX.mode>0&&WX.data.length)WX.data.forEach(o=>C.push({surf:1,p:ll(o.la,o.lo,1.03),t:`☁ Időjárás-rács (${o.la}°, ${o.lo}°): felhő ${fx(o.cl,0)}%, ${fx(o.t,1)} °C, szél ${fx(o.w,0)} km/h. Durva rács, kb. 15°×20°.`}))}catch(e){}
+ try{if(iss.visible&&ISS)C.push({surf:0,p:iss.position.clone(),t:`🛰 ISS: ${fx(ISS.alt,0)} km magasan, ${ISS.vis==="daylight"?"napfényben":ISS.vis==="eclipsed"?"a Föld árnyékában":(ISS.vis||"")}. A halvány kék vonal a következő ~100 percét mutatja.`})}catch(e){}
+ try{C.push({surf:1,p:marker.position.clone(),t:`🟠 A kiválasztott hely: ${loc.name} (${loc.lat.toFixed(2)}°, ${loc.lon.toFixed(2)}°). A számítások erre a helyre készülnek.`})}catch(e){}
+ try{if(gpsDot.visible)C.push({surf:1,p:gpsDot.position.clone(),t:`🔵 A GPS-pozíciód (${GPS.lat.toFixed(3)}°, ${GPS.lon.toFixed(3)}°, ±${Math.round(GPS.acc||0)} m).`})}catch(e){}
+ try{C.push({surf:0,p:sun.position.clone(),t:"☀ A Nap iránya: innen jön a fény. M és X osztályú napkitörésnél nagyobbra rajzolódik."});C.push({surf:0,p:moon.position.clone(),t:`🌙 A Hold: ${mn(moonPhase)}, ${Math.round(illum*100)}% megvilágítva.`})}catch(e){}
+ return C;
+}
+function markerHidden(p){
+ /* a gömb eltakarja-e a pontot a kamerából nézve: a kamera–pont szakasz belemetszi-e az egységgömböt */
+ const c=cam.position,dx=p.x-c.x,dy=p.y-c.y,dz=p.z-c.z,dd=dx*dx+dy*dy+dz*dz;
+ if(dd===0)return false;
+ const t=Math.max(0,Math.min(1,-(c.x*dx+c.y*dy+c.z*dz)/dd)),qx=c.x+dx*t,qy=c.y+dy*t,qz=c.z+dz*t;
+ return qx*qx+qy*qy+qz*qz<.998;
+}
+function markerTap(x,y){
+ let best=null,bd=26;
+ for(const c of markerCandidates()){
+  if(markerHidden(c.p))continue;
+  const v=c.p.clone().project(cam);if(v.z>1)continue;
+  const d=Math.hypot((v.x+1)/2*innerWidth-x,(1-v.y)/2*innerHeight-y);
+  if(d<bd){bd=d;best=c}
+ }
+ if(best){flash(best.t,16000);return true}
+ if(typeof HELP!=="undefined"&&HELP.on){flash("❓ Itt nincs jel. Koppints egy színes pontra (földrengés, bója, repülő, esemény, ISS), vagy a ◎ Kijelöl gombbal jelöld ki a célkereszt alatti helyet. Súgó módban a gömbre koppintás nem változtatja meg a helyet.",9000);return true}
+ return false;
+}
 
 /* ===== INDÍTÁS ===== */
 $("bRef").onclick=async()=>{const b=$("bRef");b.disabled=true;b.textContent="⟳ Lekérés...";await Promise.allSettled([fetchGlobal(),fetchLocal()]);b.disabled=false;b.textContent="⟳ Frissítés"};
