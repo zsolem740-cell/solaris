@@ -125,6 +125,8 @@ body.help #btns button,body.help #tiles .t,body.help #skyCard>div{outline:1px da
 .ctile .cn{font-size:12px;font-weight:bold;color:var(--c)}
 .ctile .cv{font-size:10px;color:#a7b6c8}
 body.help #dock button,body.help #setSheet button{outline:1px dashed #fbbf24;outline-offset:-2px}
+.slang{grid-column:1/-1}
+#sLang{width:100%;margin-top:4px;padding:11px 10px;background:#0b1220;color:#e2e8f0;border:1px solid #263447;border-radius:10px;font:inherit;font-size:13px}
 #view:not(.full) #vbar{padding-top:8px}
 #vtabs{display:flex;gap:6px;padding:6px 10px;border-bottom:1px solid #263447}
 #vtabs button{flex:1;padding:8px 4px;font-size:11px}
@@ -507,7 +509,7 @@ const liveData={bt:null,bz:null,speed:null,density:null,kp:null,f107:null,quakeM
 const simulatedMemory=new Map();
 const $=id=>document.getElementById(id);
 
-function logEvent(m){const b=$("hardwareLog");if(b)b.textContent=`[${new Date().toLocaleTimeString("hu-HU")}] ${m}\n`+b.textContent}
+function logEvent(m){const b=$("hardwareLog");if(b)b.textContent=`[${new Date().toLocaleTimeString((parent.I18N?parent.I18N.locale:"hu-HU"))}] ${m}\n`+b.textContent}
 function hexAddress(v){return Number(v).toString(16).toUpperCase().padStart(4,"0")}
 function setText(id,v){const e=$(id);if(e)e.textContent=v}
 function escapeHtml(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
@@ -680,8 +682,8 @@ function moonRiseSet(now,lat,lon){
 
 function fmtT(d){
  if(!d)return "—";
- try{return d.toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit",timeZone:currentCell.tz||undefined})}
- catch(e){return d.toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"})}
+ try{return d.toLocaleTimeString((parent.I18N?parent.I18N.locale:"hu-HU"),{hour:"2-digit",minute:"2-digit",timeZone:currentCell.tz||undefined})}
+ catch(e){return d.toLocaleTimeString((parent.I18N?parent.I18N.locale:"hu-HU"),{hour:"2-digit",minute:"2-digit"})}
 }
 
 function getNextMoonPhases(){
@@ -689,7 +691,7 @@ function getNextMoonPhases(){
  let nn=new Date(NEW_MOON+(c+1)*syn),nf=new Date(NEW_MOON+(c+0.5)*syn);
  if(nf.getTime()<now)nf=new Date(nf.getTime()+syn);
  const o={month:"numeric",day:"numeric",timeZone:currentCell.tz||undefined};
- const f=d=>{try{return d.toLocaleDateString("hu-HU",o)}catch(e){return d.toLocaleDateString("hu-HU")}};
+ const f=d=>{try{return d.toLocaleDateString((parent.I18N?parent.I18N.locale:"hu-HU"),o)}catch(e){return d.toLocaleDateString((parent.I18N?parent.I18N.locale:"hu-HU"))}};
  return{newMoon:f(nn),fullMoon:f(nf)};
 }
 
@@ -833,13 +835,13 @@ function updateSphinxPhase(value){
  currentPhiWeight=1+Math.sin(sphinxAngle*RAD)/PHI;
  currentHarmonic=currentClock*currentPhiWeight;
  setText("angleVal",sphinxAngle);
- setText("addressVal",memoryAddress.toLocaleString("hu-HU"));
+ setText("addressVal",memoryAddress.toLocaleString((parent.I18N?parent.I18N.locale:"hu-HU")));
  setText("memoryBlockDisplay",`0x${hexAddress(memoryAddress)} · TALAJVÍZ-CELLA`);
  setText("decanDisplay",`${currentDecan}. dekán (${(currentDecan-1)*10}°–${currentDecan*10}°)`);
  setText("phiWeightDisplay",currentPhiWeight.toFixed(4));
  setText("harmonicFreqDisplay",currentHarmonic.toFixed(2)+" Hz");
  $("hardwareStatus").innerHTML=
-  `I/O PORT: ${sphinxAngle}°<br>ÓRAJEL: ${currentClock} Hz · CÍM: ${memoryAddress.toLocaleString("hu-HU")} / ${MEMORY_SIZE.toLocaleString("hu-HU")}<br>`+
+  `I/O PORT: ${sphinxAngle}°<br>ÓRAJEL: ${currentClock} Hz · CÍM: ${memoryAddress.toLocaleString((parent.I18N?parent.I18N.locale:"hu-HU"))} / ${MEMORY_SIZE.toLocaleString((parent.I18N?parent.I18N.locale:"hu-HU"))}<br>`+
   `DEKÁN: ${currentDecan}. · Φ-SÚLY: ${currentPhiWeight.toFixed(4)}<br>HARMONIKUS FREKVENCIA: ${currentHarmonic.toFixed(2)} Hz`;
  document.querySelectorAll(".decan").forEach((el,i)=>el.classList.toggle("active",i+1===currentDecan));
  if(isAudioRunning)updateAudioFrequency();
@@ -854,7 +856,7 @@ function triggerReadWrite(){
  if(!back){setText("readWriteStatus","Hiba: A memóriacím olvasása sikertelen.");logEvent("[MEMÓRIA-HIBA] Nem sikerült visszaolvasni a címet.");return}
  memoryLog.push({...back});
  updateExportInfo();savePersistentData();
- setText("readWriteStatus",`Szimulált Map írás és visszaolvasás sikeres · cím: 0x${hexAddress(memoryAddress)} · ${new Date().toLocaleTimeString("hu-HU")}`);
+ setText("readWriteStatus",`Szimulált Map írás és visszaolvasás sikeres · cím: 0x${hexAddress(memoryAddress)} · ${new Date().toLocaleTimeString((parent.I18N?parent.I18N.locale:"hu-HU"))}`);
  logEvent("[SZIMULÁLT MEMÓRIA] Adatok rögzítve és ellenőrizve: "+JSON.stringify(back));
 }
 
@@ -1171,7 +1173,7 @@ function initMicroChess(){
 function generateSectorForecastReport(){
  lastReport=[
  "SOLARIS-YANTRA SECTOR FORECAST REPORT","=====================================",
- `Időbélyeg: ${new Date().toLocaleString("hu-HU")}`,
+ `Időbélyeg: ${new Date().toLocaleString((parent.I18N?parent.I18N.locale:"hu-HU"))}`,
  `Helyszín: ${currentCell.name} (${currentCell.lat}, ${currentCell.lon}) [Zóna: ${currentCell.tz||"ismeretlen"}]`,
  "Schumann alapfrekvencia: 7.83 Hz (Referencia)",
  `Legközelebbi földrengés (USGS): ${liveData.quakeMag!==null?liveData.quakeMag:"nincs adat"}`,
@@ -1239,7 +1241,7 @@ window.addEventListener("message",e=>{
  setText("aiScore",d.score.toFixed(0)+"/100");setText("aiLevel",d.level);setText("aiN",d.n);
  setText("aiAge","utolsó minta: "+d.age+" s");
  setText("aiWhy",d.why.length?d.why.join(" · "):"Nincs kiugró tényező.");
- if(d.log){const l=$("aiLog");l.textContent=(`[${new Date().toLocaleTimeString("hu-HU")}] ${d.log}\n`+l.textContent).slice(0,4000)}
+ if(d.log){const l=$("aiLog");l.textContent=(`[${new Date().toLocaleTimeString((parent.I18N?parent.I18N.locale:"hu-HU"))}] ${d.log}\n`+l.textContent).slice(0,4000)}
 });
 function renderCards(){
  let c;try{c=parent.getCards&&parent.getCards()}catch(e){return}
@@ -1248,7 +1250,7 @@ function renderCards(){
  const tb=$("cPassTbl");tb.replaceChildren();
  c.passes.slice(0,12).forEach(p=>{
   const d=document.createElement("div");d.className="small";d.style.cssText="padding:3px 0;border-bottom:1px dashed #1e293b"+(p.vis?";color:#34d399":"");
-  d.textContent=new Date(p.t).toLocaleString("hu-HU",{weekday:"short",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})+" · max "+p.max.toFixed(0)+"° · "+p.mins+" perc · "+(p.vis?"LÁTHATÓ":"nem látható")+(p.dir?" · "+p.dir+(p.vis&&p.south!==null&&p.south!==undefined?" · déli kilátásból ~"+p.south+"%":""):"");
+  d.textContent=new Date(p.t).toLocaleString((parent.I18N?parent.I18N.locale:"hu-HU"),{weekday:"short",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})+" · max "+p.max.toFixed(0)+"° · "+p.mins+" perc · "+(p.vis?"LÁTHATÓ":"nem látható")+(p.dir?" · "+p.dir+(p.vis&&p.south!==null&&p.south!==undefined?" · déli kilátásból ~"+p.south+"%":""):"");
   tb.appendChild(d);
  });
  if(c.oval){
@@ -1272,7 +1274,7 @@ function renderCards(){
    (w.cold?`<div class="metric">Leghidegebb pont<div class="value" style="font-size:13px">${f(w.cold.t,"°C",1)}</div><div class="small">${Number(w.cold.la).toFixed(1)}°, ${Number(w.cold.lo).toFixed(1)}°</div></div>`:"")+
    (w.wind?`<div class="metric">Legerősebb szél<div class="value" style="font-size:13px">${f(w.wind.w," km/h")}</div><div class="small">${Number(w.wind.la).toFixed(1)}°, ${Number(w.wind.lo).toFixed(1)}°</div></div>`:"");
  }
- if(c.summary){setText("cSum",c.summary.text);setText("cSumInfo",new Date(c.summary.t).toLocaleString("hu-HU")+" · forrás: "+c.summary.src)}
+ if(c.summary){setText("cSum",c.summary.text);setText("cSumInfo",new Date(c.summary.t).toLocaleString((parent.I18N?parent.I18N.locale:"hu-HU"))+" · forrás: "+c.summary.src)}
 }
 $("cPassBtn").addEventListener("click",()=>{try{parent.passRun().then(renderCards)}catch(e){}});
 $("cWxBtn").addEventListener("click",async()=>{setText("cWxInfo","Betöltés...");try{await parent.cardsLoadWx()}catch(e){setText("cWxInfo","Nem érhető el.")}renderCards()});
@@ -1299,6 +1301,103 @@ setInterval(refreshAllLiveData,300000);
 <script>
 "use strict";
 if(!window.THREE){document.body.innerHTML='<p style="padding:20px">A 3D motorhoz internetkapcsolat kell (three.js).</p>';throw new Error("no three")}
+/* ===== NYELV (i18n): futásidejű fordító réteg (v30) ===== */
+const I18N=(function(){
+ const LOC={hu:"hu-HU",en:"en-GB",de:"de-DE",es:"es-ES",fr:"fr-FR"},NAME={hu:"magyar",en:"English",de:"Deutsch",es:"español",fr:"français"};
+ const st={lang:"hu",locale:"hu-HU",map:null,re:null,exact:null,cache:new Map(),obs:[],wins:[]};
+ let L="hu";try{L=localStorage.getItem("solarisLang")||"hu"}catch(e){}
+ if(!LOC[L])L="hu";st.lang=L;st.locale=LOC[L];
+ const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+ function build(d){
+  const ex=new Set(d._exact||[]),keys=[],map={},exact=new Map();
+  Object.keys(d).forEach(k=>{if(k==="_v"||k==="_exact"||k.length<2&&!ex.has(k))return;if(ex.has(k))exact.set(k,d[k]);else{keys.push(k);map[k]=d[k]}});
+  keys.sort((a,b)=>b.length-a.length);
+  const w=k=>{const a=/^[\p{L}\p{N}]/u.test(k)?"(?<![\\p{L}\\p{N}])":"",b=/[\p{L}\p{N}]$/u.test(k)?"(?![\\p{L}\\p{N}])":"";return a+esc(k)+b};
+  st.map=map;st.exact=exact;st.re=keys.length?new RegExp(keys.map(w).join("|"),"gu"):null;st.cache.clear();
+ }
+ function tr(s){
+  if(!st.map||typeof s!=="string"||s.length<2)return s;
+  const hit=st.cache.get(s);if(hit!==undefined)return hit;
+  let r=s;const tt=s.trim();
+  if(st.exact.has(tt))r=s.replace(tt,st.exact.get(tt));
+  else if(st.re)r=s.replace(st.re,m=>st.map[m]!==undefined?st.map[m]:m);
+  if(st.cache.size>4000)st.cache.clear();st.cache.set(s,r);return r;
+ }
+ const SKIP={SCRIPT:1,STYLE:1,TEXTAREA:1,NOSCRIPT:1,TEMPLATE:1,CANVAS:1},ATTR=["aria-label","title","placeholder","alt"];
+ function node(n,force){
+  const v=n.nodeValue;if(n.__i18n===v&&!force)return;
+  const base=(n.__i18n===v&&n.__hu!==undefined)?n.__hu:v,t=tr(base);
+  if(t!==base){n.__hu=base;n.__i18n=t;if(n.nodeValue!==t)n.nodeValue=t}else{n.__hu=undefined;n.__i18n=undefined;if(n.nodeValue!==base)n.nodeValue=base}
+ }
+ function attrs(el,force){
+  if(!el.getAttribute)return;
+  for(let i=0;i<ATTR.length;i++){
+   const a=ATTR[i],v=el.getAttribute(a);if(!v)continue;
+   const k="__hu_"+a,cur=el[k],base=(cur!==undefined&&cur.t===v)?cur.h:v,t=tr(base);
+   if(t!==base){el[k]={h:base,t};if(v!==t)el.setAttribute(a,t)}
+  }
+ }
+ function walk(n,force){
+  if(!n)return;
+  if(n.nodeType===3){node(n,force);return}
+  if(n.nodeType!==1||SKIP[n.tagName])return;
+  attrs(n,force);for(let c=n.firstChild;c;c=c.nextSibling)walk(c,force);
+ }
+ function patchWin(win){
+  try{
+   if(st.wins.indexOf(win)>=0)return;st.wins.push(win);
+   const P=win.CanvasRenderingContext2D&&win.CanvasRenderingContext2D.prototype;
+   if(P)["fillText","strokeText"].forEach(m=>{const o=P[m];if(o)P[m]=function(t,...a){return o.call(this,tr(String(t)),...a)}});
+   ["alert","prompt","confirm"].forEach(m=>{const o=win[m];if(o)win[m]=function(t,...a){return o.call(win,tr(String(t)),...a)}});
+  }catch(e){}
+ }
+ function attach(doc){
+  if(!doc||!doc.body)return;
+  try{doc.documentElement.lang=st.lang}catch(e){}
+  walk(doc.body);patchWin(doc.defaultView);
+  const ob=new MutationObserver(ms=>{for(let i=0;i<ms.length;i++){const m=ms[i];
+   if(m.type==="characterData")node(m.target);
+   else if(m.type==="attributes")attrs(m.target);
+   else if(m.type==="childList")for(let j=0;j<m.addedNodes.length;j++)walk(m.addedNodes[j]);}});
+  ob.observe(doc.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:ATTR});
+  st.obs.push({doc,ob});
+ }
+ function refreshAll(){st.obs.forEach(o=>{try{walk(o.doc.body,true)}catch(e){}})}
+ function huOf(el){
+  let s="";(function w(n){for(let c=n.firstChild;c;c=c.nextSibling){if(c.nodeType===3)s+=(c.__hu!==undefined&&c.__i18n===c.nodeValue)?c.__hu:c.nodeValue;else if(c.nodeType===1)w(c)}})(el);return s;
+ }
+ function load(){
+  if(st.lang==="hu")return;
+  try{const c=localStorage.getItem("solarisLangDict_"+st.lang);if(c)build(JSON.parse(c))}catch(e){}
+ }
+ async function sync(){
+  if(st.lang==="hu")return;
+  try{
+   const r=await fetch("lang_"+st.lang+".json",{cache:"no-store"});if(!r.ok)return;const d=await r.json();
+   let cv=null;try{cv=(JSON.parse(localStorage.getItem("solarisLangDict_"+st.lang)||"{}"))._v}catch(e){}
+   if(d._v!==cv||!st.map){try{localStorage.setItem("solarisLangDict_"+st.lang,JSON.stringify(d))}catch(e){}build(d);refreshAll()}
+  }catch(e){}
+ }
+ async function choose(code,onfail){
+  if(!LOC[code]||code===st.lang)return;
+  if(code==="hu"){try{localStorage.setItem("solarisLang","hu")}catch(e){}location.reload();return}
+  try{
+   const r=await fetch("lang_"+code+".json",{cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);
+   const d=await r.json();localStorage.setItem("solarisLangDict_"+code,JSON.stringify(d));localStorage.setItem("solarisLang",code);location.reload();
+  }catch(e){if(onfail)onfail(e)}
+ }
+ function sys(s){return st.lang==="hu"?s:String(s).replace(/magyarul|magyar/g,NAME[st.lang]||"English")+"\nIMPORTANT: Write your whole reply in "+(NAME[st.lang]||"English")+"."}
+ const QM=[[/\bsolar wind\b|\bwind\b/gi,"napszél"],[/\bweather\b/gi,"időjárás"],[/\bpressure\b/gi,"nyomás"],[/\bwaves?\b|\bsea\b|\bocean\b/gi,"hullám"],[/\bearthquakes?\b|\bquakes?\b/gi,"rengés"],[/\bmoon\b/gi,"hold"],[/\bsun\b/gi,"nap"],[/\bstatus\b/gi,"állapot"],[/\beurope\b/gi,"európa"],[/\bflare\b/gi,"napkitörés"]];
+ function q(s){let r=String(s);for(let i=0;i<QM.length;i++)r=r.replace(QM[i][0],QM[i][1]);return r}
+ function cmd(s){let r=String(s).replace(/^\/key\b/i,"/kulcs").replace(/^\/model\b/i,"/modell").replace(/^\/order\b/i,"/sorrend");if(/^\/kulcs\b/i.test(r))r=r.replace(/\bdelete\b/i,"töröl");else if(r[0]!=="/")r=q(r);return r}
+ load();
+ return{st,tr,build,walk,attach,huOf,choose,sync,sys,refreshAll,q,cmd,get lang(){return st.lang},get locale(){return st.locale},NAME,LOC,
+  start(){if(st.lang==="hu")return;try{attach(document)}catch(e){}sync()}};
+})();
+if(typeof window!=="undefined")window.I18N=I18N;
+function huText(el){return el?I18N.huOf(el):""}
+/* ===== /NYELV ===== */
+
 /* ===== OPCIONÁLIS: ITT ADHATOD MEG EGYSZER A SAJÁT API-KULCSAIDAT (claude, gemini, openai, openrouter), ÍGY SOHA NEM KÉRI. Ne oszd meg a fájlt kulccsal! ===== */
 const EMBEDDED_KEYS={claude:"",gemini:"",openai:"",openrouter:""};
 const EMBEDDED_MODELS={claude:"",gemini:"",openai:"",openrouter:""};
@@ -1456,7 +1555,7 @@ async function fetchGlobal(){
   })
  ]);
  visuals();updateHud();showStatus();
- if($("quakeList").textContent==="Lekérés...")$("quakeList").textContent="Nincs adat.";
+ if(huText($("quakeList"))==="Lekérés...")$("quakeList").textContent="Nincs adat.";
 }
 function riverPick(d,at){
  const arr=Array.isArray(d)?d:[d];let best=null;
@@ -1775,6 +1874,7 @@ async function localLLM(model,sys,q){
  return r.choices[0].message.content||"";
 }
 async function callProvider(p,sys,q){
+ sys=I18N.sys(sys);
  if(p==="local")return localLLM(modelOf("local"),sys,q);
  const key=keyOf(p),model=modelOf(p);let r,d,t="";
  if(p==="gemini"){
@@ -1839,7 +1939,7 @@ async function askAI(q){
  }
 }
 function localAnswer(q,strict){
- const l=q.toLowerCase(),n=(x,d=1)=>x===null||x===undefined?null:x.toFixed(d);
+ const l=I18N.q(q).toLowerCase(),n=(x,d=1)=>x===null||x===undefined?null:x.toFixed(d);
  if(/kp|geomágn|sarki fény|aurora/.test(l)){
   if(D.kp===null)return "A Kp-index még nem érkezett meg.";
   return `Kp ${n(D.kp)}: `+(D.kp<4?"nyugodt geomágneses tér.":D.kp<5?"aktív tér, sarki fény főleg északon.":"geomágneses vihar (G1 vagy erősebb), sarki fény alacsonyabb szélességeken is eséllyel látszhat.");
@@ -1860,9 +1960,9 @@ function localAnswer(q,strict){
 }
 const PRESET=[["gíza","Gíza",29.9792,31.1342],["giza","Gíza",29.9792,31.1342],["körmend","Körmend",46.9833,16.6],["kormend","Körmend",46.9833,16.6],["európa","Európa (Bécs)",48.2082,16.3738],["europa","Európa (Bécs)",48.2082,16.3738]];
 function aiCommand(txt){
- const c=txt.trim();if(!c)return;
+ const c0=txt.trim();if(!c0)return;const c=I18N.cmd(c0);
  const l=c.toLowerCase(),w=c.split(/\s+/);
- aiPrint("> "+(l.startsWith("/kulcs")?"/kulcs "+(w[1]||"")+" ***":c));
+ aiPrint("> "+(l.startsWith("/kulcs")?"/kulcs "+(w[1]||"")+" ***":c0));
  if(l.startsWith("/kulcs")){
   const p=(w[1]||"").toLowerCase();
   if(!PROV[p]){aiPrint("Használat: /kulcs <claude|gemini|openai|openrouter> <kulcs>   törlés: /kulcs <szolgáltató> töröl");return}
@@ -1943,6 +2043,7 @@ function beep(){
 function notifyAlert(title,body,noBeep){
  logEv("riasztás",title+": "+body);
  if(!notifOn)return;
+ title=I18N.tr(title);body=I18N.tr(body);
  try{if(navigator.vibrate)navigator.vibrate([250,120,250,120,400])}catch(e){}
  if(!noBeep)beep();
  try{
@@ -2028,7 +2129,7 @@ $("bOcean").onclick=async()=>{
 let speakOn=gget("solarisSpeak")==="1";
 function speak(t){
  if(!speakOn||!window.speechSynthesis)return;
- try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(t).replace(/\*\*/g,"").slice(0,600));u.lang="hu-HU";speechSynthesis.speak(u)}catch(e){}
+ try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(I18N.tr(String(t).replace(/\*\*/g,"").slice(0,600)));u.lang=I18N.locale;speechSynthesis.speak(u)}catch(e){}
 }
 function drawSpk(){$("aiSpkBtn").textContent="🔊 Felolvas: "+(speakOn?"be":"ki");$("aiSpkBtn").classList.toggle("on",speakOn)}
 $("aiSpkBtn").onclick=()=>{speakOn=!speakOn;gset("solarisSpeak",speakOn?"1":"");if(!speakOn&&window.speechSynthesis)speechSynthesis.cancel();drawSpk();if(speakOn)speak("Felolvasás bekapcsolva.")};
@@ -2038,7 +2139,7 @@ $("aiMicBtn").onclick=()=>{
  if(micBlocked){$("aiCmdInp").focus();return}
  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
  if(!SR){aiPrint("Ebben a böngészőben nincs hangfelismerés. Használd a billentyűzet mikrofon gombját a beírómezőnél.");return}
- const r=new SR();r.lang="hu-HU";r.interimResults=false;r.maxAlternatives=1;
+ const r=new SR();r.lang=I18N.locale;r.interimResults=false;r.maxAlternatives=1;
  $("aiMicBtn").classList.add("on");
  r.onresult=e=>{const t=e.results[0][0].transcript;aiCommand(t)};
  r.onerror=e=>{
@@ -2081,7 +2182,7 @@ function drawEv(){
  const box=$("evList");box.replaceChildren();
  const a=[...evLog].reverse().slice(0,60);
  if(!a.length){box.textContent="Még nincs esemény.";return}
- a.forEach(e=>{const d=document.createElement("div");d.className="qItem";d.style.whiteSpace="normal";d.textContent=new Date(e.t).toLocaleString("hu-HU",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})+" · "+e.type+": "+e.text;box.appendChild(d)});
+ a.forEach(e=>{const d=document.createElement("div");d.className="qItem";d.style.whiteSpace="normal";d.textContent=new Date(e.t).toLocaleString(I18N.locale,{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})+" · "+e.type+": "+e.text;box.appendChild(d)});
 }
 function drawLog(){
  const c=$("logCanvas"),ctx=c.getContext("2d"),k=$("logSel").value,r=c.getBoundingClientRect(),ratio=Math.max(1,devicePixelRatio||1);
@@ -2302,7 +2403,7 @@ function cmp8(a){return CMP8[Math.round((((a%360)+360)%360)/45)%8]}
 function passDir(p){return p.az0===undefined?"":cmp8(p.az0)+" → "+cmp8(p.az1)+", csúcs: "+cmp8(p.azMax)}
 function southShare(p){const a=p.pts||[];return a.length?Math.round(100*a.filter(x=>x>=100&&x<=260).length/a.length):null}
 function fmtPass(p){
- return p.start.toLocaleString("hu-HU",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})+" · max "+p.maxEl.toFixed(0)+"° · "+Math.max(1,Math.round((p.end-p.start)/6e4))+" perc"+(p.vis?" · LÁTHATÓ":" · nem látható")+(p.az0!==undefined?" · "+passDir(p)+(p.vis&&southShare(p)!==null?" · déli kilátásból ~"+southShare(p)+"%":""):"");
+ return p.start.toLocaleString(I18N.locale,{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})+" · max "+p.maxEl.toFixed(0)+"° · "+Math.max(1,Math.round((p.end-p.start)/6e4))+" perc"+(p.vis?" · LÁTHATÓ":" · nem látható")+(p.az0!==undefined?" · "+passDir(p)+(p.vis&&southShare(p)!==null?" · déli kilátásból ~"+southShare(p)+"%":""):"");
 }
 async function passRun(){
  if(PASS.busy)return;PASS.busy=true;PASS.at=Date.now();
@@ -2366,7 +2467,7 @@ async function pollOvation(){
   ovPts.geometry.dispose();
   const gg=new THREE.BufferGeometry();gg.setAttribute("position",new THREE.Float32BufferAttribute(pos,3));gg.setAttribute("color",new THREE.Float32BufferAttribute(col,3));ovPts.geometry=gg;
   const tm=new Date(d["Forecast Time"]);
-  OV={g,time:isNaN(tm)?"":tm.toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"})};
+  OV={g,time:isNaN(tm)?"":tm.toLocaleTimeString(I18N.locale,{hour:"2-digit",minute:"2-digit"})};
   const r=ovLocal();
   if(r){
    const hi=r.north>=40&&sunAltNow()<-12&&!(D.cloud>60)?"hi":"";
@@ -2439,7 +2540,7 @@ $("bWx").onclick=async()=>{
 };
 
 /* ===== NAPI ÖSSZEFOGLALÓ (helyi adatokból, kulccsal AI-val) ===== */
-function cardText(){return["skyAu","skyOval","skyIss","skyPass","skySky","skyEnv","skyRiver"].map(i=>$(i)?$(i).textContent:"").filter(Boolean).join("\n")}
+function cardText(){return["skyAu","skyOval","skyIss","skyPass","skySky","skyEnv","skyRiver"].map(i=>$(i)?huText($(i)):"").filter(Boolean).join("\n")}
 function localSummary(){
  const q=quakeTop&&quakeTop[0]?"Legerősebb mai (2,5 fölötti) rengés: M"+(quakeTop[0].properties.mag||0).toFixed(1)+", "+(quakeTop[0].properties.place||"ismeretlen hely")+".":"";
  return "Napi összefoglaló ("+loc.name+")\n"+statusText()+"\n"+cardText()+(q?"\n"+q:"");
@@ -2471,7 +2572,7 @@ window.getCards=()=>{
   passMsg:PASS.msg,
   passes:PASS.list.map(p=>({t:+p.start,max:p.maxEl,mins:Math.max(1,Math.round((p.end-p.start)/6e4)),vis:p.vis,dir:passDir(p),south:southShare(p)})),
   oval:(OV&&r)?{here:r.here,north:r.north,time:OV.time,prof}:null,
-  auroraKp:$("skyAu").textContent,gps:gpsText(),
+  auroraKp:huText($("skyAu")),gps:gpsText(),
   wx:{n:wd.length,near:near?{la:near.la,lo:near.lo,km:Math.round(bd),cl:near.cl,t:near.t,w:near.w,wd:near.wd}:null,warm:ext("t",(a,b)=>a>b),cold:ext("t",(a,b)=>a<b),wind:ext("w",(a,b)=>a>b)},
   summary:lastSum
  };
@@ -2604,22 +2705,22 @@ function renderView(topic){
  if(VIEW.tab==="map"){renderMap(topic);vBtn("↗ Fő forrás megnyitása",()=>window.open(VIEW.src,"_blank","noopener"));return}
  vRow(gpsText()+" · számítás helye: "+(ob.gps?"GPS-pozíciód":"kijelölt hely ("+loc.name+")"),"#8193a5");
  if(topic==="aurora"){
-  vRow($("skyAu").textContent);vRow($("skyOval").textContent);
+  vRow(huText($("skyAu")));vRow(huText($("skyOval")));
   const g=getCards();
   if(g.oval){vRow("Metszet a hosszúságodon, a pólus felé (szélesség · valószínűség):","#8193a5");g.oval.prof.forEach(r=>{vRow(r.lat+"°  "+"█".repeat(Math.max(1,Math.round(r.v/5)))+"  "+r.v+"%")})}
  }else if(topic==="iss"){
-  vRow($("skyIss").textContent);vRow($("skyPass").textContent,"#a7f3d0");
+  vRow(huText($("skyIss")));vRow(huText($("skyPass")),"#a7f3d0");
   PASS.list.forEach(p=>vRow(fmtPass(p),p.vis?"#34d399":null));
   if(!PASS.list.length)vRow("Még nincs kiszámolt átvonulás.");
  }else if(topic==="sky"){
-  vRow($("skySky").textContent);
+  vRow(huText($("skySky")));
   vRow("Hold: "+mn(moonPhase)+", megvilágítás "+(illum*100).toFixed(0)+"%");
   vRow("Nap magassága: "+sunAltNow().toFixed(1)+"° · Hold magassága: "+moonAltNow(ob.lat,ob.lon).toFixed(1)+"°");
  }else if(topic==="air"){
-  vRow($("skyEnv").textContent);
+  vRow(huText($("skyEnv")));
   vRow("AQI: "+(D.aqi??"--")+" · PM2.5: "+(D.pm25??"--")+" µg/m³ · UV: "+(D.uv??"--")+" · pollen: "+(D.pollen||"nincs adat"));
  }else if(topic==="river"){
-  vRow($("skyRiver").textContent);
+  vRow(huText($("skyRiver")));
   vRow("Ez globális modell (GloFAS, kb. 5 km-es rács), nem mérőállomás. Magyarországi valódi vízállásokhoz használd a lenti forrást.","#8193a5");
  }else if(topic==="ac"){
   vRow(AC.msg||"A réteg ki van kapcsolva. Kapcsold be a ✈ Repülők gombbal.");
@@ -2723,7 +2824,7 @@ function renderBuoy(){
  const f=BU.filter||"",seas={};
  BU.list.forEach(b=>{seas[b.sea]=(seas[b.sea]||0)+1});
  const names=Object.keys(seas).sort((x,y)=>seas[y]-seas[x]);
- vRow(BU.list.length+" bója mért adata az elmúlt 3 órából (NOAA NDBC, kiszolgáló: "+(BU.base?new URL(BU.base).hostname+", "+(BU.via||""):"?")+"). Frissítve: "+new Date(BU.at).toLocaleTimeString("hu-HU")+".","#8193a5");
+ vRow(BU.list.length+" bója mért adata az elmúlt 3 órából (NOAA NDBC, kiszolgáló: "+(BU.base?new URL(BU.base).hostname+", "+(BU.via||""):"?")+"). Frissítve: "+new Date(BU.at).toLocaleTimeString(I18N.locale)+".","#8193a5");
  vRow("Melyik tengerből, óceánból, tóból érkeznek a mérések (koppints a szűréshez):","#8193a5");
  names.slice(0,16).forEach(n=>vRow((f===n?"▶ ":"")+n+": "+seas[n]+" bója",f===n?"#a7f3d0":null,()=>{BU.filter=f===n?"":n;renderView("buoy")}));
  if(f)vRow("Szűrő: "+f+" (koppints rá újra a kikapcsoláshoz)","#a7f3d0");
@@ -3424,7 +3525,7 @@ function fcFrost(h,i0,tm){
  return{tMin,when:tm[iMin],frostH,sMin,s6Min,lvl};
 }
 function frostText(fr){
- const t=new Date(fr.when).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"});
+ const t=new Date(fr.when).toLocaleTimeString(I18N.locale,{hour:"2-digit",minute:"2-digit"});
  return `🌱 Következő 12 óra: legalacsonyabb levegő-hőmérséklet ${fr.tMin.toFixed(1)} °C (${t}) · talajfelszín min ${fnum(fr.sMin,1," °C")} · 6 cm mélyen min ${fnum(fr.s6Min,1," °C")} · fagyos órák: ${fr.frostH} → ${fr.lvl}`;
 }
 
@@ -3454,7 +3555,7 @@ function skyPhotoUI(){
    if(r.dark<.4)SKYP.res="A kép túl világos, nem éjszakai égbolt, az elemzés nem értelmezhető.";
    else{
     const g=(r.green*100).toFixed(1),p=(r.purple*100).toFixed(1),hit=r.green>=.03||r.purple>=.03;
-    SKYP.res=`Sötét képpontok: ${(r.dark*100).toFixed(0)}% · zöldes árnyalat: ${g}% · bíbor árnyalat: ${p}%\n`+(hit?"Zöldes vagy bíbor árnyalat van az égen: ez összefér sarki fénnyel, de városi fény, felhőről visszaverődő fény, légköri fénylés (airglow) vagy a kamera színkezelése is okozhatja.":"Nincs számottevő zöldes vagy bíbor árnyalat.")+"\nAz adatok szerint: "+$("skyAu").textContent;
+    SKYP.res=`Sötét képpontok: ${(r.dark*100).toFixed(0)}% · zöldes árnyalat: ${g}% · bíbor árnyalat: ${p}%\n`+(hit?"Zöldes vagy bíbor árnyalat van az égen: ez összefér sarki fénnyel, de városi fény, felhőről visszaverődő fény, légköri fénylés (airglow) vagy a kamera színkezelése is okozhatja.":"Nincs számottevő zöldes vagy bíbor árnyalat.")+"\nAz adatok szerint: "+huText($("skyAu"));
    }
    renderView("aurora");
   };
@@ -3484,7 +3585,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v29 · 2026-10-30";
+const APP_VER="v30 · 2026-10-31";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3562,7 +3663,7 @@ function sourcesRows(){
   const FB={"NOAA napszél (2 órás)":"NOAA 1 perces folyam (tartalék)","NOAA mágneses tér (2 órás)":"NOAA 1 perces mágneses folyam (tartalék)"},NOTE={"GFZ Kp":"csak keresztellenőrzés, a Kp a NOAA-ból jön"};
   const up=n=>{const x=SRCST.res.find(q=>q.name===n);return !!(x&&x.ok)};
   const cov=SRCST.res.filter(r=>!r.ok&&FB[r.name]&&up(FB[r.name])).length;
-  vRow(`Források: ${ok}/${SRCST.res.length} elérhető${cov?" · "+cov+" kiesőnek él a tartaléka":""} · ellenőrizve: ${new Date(SRCST.at).toLocaleTimeString("hu-HU")}`,(ok+cov)>=SRCST.res.length?"#34d399":"#f59e0b");
+  vRow(`Források: ${ok}/${SRCST.res.length} elérhető${cov?" · "+cov+" kiesőnek él a tartaléka":""} · ellenőrizve: ${new Date(SRCST.at).toLocaleTimeString(I18N.locale)}`,(ok+cov)>=SRCST.res.length?"#34d399":"#f59e0b");
   SRCST.res.forEach(r=>{
    const why=r.ok?r.ms+" ms":(r.code?"HTTP "+r.code:r.err);
    if(!r.ok&&FB[r.name]&&up(FB[r.name]))vRow("↪ "+r.name+" · "+why+" · tartalék aktív: "+FB[r.name].replace(" (tartalék)",""),"#a7f3d0");
@@ -3574,16 +3675,16 @@ function sourcesRows(){
   vRow("Háttérfigyelő (GitHub Actions, a telefon nélkül is fut):","#8193a5");
   if(w&&w.ok&&w.data){
    const s=w.data,age=Date.now()-Date.parse(s.updated),c=s.current||{};
-   vRow(`Utolsó mentett futás: ${new Date(s.updated).toLocaleString("hu-HU")} (${ago(age)}) · értesítés: ${s.notify&&s.notify.configured?"be van állítva":"NINCS beállítva"}`,age>3*36e5?"#f59e0b":"#34d399");
+   vRow(`Utolsó mentett futás: ${new Date(s.updated).toLocaleString(I18N.locale)} (${ago(age)}) · értesítés: ${s.notify&&s.notify.configured?"be van állítva":"NINCS beállítva"}`,age>3*36e5?"#f59e0b":"#34d399");
    if(age>3*36e5)vRow("⚠ A háttérfigyelő több mint 3 órája nem mentett adatot. Nézd meg a GitHub Actions fület (lásd a Fő forrás gombot).","#f59e0b");
    vRow(`Utolsó mért állapot: Kp ${fnum(c.kp,1)} · napszél ${fnum(c.speed,0)} km/s · Bz ${fnum(c.bz,1)} nT · napkitörés ${c.flare||"nincs"} · 12 órás min ${fnum(c.tmin12,1,"°C")}`);
    const bad=Object.entries(s.sources||{}).filter(([k,v])=>!v.ok).map(([k])=>k);
    vRow("Háttér-források: "+(bad.length?"hiba: "+bad.join(", "):"mind elérhető"),bad.length?"#f59e0b":null);
-   if(s.obs&&s.obs.station)vRow(`📍 HungaroMet mért adat: ${s.obs.station.name} (${s.obs.station.distKm.toFixed(0)} km) · ${s.obs.rows} órányi mérés · utolsó: ${s.obs.last?new Date(s.obs.last+":00:00Z").toLocaleString("hu-HU",{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}):"--"}${s.obs.stale?" · elavult":""}`,s.obs.stale?"#f59e0b":null);
+   if(s.obs&&s.obs.station)vRow(`📍 HungaroMet mért adat: ${s.obs.station.name} (${s.obs.station.distKm.toFixed(0)} km) · ${s.obs.rows} órányi mérés · utolsó: ${s.obs.last?new Date(s.obs.last+":00:00Z").toLocaleString(I18N.locale,{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}):"--"}${s.obs.stale?" · elavult":""}`,s.obs.stale?"#f59e0b":null);
    else if(s.sources&&s.sources.hungaromet&&!s.sources.hungaromet.ok)vRow("📍 HungaroMet mért adat: nem elérhető ("+String(s.sources.hungaromet.error||"").slice(0,110)+")","#f59e0b");
-   if(s.history)vRow(`Tanuló adat a szerverről: ${s.history.rows} óránkénti mérés, ebből ${s.history.withCsi} CSI-vel${s.history.since?" · kezdet: "+new Date(s.history.since).toLocaleString("hu-HU"):""}`+(s.csi?" · utolsó CSI: "+s.csi.csi+" σ":""));
+   if(s.history)vRow(`Tanuló adat a szerverről: ${s.history.rows} óránkénti mérés, ebből ${s.history.withCsi} CSI-vel${s.history.since?" · kezdet: "+new Date(s.history.since).toLocaleString(I18N.locale):""}`+(s.csi?" · utolsó CSI: "+s.csi.csi+" σ":""));
    if(s.diag&&s.diag.lines&&s.diag.lines.length){vRow("🛠 Diagnosztika (automatikus, csak jelzés, nem módosít semmit):","#8193a5");s.diag.lines.forEach(l=>vRow(l,l.startsWith("⚠")?"#f59e0b":l.startsWith("✅")?"#34d399":null))}
-   (s.recent||[]).slice(0,8).forEach(a=>vRow("🔔 "+new Date(a.t).toLocaleString("hu-HU")+" · "+a.title));
+   (s.recent||[]).slice(0,8).forEach(a=>vRow("🔔 "+new Date(a.t).toLocaleString(I18N.locale)+" · "+a.title));
    if(!(s.recent||[]).length)vRow("Még nem ment ki riasztás (nyugodt a helyzet, vagy még nem volt küszöbátlépés).","#8193a5");
   }else{
    vRow("Még nincs háttérfigyelő-adat"+(w&&w.code?" (HTTP "+w.code+")":"")+". Beállítás: lásd a BEALLITAS.md fájlt a tárolóban. Addig a riasztások csak akkor működnek, amikor az app nyitva van.","#f59e0b");
@@ -3626,7 +3727,7 @@ function scoreSummary(sc,st){
 function blendSummary(b){
  if(!b||!b.hours||!b.hours.length)return[{t:"A javított előrejelzés még nem készült el (a háttérfigyelő óránként számolja).",c:"#8193a5"}];
  const out=[],pick=h=>b.hours.find(x=>x.h===h),f=(v,d,u)=>v===undefined||v===null?"--":Number(v).toFixed(d)+u;
- const iss=b.issued?new Date(b.issued).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"}):"--";
+ const iss=b.issued?new Date(b.issued).toLocaleTimeString(I18N.locale,{hour:"2-digit",minute:"2-digit"}):"--";
  out.push({t:`🎯 Javított előrejelzés (kiadva: ${iss}) · ${b.calibrated?"súlyozva és torzításmentesítve a skórkártya alapján ("+b.verifiedRuns+" kiértékelt futás)":"egyelőre egyszerű átlag, a kalibrálás legalább ~4 nap kiértékelt adat után indul"}`,c:b.calibrated?"#34d399":"#a7f3d0"});
  [3,6,12,24].forEach(h=>{const x=pick(h);if(x)out.push({t:`+${h} óra: ${f(x.temp,1," °C")} (modell-szórás ±${f(x.tempSp/2,1,"")}) · ${f(x.pres,0," hPa")} · felhő ${f(x.cloud,0,"%")}`,c:null})});
  if(b.calibrated&&b.calSrc){const nm={obs:"HungaroMet mérés",era5:"ERA5 újraelemzés","obs+era5":"HungaroMet mérés és ERA5","era5+obs":"HungaroMet mérés és ERA5"},lab={temp:"hőmérséklet",pres:"légnyomás",cloud:"felhő"};out.push({t:"Kalibráció alapja: "+Object.entries(b.calSrc).filter(([k,v])=>lab[k]&&v).map(([k,v])=>lab[k]+": "+(nm[v]||v)).join(" · "),c:"#8193a5"})}
@@ -3641,7 +3742,7 @@ function obsSummary(so,ob,st){
   return out;
  }
  const s=ob.station,last=ob.rows&&ob.rows.length?ob.rows[ob.rows.length-1]:null;
- out.push({t:`📍 Mért összevetés: ${s.name} állomás (${s.distKm.toFixed(0)} km-re a helyedtől${s.distKm>25?", ezért a tanult javítás az állomás környékére szól, nem pontosan a te helyedre":""})${last?" · utolsó mérés: "+new Date(last.h+":00:00Z").toLocaleString("hu-HU",{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}):""}${ob.stale?" · az adat több mint 6 órás":""}`,c:ob.stale?"#f59e0b":"#a7f3d0"});
+ out.push({t:`📍 Mért összevetés: ${s.name} állomás (${s.distKm.toFixed(0)} km-re a helyedtől${s.distKm>25?", ezért a tanult javítás az állomás környékére szól, nem pontosan a te helyedre":""})${last?" · utolsó mérés: "+new Date(last.h+":00:00Z").toLocaleString(I18N.locale,{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}):""}${ob.stale?" · az adat több mint 6 órás":""}`,c:ob.stale?"#f59e0b":"#a7f3d0"});
  if(last)out.push({t:`Legutóbbi mérés: ${last.t===null?"--":last.t.toFixed(1)} °C · ${last.p0===null?"--":last.p0.toFixed(0)} hPa (tengerszinti) · ${last.u===null?"--":last.u.toFixed(0)}% páratartalom · szél ${last.f===null?"--":last.f.toFixed(1)} m/s${last.fx!==null?" (lökés "+last.fx.toFixed(1)+")":""}${last.r!==null?" · csapadék "+last.r.toFixed(1)+" mm":""}`,c:null});
  if(ob.rows&&ob.rows.length&&ob.rows.every(r=>r.r===null))out.push({t:"Ez az állomás nem ad csapadékadatot, ezért a heves eső figyelmeztetés mért ellenőrzése nem lehetséges (a többi szabályé igen).",c:"#f59e0b"});
  if(!so||!so.verified){
@@ -3715,6 +3816,7 @@ function legendText(){
 }
 $("bLeg").onclick=()=>flash(legendText(),30000);
 const HELP_TEXT={
+ sLangRow:"🌐 Nyelv: az app nyelve. A választás megmarad; váltáskor az oldal újratölt.",
  dGlobe:"🌍 Gömb: visszavisz a földgömbhöz, becsukja a megnyitott kártyát és a beállításokat.",
  dSearch:"🔍 Keresés: megnyitja a helykeresőt a kedvencekkel.",
  dSet:"⚙ Beállítások: az adatkártyák, a térképrétegek és a rendszer-beállítások egy helyen.",
@@ -3782,7 +3884,7 @@ const HELP_TEXT={
 };
 function helpTextFor(k){if(String(k).indexOf("ct_")===0){const c=CARDS.find(x=>"ct_"+x[0]===k);return "Kártya: koppintásra megnyílik a részletes nézet"+(c?" ("+c[2]+")":"")+", mozgó, mért adatokból hajtott háttérrel."}return HELP_TEXT[k]||(String(k).indexOf("sky")===0?"Az összkép egyik sora. Súgó nélkül koppintva megnyílik a részletes nézete.":"Ehhez még nincs súgó.")}
 const HELP={on:false};
-function helpKey(el){return el.id||(el.querySelector&&el.querySelector("span")?el.querySelector("span").textContent:"")}
+function helpKey(el){return el.id||(el.querySelector&&el.querySelector("span")?huText(el.querySelector("span")):"")}
 $("bHelp").onclick=()=>{
  HELP.on=!HELP.on;document.body.classList.toggle("help",HELP.on);$("bHelp").classList.toggle("on",HELP.on);$("bHelp").textContent=HELP.on?"❓ Súgó: be":"❓ Súgó";
  if(HELP.on)flash("❓ Súgó mód: koppints bármelyik gombra, adat-csempére vagy összkép-sorra, és megmondom, mi az és honnan jön az adat.\n\nKilépés: koppints újra a ❓ gombra.",9000);
@@ -3804,7 +3906,7 @@ function markerCandidates(){
   C.push({surf:1,p:ll(g[1],g[0],1.012),t:`🌋 Földrengés: M${fx(pr.mag,1)}, ${pr.place||"ismeretlen hely"}${g[2]!=null?", "+Math.round(g[2])+" km mélyen":""}${pr.time?", "+agoTxt(pr.time):""}. USGS élő adat; M5 fölött már jelentős rengés.`})})}catch(e){}
  try{if(buoyPts.visible&&BU.list)BU.list.forEach(b=>C.push({surf:1,p:ll(b.lat,b.lon,1.016),t:`🛟 Bója ${b.id}${b.name?" – "+b.name:""}${b.sea?" ("+b.sea+")":""}: víz ${fx(b.sst,1)} °C, levegő ${fx(b.air,1)} °C, nyomás ${fx(b.bar,0)} hPa, szél ${fx(b.wind,1)} m/s, hullám ${fx(b.wave,1)} m. Mért adat (NOAA NDBC).`}))}catch(e){}
  try{if(acPts.visible&&AC.list)AC.list.forEach(a=>C.push({surf:1,p:ll(a.lat,a.lon,1.014),t:`✈ ${a.call}: ${fx(a.alt/1000,1)} km magasan${a.v!=null?", "+Math.round(a.v*3.6)+" km/h":""}, ${Math.round(a.dist)} km-re tőled. Forrás: ${[...a.src].join(", ")}.`}))}catch(e){}
- try{if(eoPts.visible&&EOARR)EOARR.forEach(e=>C.push({surf:1,p:ll(e.lat,e.lon,1.015),t:`🌍 ${EV_HU[e.cat]||e.cat}: ${e.title}${e.t?" ("+new Date(e.t).toLocaleDateString("hu-HU")+")":""}. NASA EONET, nyitott esemény.`}))}catch(e){}
+ try{if(eoPts.visible&&EOARR)EOARR.forEach(e=>C.push({surf:1,p:ll(e.lat,e.lon,1.015),t:`🌍 ${EV_HU[e.cat]||e.cat}: ${e.title}${e.t?" ("+new Date(e.t).toLocaleDateString(I18N.locale)+")":""}. NASA EONET, nyitott esemény.`}))}catch(e){}
  try{if(WX.mode>0&&WX.data.length)WX.data.forEach(o=>C.push({surf:1,p:ll(o.la,o.lo,1.03),t:`☁ Időjárás-rács (${o.la}°, ${o.lo}°): felhő ${fx(o.cl,0)}%, ${fx(o.t,1)} °C, szél ${fx(o.w,0)} km/h. Durva rács, kb. 15°×20°.`}))}catch(e){}
  try{if(iss.visible&&ISS)C.push({surf:0,p:iss.position.clone(),t:`🛰 ISS: ${fx(ISS.alt,0)} km magasan, ${ISS.vis==="daylight"?"napfényben":ISS.vis==="eclipsed"?"a Föld árnyékában":(ISS.vis||"")}. A halvány kék vonal a következő ~100 percét mutatja.`})}catch(e){}
  try{C.push({surf:1,p:marker.position.clone(),t:`🟠 A kiválasztott hely: ${loc.name} (${loc.lat.toFixed(2)}°, ${loc.lon.toFixed(2)}°). A számítások erre a helyre készülnek.`})}catch(e){}
@@ -3971,18 +4073,19 @@ function fxLoop(now){
 
 /* ===== ALSÓ SÁV ÉS ⚙ BEÁLLÍTÁSOK (v29): a gombok témánként rendezve, az adatkártyák innen nyílnak ===== */
 const SET={open:false,tab:"cards"};
+const LANGS=[["hu","Magyar"],["en","English"]];
 const CARDS=[["solar","☀️","Napszél és Kp"],["aurora","🌌","Sarki fény"],["iss","🛰","ISS-átvonulás"],["sky","🔭","Esti égbolt"],["forecast","🌡","Előrejelzés"],["air","🌫","Levegő"],["river","🌊","Folyó"],["buoy","🛟","Bóják"],["quake","🌋","Földrengések"],["hf","📡","HF-rádió"],["ac","✈","Repülők"],["schumann","〰","Schumann"],["sources","📶","Források"]];
 const SETGROUPS={
  layers:[["Térképrétegek a gömbön · narancs keret = bekapcsolva",["bQuake","bEonet","bAc","bOv","bWx","bBuoy","bOcean","bNight","bHf"]]],
- sys:[["Megjelenítés",["bRot","bBloom","bSon","bPerf","#fx"]],["Adatok és értesítés",["bAi","bNotif","bWake","bGps","bRef","bLog"]],["Eszközök",["bPick","bSearch","bLeg","bHelp","bFc","bTwin","bSrc"]]]
+ sys:[["Megjelenítés",["#lang","bRot","bBloom","bSon","bPerf","#fx"]],["Adatok és értesítés",["bAi","bNotif","bWake","bGps","bRef","bLog"]],["Eszközök",["bPick","bSearch","bLeg","bHelp","bFc","bTwin","bSrc"]]]
 };
 function cardVal(t){
  const f=(x,d)=>x===null||x===undefined||!Number.isFinite(Number(x))?"--":Number(x).toFixed(d);
  try{
   if(t==="solar")return f(D.speed,0)+" km/s · Kp "+f(D.kp,1);
-  if(t==="aurora"){const m=/Sarki fény:\s*([^·(]+)/.exec($("skyAu").textContent||"");return m?m[1].trim().slice(0,30):"számolás..."}
-  if(t==="iss"){const p=PASS.list&&PASS.list[0];return p?p.start.toLocaleString("hu-HU",{hour:"2-digit",minute:"2-digit"})+" · max "+p.maxEl.toFixed(0)+"°"+(p.vis?" · látható":""):"számolás..."}
-  if(t==="sky"){const m=/(\d+)\/100/.exec($("skySky").textContent||"");return m?m[1]+"/100":"--"}
+  if(t==="aurora"){const m=/Sarki fény:\s*([^·(]+)/.exec(huText($("skyAu"))||"");return m?m[1].trim().slice(0,30):"számolás..."}
+  if(t==="iss"){const p=PASS.list&&PASS.list[0];return p?p.start.toLocaleString(I18N.locale,{hour:"2-digit",minute:"2-digit"})+" · max "+p.maxEl.toFixed(0)+"°"+(p.vis?" · látható":""):"számolás..."}
+  if(t==="sky"){const m=/(\d+)\/100/.exec(huText($("skySky"))||"");return m?m[1]+"/100":"--"}
   if(t==="forecast"){const a=fcAnalyze();return a?f(a.tMin,0)+"…"+f(a.tMax,0)+" °C":"betöltés..."}
   if(t==="air")return "AQI "+f(D.aqi,0)+" · PM2,5 "+f(D.pm25,0);
   if(t==="river"){const r=D.river;return !r?"betöltés...":r.none?"nincs adat":r.small?"kis vízfolyás":(r.lvl||"normál")}
@@ -4023,6 +4126,14 @@ function buildSettings(){
  const fill=(pane,groups)=>groups.forEach(([title,ids])=>{
   pane.appendChild(mk("div","","sgh",title));const grid=mk("div","","sgrid");
   ids.forEach(id=>{
+   if(id==="#lang"){
+    const wr=mk("div","sLangRow","slang"),sel=document.createElement("select");sel.id="sLang";
+    wr.appendChild(mk("span","","sgh","🌐 Nyelv / Language"));
+    LANGS.forEach(([c,n])=>{const o=document.createElement("option");o.value=c;o.textContent=n;sel.appendChild(o)});
+    sel.value=I18N.lang;
+    sel.onchange=()=>{flash("🌐 …",3000);I18N.choose(sel.value,()=>{sel.value=I18N.lang;flash("Nem sikerült letölteni a nyelvi fájlt (internet kell). Próbáld újra.",5000)})};
+    wr.appendChild(sel);grid.appendChild(wr);return;
+   }
    if(id==="#fx"){const b=mk("button","sFx","",fxLabel());b.onclick=()=>{FX.mode=FX.mode==="on"?"eco":FX.mode==="eco"?"off":"on";try{gset("solarisFx",FX.mode)}catch(e){}try{fxApply()}catch(e){}b.textContent=fxLabel();flash(fxLabel(),1800)};grid.appendChild(b);return}
    const el=$(id);if(el)grid.appendChild(el);
   });
@@ -4042,12 +4153,14 @@ function buildSettings(){
  setInterval(()=>{if(SET.open&&SET.tab==="cards")refreshCards()},5000);
 }
 buildSettings();
+I18N.start();
 
 /* ===== INDÍTÁS ===== */
 $("bRef").onclick=async()=>{const b=$("bRef");b.disabled=true;b.textContent="⟳ Lekérés...";await Promise.allSettled([fetchGlobal(),fetchLocal()]);b.disabled=false;b.textContent="⟳ Frissítés"};
 $("bRot").onclick=()=>{autoRot=!autoRot;$("bRot").classList.toggle("on",autoRot)};
 let drawerOpen=false;
 $("pf").srcdoc=$("dash2d").textContent.split("<\\/script>").join("</"+"script>");
+$("pf").addEventListener("load",()=>{try{I18N.attach($("pf").contentDocument)}catch(e){}});
 $("bMenu").onclick=()=>{drawerOpen=true;$("drawer").classList.add("open")};
 $("bClose").onclick=()=>{drawerOpen=false;$("drawer").classList.remove("open")};
 
