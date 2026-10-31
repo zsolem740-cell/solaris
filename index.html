@@ -3447,7 +3447,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v23 · 2026-10-30";
+const APP_VER="v24 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3545,6 +3545,7 @@ function sourcesRows(){
    if(s.obs&&s.obs.station)vRow(`📍 HungaroMet mért adat: ${s.obs.station.name} (${s.obs.station.distKm.toFixed(0)} km) · ${s.obs.rows} órányi mérés · utolsó: ${s.obs.last?new Date(s.obs.last+":00:00Z").toLocaleString("hu-HU",{month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit"}):"--"}${s.obs.stale?" · elavult":""}`,s.obs.stale?"#f59e0b":null);
    else if(s.sources&&s.sources.hungaromet&&!s.sources.hungaromet.ok)vRow("📍 HungaroMet mért adat: nem elérhető ("+String(s.sources.hungaromet.error||"").slice(0,110)+")","#f59e0b");
    if(s.history)vRow(`Tanuló adat a szerverről: ${s.history.rows} óránkénti mérés, ebből ${s.history.withCsi} CSI-vel${s.history.since?" · kezdet: "+new Date(s.history.since).toLocaleString("hu-HU"):""}`+(s.csi?" · utolsó CSI: "+s.csi.csi+" σ":""));
+   if(s.diag&&s.diag.lines&&s.diag.lines.length){vRow("🛠 Diagnosztika (automatikus, csak jelzés, nem módosít semmit):","#8193a5");s.diag.lines.forEach(l=>vRow(l,l.startsWith("⚠")?"#f59e0b":l.startsWith("✅")?"#34d399":null))}
    (s.recent||[]).slice(0,8).forEach(a=>vRow("🔔 "+new Date(a.t).toLocaleString("hu-HU")+" · "+a.title));
    if(!(s.recent||[]).length)vRow("Még nem ment ki riasztás (nyugodt a helyzet, vagy még nem volt küszöbátlépés).","#8193a5");
   }else{
