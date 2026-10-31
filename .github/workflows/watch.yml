@@ -32,11 +32,10 @@ jobs:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           TEST: ${{ github.event.inputs.test }}
         run: node watch.mjs
-      - name: Osztrák állomás (GeoSphere)
+      - name: Kiegészítő modulok (osztrák állomás, AI-modellek)
         run: |
-          cp geo.mjs.txt geo.mjs
-          cp geo-run.mjs.txt geo-run.mjs
-          node geo-run.mjs
+          for t in *.mjs.txt; do cp "$t" "${t%.txt}"; done
+          for m in *-run.mjs; do [ -e "$m" ] || continue; node "$m" || echo "hiba: $m"; done
         continue-on-error: true
       - name: Eredmények mentése
         if: steps.run.outputs.commit == 'true'
