@@ -1,73 +1,53 @@
 {
- "updated": "2026-10-31T20:14:56.751Z",
+ "updated": "2026-10-31T20:33:34.261Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
   "configured": true,
-  "attempted": 0,
-  "sent": 0
+  "attempted": 1,
+  "sent": 1
  },
  "sources": {
-  "noaa_wind": {
-   "ok": true,
-   "ms": 75
-  },
   "noaa_kp_forecast": {
    "ok": true,
-   "ms": 134
+   "ms": 133
   },
   "noaa_kp": {
    "ok": true,
-   "ms": 193
-  },
-  "noaa_mag": {
-   "ok": true,
-   "ms": 47
+   "ms": 167
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 144
+   "ms": 135
+  },
+  "noaa_wind": {
+   "ok": true,
+   "ms": 19
+  },
+  "noaa_mag": {
+   "ok": true,
+   "ms": 14
   },
   "open_meteo": {
    "ok": true,
-   "ms": 186
+   "ms": 414
   },
   "usgs": {
    "ok": true,
-   "ms": 241
+   "ms": 571
   },
-  "om_daily": {
+  "geosphere": {
    "ok": true,
-   "ms": 79
-  },
-  "om_pressure": {
-   "ok": true,
-   "ms": 20
-  },
-  "om_flood": {
-   "ok": true,
-   "ms": 398
-  },
-  "hungaromet": {
-   "ok": true,
-   "ms": 2915
-  },
-  "om_models": {
-   "ok": true,
-   "ms": 26
-  },
-  "om_models_16414": {
-   "ok": true,
-   "ms": 25
+   "ms": 2832
   }
  },
  "current": {
   "kp": 3.33,
-  "kpMax24": 4.67,
+  "kpMax24": 6,
   "flux": 5.922987043049943e-7,
   "flare": "B5.9",
-  "speed": 330.6,
-  "bz": -5.555,
+  "speed": 335.4,
+  "bz": -7.0390000000000015,
   "tmin12": 5.8,
   "gust12": 27.7,
   "dp3": -0.7999999999999545,
@@ -125,6 +105,11 @@
   "since": "2026-10-30T14:04Z"
  },
  "recent": [
+  {
+   "t": "2026-10-31T20:33:34.261Z",
+   "key": "kpForecast",
+   "title": "Kp 6 várható 24 órán belül"
+  },
   {
    "t": "2026-10-31T19:59:29.346Z",
    "key": "test",
@@ -186,5 +171,25 @@
   "gustKmh": 60,
   "quakeMag": 3.5,
   "quakeRadiusKm": 600
+ },
+ "scoreObsAt": {
+  "records": 1,
+  "verified": 0,
+  "since": null
+ },
+ "obsAt": {
+  "station": {
+   "id": "11198",
+   "name": "GUESSING",
+   "lat": 47.0625,
+   "lon": 16.321944444444444,
+   "elev": 215,
+   "distKm": 22.84307300494139
+  },
+  "last": "2026-10-31T20",
+  "rows": 50,
+  "via": "GeoSphere TAWES 10 perces",
+  "stale": false,
+  "error": null
  }
 }
