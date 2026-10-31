@@ -76,6 +76,7 @@ button:focus-visible{outline:2px solid #f59e0b}
 #sumToast{display:none;position:fixed;left:10px;right:10px;top:calc(env(safe-area-inset-top,0px) + 150px);max-height:38vh;overflow-y:auto;background:#080c12f5;border:1px solid #8b5cf6;border-radius:8px;padding:10px;z-index:8;font-size:11px;line-height:1.5;color:#e2e8f0;white-space:pre-wrap}
 #legend{display:none;font-size:9px;line-height:1.5;color:#cbd5e1;background:#080c12cc;border:1px solid #263447;border-radius:6px;padding:4px 8px;margin-bottom:6px}
 #skyCard{cursor:pointer}
+body.help #btns button,body.help #tiles .t,body.help #skyCard>div{outline:1px dashed #fbbf24;outline-offset:-2px}
 #skyCard:not(.open)>div:not(#skyBrief){display:none}
 #skyCard.open #skyBrief{display:none}
 #skyBrief{color:#a7f3d0}
@@ -126,7 +127,7 @@ body.alert #tiles .t{border-color:#ef444477}
 <div id="favBar"></div>
 <div id="sbar"><input id="q" type="text" placeholder="Hely keresése (pl. Körmend)" aria-label="Hely keresése"><button id="bQ">Keres</button></div>
 <div id="tiles"></div>
-<div id="btns"><button id="bRef">⟳ Frissítés</button><button id="bRot" class="on">⟲ Önforgás</button><button id="bPick">◎ Kijelöl</button><button id="bQuake">🌋 Rengések</button><button id="bAi" class="on">🤖 Elemző</button><button id="bOcean">🌊 Óceán</button><button id="bNotif">🔔 Értesítés</button><button id="bWake">☀ Ébren</button><button id="bLog">📈 Napló</button><button id="bEonet">🌍 Események</button><button id="bAc">✈ Repülők</button><button id="bOv">🌌 Oval</button><button id="bWx">☁ Időjárás: ki</button><button id="bGps">📍 GPS</button><button id="bBuoy">🛟 Bóják</button><button id="bFc">🌡 Előrejelzés</button><button id="bNight">🌃 Éj-fények</button><button id="bBloom">✨ Fény</button><button id="bSon">🔊 Hangok: ki</button><button id="bHf">📡 HF-csend</button><button id="bPerf">📊 Teljesítmény</button><button id="bTwin">🧬 Twin</button><button id="bSrc">📶 Források</button></div>
+<div id="btns"><button id="bRef">⟳ Frissítés</button><button id="bRot" class="on">⟲ Önforgás</button><button id="bPick">◎ Kijelöl</button><button id="bSearch">🔍 Keresés</button><button id="bLeg">🗺 Jelmagyarázat</button><button id="bHelp">❓ Súgó</button><button id="bQuake">🌋 Rengések</button><button id="bAi" class="on">🤖 Elemző</button><button id="bOcean">🌊 Óceán</button><button id="bNotif">🔔 Értesítés</button><button id="bWake">☀ Ébren</button><button id="bLog">📈 Napló</button><button id="bEonet">🌍 Események</button><button id="bAc">✈ Repülők</button><button id="bOv">🌌 Oval</button><button id="bWx">☁ Időjárás: ki</button><button id="bGps">📍 GPS</button><button id="bBuoy">🛟 Bóják</button><button id="bFc">🌡 Előrejelzés</button><button id="bNight">🌃 Éj-fények</button><button id="bBloom">✨ Fény</button><button id="bSon">🔊 Hangok: ki</button><button id="bHf">📡 HF-csend</button><button id="bPerf">📊 Teljesítmény</button><button id="bTwin">🧬 Twin</button><button id="bSrc">📶 Források</button></div>
 <div id="aiConsole"><div class="hdr">🤖 AI konzol <select id="aiProv" aria-label="AI szolgáltató"><option value="auto">Auto (legjobb)</option><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="openai">OpenAI</option><option value="openrouter">OpenRouter</option><option value="local">Helyi AI (offline)</option><option value="all">Összehasonlít (mind)</option></select></div><div class="log" id="aiCmdLog">AI konzol kész. Helyi parancsok: állapot, gíza, körmend, európa. Kulcs nélkül is válaszol: kp, napszél, bz, napkitörés, nyomás, hullám, rengés, hold, nap. Több AI: /kulcs claude|gemini|openai|openrouter &lt;kulcs&gt;, a választóval te döntesz, az Auto a feladathoz illőt veszi. A Claude a Claude appon belül kulcs nélkül is megy. A Helyi AI kulcs és szerver nélkül, az eszközön fut (WebGPU kell).</div><div class="inpRow"><input id="aiCmdInp" type="text" placeholder="Kérdés vagy parancs..." aria-label="AI parancs"><button id="aiCmdBtn">Küld</button><button id="aiTestBtn">Teszt</button></div>
 <div class="inpRow" style="margin-top:4px"><button id="aiMicBtn" style="flex:1">🎤 Beszélj</button><button id="aiSpkBtn" style="flex:1">🔊 Felolvas: ki</button></div>
 <div class="inpRow" style="margin-top:4px"><button id="aiSumBtn" style="flex:1">📰 Napi összefoglaló</button></div></div>
@@ -3447,7 +3448,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v24 · 2026-10-30";
+const APP_VER="v25 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3643,6 +3644,112 @@ function scoreRows(){
  scoreSummary(c.v.sc,c.v.st).forEach(r=>vRow(r.t,r.c));
  obsSummary(c.v.so,c.v.ob,c.v.st).forEach(r=>vRow(r.t,r.c));
 }
+
+/* ===== KERESÉS · JELMAGYARÁZAT · SÚGÓ (v25) ===== */
+$("bSearch").onclick=()=>{
+ const b=$("bottom");if(b.classList.contains("min"))$("bToggle").click();
+ setTimeout(()=>{try{$("sbar").scrollIntoView({block:"center",behavior:"smooth"})}catch(e){}$("q").focus()},150);
+};
+function legendLines(f){
+ const L=["🟠 narancs pont és gyűrű: a kiválasztott hely"+(f.place?" ("+f.place+")":""),"◎ célkereszt a képernyő közepén: ezt jelöli ki a ◎ Kijelöl gomb"];
+ if(f.gps)L.push("🔵 kék pont: a GPS-pozíciód");
+ L.push("🟡 arany vonal: a nappal és az éjszaka határa",
+  "⭕ gyűrű a gömb körül: az Elemző szintje (zöld = nyugodt, narancs = figyelem, piros = riasztás); gyorsabban forog, ha nő a kockázat",
+  "💠 cián pontok a háttérben: a napszél részecskéi",
+  "🟢 zöld izzás a sarkoknál: sarki fény, ha Kp ≥ 5 vagy az Elemző kockázata ≥ 75",
+  "☀ a Nap megnő M és X osztályú napkitörésnél");
+ if(f.quake)L.push("🔴 piros pont: földrengés (USGS)");
+ if(f.ov)L.push("🌌 sarki fény ovális: zöld (kicsi) → piros (nagy valószínűség)");
+ if(f.wx===1)L.push("☁ felhő: fényesebb pont = felhősebb");
+ if(f.wx===2)L.push("🌡 hőmérséklet: kék hideg → piros meleg");
+ if(f.wx===3)L.push("💨 szél: nyíl = irány, hossz = sebesség");
+ if(f.oc)L.push("🌊 óceán: cián nyíl = áramlás, zöld/sárga/piros pont = hullámmagasság");
+ if(f.eo)L.push("🌍 esemény: narancs = tűz, piros = vulkán, lila vonal = vihar pályája");
+ if(f.ac)L.push("✈ repülő: sárga <3 km, cián <9 km, fehér magasabb");
+ if(f.iss)L.push("🛰 ISS: fehér pont, halvány kék vonal = következő ~100 perc"+(f.issLink?"; zöld vonal: a helyedtől az ISS felé (a horizont fölött)":""));
+ if(f.buoy)L.push("🛟 bója: kék = hideg víz → piros = meleg víz, szürke = nincs adat");
+ if(f.hf)L.push("📡 HF-csend: sárga (kis elnyelés) → piros (nagy) a Nap felőli oldalon");
+ if(f.air)L.push("🌫 levegőminőség: zöld = jó → piros = rossz (AQI)");
+ if(f.night)L.push("🌃 éjszakai fények: a városok fénye a sötét oldalon");
+ return L;
+}
+function legendText(){
+ const f={place:loc.name,gps:!!(GPS.lat!==null&&gpsDot.visible),quake:qPts.visible!==false,ov:ovPts.visible,wx:WX.mode,oc:oLines.visible,eo:eoPts.visible,ac:acPts.visible,iss:iss.visible,issLink:issLink.visible,buoy:buoyPts.visible,hf:drapPts.visible,air:airPts.visible,night:nlMesh.visible};
+ return "🗺 Jelmagyarázat (csak ami most látszik a gömbön)\n\n"+legendLines(f).join("\n");
+}
+$("bLeg").onclick=()=>flash(legendText(),30000);
+const HELP_TEXT={
+ bRef:"⟳ Frissítés: újra lekéri az űridőjárási és a helyi adatokat. Az app amúgy is magától frissít.",
+ bRot:"⟲ Önforgás: a földgömb magától forog. Kikapcsolva kézzel forgatod, húzással.",
+ bPick:"◎ Kijelöl: a képernyő közepén lévő célkereszt alatti pontot teszi meg a vizsgált helynek; a számítások ezután arra a helyre készülnek.",
+ bSearch:"🔍 Keresés: megnyitja a helykeresőt a kedvencekkel. Írd be a hely nevét, és megkeresi.",
+ bLeg:"🗺 Jelmagyarázat: felsorolja, mit jelentenek a gömbön látható színek és jelek, csak azokat, amik éppen látszanak.",
+ bQuake:"🌋 Rengések: a legutóbbi földrengések listája (USGS és EMSC). A piros pontok a gömbön a rengések.",
+ bAi:"🤖 Elemző: a háttérelemző kockázati pontszáma (0–100) a mért napszélből, Bz-ből, Kp-ből és a helyi adatokból. Ezzel szüneteltethető vagy indítható.",
+ bOcean:"🌊 Óceán: óceáni réteg a gömbön (áramlási nyilak, hullámpontok), kb. 30 percenként frissül.",
+ bNotif:"🔔 Értesítés: böngészős értesítés az Elemző riasztásairól, csak amíg az app él. Zárt telefonnál az ntfy értesít.",
+ bWake:"☀ Ébren: a képernyő nem alszik el, amíg az oldal látszik. Több akkumulátort fogyaszt.",
+ bLog:"📈 Napló: a mérések és események naplója grafikonnal.",
+ bEonet:"🌍 Események: NASA EONET természeti események (tűz, vulkán, vihar) a gömbön és listában.",
+ bAc:"✈ Repülők: élő repülők a kiválasztott hely körül (OpenSky, ADSB.lol). A szín a magasságtól függ.",
+ bOv:"🌌 Oval: a sarki fény ovális (NOAA OVATION). Zöld = kis, sárga-piros = nagy valószínűség.",
+ bWx:"☁ Időjárás: körbeváltja az időjárási rétegeket a gömbön (ki, felhő, hőmérséklet, szél).",
+ bGps:"📍 GPS: a telefon pozíciója. Az ISS-átvonulás és a távolságok erre számolnak.",
+ bBuoy:"🛟 Bóják: a NOAA mért óceáni bójái. A szín a víz hőmérséklete.",
+ bFc:"🌡 Előrejelzés: 36 órás előrejelzés, fagykártya, modellek összevetése, figyelmeztetések és skórkártya.",
+ bNight:"🌃 Éj-fények: az éjszakai városfények képe a gömbön.",
+ bBloom:"✨ Fény: fényhatás a gömb körül. Több akkumulátort fogyaszt.",
+ bSon:"🔊 Hangok: a mért adatok hanggá alakítása (napszél = hangmagasság, negatív Bz = mély lüktetés). Alapból ki van kapcsolva.",
+ bHf:"📡 HF-csend: rádiós elnyelés réteg (NOAA D-RAP). A színek a legmagasabb érintett frekvenciát mutatják a Nap felőli oldalon.",
+ bPerf:"📊 Teljesítmény: képkocka-sebesség és akadások kijelzése.",
+ bTwin:"🧬 Twin: a nyolc számító modul (P1–P8) és az összevont stresszindex (CSI).",
+ bSrc:"📶 Források: az adatforrások élő ellenőrzése, a verzió, a háttérfigyelő és a diagnosztika állapota.",
+ bMenu:"☰ Adatok: a teljes irányítópult: minden mérés, napló és export.",
+ bToggle:"▴ Több: kinyitja a panelt: kereső, kedvencek, AI konzol.",
+ bHide:"⌄ Gömb: eltünteti a panelt, hogy csak a gömb látsszon.",
+ bQ:"Keres: a beírt nevű helyet megkeresi és kijelöli.",
+ aiBar:"🤖 Az Elemző állapota: a kockázati pontszám és a szint (nyugodt, figyelem, riasztás). Koppintásra részletek.",
+ "Napszél km/s":"Napszél: a Napból érkező részecskék sebessége (NOAA). Normál 300–450 km/s, 600 fölött gyors.",
+ "Bz nT":"Bz: a bolygóközi mágneses tér déli-északi összetevője. Tartósan −10 nT alatt kedvez a geomágneses viharnak.",
+ "Kp":"Kp: a geomágneses aktivitás 0–9 között. 5 vagy több már vihar.",
+ "Flare":"Flare: a legutóbbi napkitörés röntgenosztálya (A, B, C, M, X; az X a legerősebb).",
+ "Nyomás hPa":"Nyomás: tengerszintre átszámított légnyomás. Gyors esés (3 óra alatt 4 hPa) romló időt jelez.",
+ "Szél km/h":"Szél: az aktuális szélsebesség a helyen. 60 km/h fölött a csempe riaszt.",
+ "Hullám m":"Hullám: hullámmagasság tengeren. Szárazföldön nincs érték (--).",
+ "Víz °C":"Víz: a tenger vízhőmérséklete. Szárazföldön nincs érték (--).",
+ "AI kockázat":"AI kockázat: az Elemző pontszáma 0–100 között. 75 fölött riasztás.",
+ skyBrief:"Összkép: a legfontosabb jelzések egy sorban. Koppintásra kinyílik a részletes lista.",
+ skyWarn:"Figyelmeztetések a következő 24 órára (fekete jég, heves eső, sínhőmérséklet, folyóparti széllökés) a háttérfigyelőtől. Előrejelzés, nem mérés.",
+ skyAu:"Sarki fény: a geomágneses szélesség és a Kp alapján becsült esély a helyeden.",
+ skyIss:"ISS: a távolsága a helyedtől, a magassága, és hogy épp látszik-e.",
+ skyPass:"ISS-átvonulások a következő 48 órára: idő, magasság, hossz, látszik-e, és merre halad.",
+ skyAc:"Repülők: kapcsold be a ✈ gombbal, utána a környező gépek száma látszik.",
+ skyOval:"Sarki fény ovális (NOAA OVATION): a helyeden és az északi horizonton mért valószínűség.",
+ skyBuoy:"Bóják: a legközelebbi mért óceáni bója adatai (NOAA NDBC).",
+ skyFc:"Előrejelzés: nyomástendencia és a következő 24 óra a modellekből.",
+ skySun:"Űridőjárás: napszél, Bz, Kp, napkitörés és Dst egy sorban.",
+ skyQuake:"Földrengések: a legerősebb friss rengés (USGS) és az EMSC eseményeinek száma.",
+ skyHf:"HF-rádió: a napkitörés okozta rádiós elnyelés (D-RAP) szintje.",
+ skySch:"Schumann-rezonancia: a tomszki mért 3 napos spektrogram. Koppintásra megnyílik a kép.",
+ skySky:"Esti égbolt: megfigyelhetőségi pontszám (0–100) a Nap és a Hold helyzetéből és a felhőzetből.",
+ skyEnv:"Levegő: levegőminőség (AQI), PM2.5, UV-index és pollen.",
+ skyRiver:"Folyó: a hely körüli legnagyobb vízfolyás hozama (GloFAS modell, nem mérőállomás) és szintje a saját 30 napjához mérve.",
+ skyFoot:"Összecsukás: koppints rá, és az összkép újra egy sorra zsugorodik."
+};
+function helpTextFor(k){return HELP_TEXT[k]||(String(k).indexOf("sky")===0?"Az összkép egyik sora. Súgó nélkül koppintva megnyílik a részletes nézete.":"Ehhez még nincs súgó.")}
+const HELP={on:false};
+function helpKey(el){return el.id||(el.querySelector&&el.querySelector("span")?el.querySelector("span").textContent:"")}
+$("bHelp").onclick=()=>{
+ HELP.on=!HELP.on;document.body.classList.toggle("help",HELP.on);$("bHelp").classList.toggle("on",HELP.on);$("bHelp").textContent=HELP.on?"❓ Súgó: be":"❓ Súgó";
+ if(HELP.on)flash("❓ Súgó mód: koppints bármelyik gombra, adat-csempére vagy összkép-sorra, és megmondom, mi az és honnan jön az adat.\n\nKilépés: koppints újra a ❓ gombra.",9000);
+};
+document.addEventListener("click",ev=>{
+ if(!HELP.on)return;
+ const el=ev.target&&ev.target.closest?ev.target.closest("#btns button,#tiles .t,#skyCard>div,#aiBar,#bMenu,#bToggle,#bHide,#bQ"):null;
+ if(!el||el.id==="bHelp")return;
+ ev.stopPropagation();ev.preventDefault();
+ flash("❓ "+helpTextFor(helpKey(el)),20000);
+},true);
 
 /* ===== INDÍTÁS ===== */
 $("bRef").onclick=async()=>{const b=$("bRef");b.disabled=true;b.textContent="⟳ Lekérés...";await Promise.allSettled([fetchGlobal(),fetchLocal()]);b.disabled=false;b.textContent="⟳ Frissítés"};
