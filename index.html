@@ -104,6 +104,27 @@ body.help #btns button,body.help #tiles .t,body.help #skyCard>div{outline:1px da
 @keyframes viewIn{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
 #vFxBtn{flex:none;padding:6px 10px;font-size:13px}
 @media (prefers-reduced-motion:reduce){#view.in{animation:none}}
+#dock{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;gap:6px;padding:6px 10px calc(env(safe-area-inset-bottom,0px) + 6px);background:rgba(3,4,6,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid #263447}
+#dock button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 2px;background:transparent;border:0;border-radius:10px;color:#8193a5;font-size:10px}
+#dock button .di{font-size:19px;line-height:1.15}
+#dock button.on{color:#e2e8f0;background:linear-gradient(180deg,rgba(139,92,246,.16),rgba(139,92,246,0));box-shadow:inset 0 2px 0 #8b5cf6}
+#bottom{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 70px)}
+#bShow{bottom:calc(env(safe-area-inset-bottom,0px) + 74px)}
+#sumToast{z-index:40}
+#btns{display:none}
+#setSheet{display:none;position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 62px);height:64vh;z-index:22;flex-direction:column;background:linear-gradient(180deg,rgba(8,12,18,.95),rgba(3,4,6,.98));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:2px solid #8b5cf6;border-radius:16px 16px 0 0;box-shadow:0 -12px 34px #000c}
+#setHead{display:flex;gap:6px;padding:10px 10px 6px;align-items:center}
+#setHead button{flex:1;padding:9px 4px;font-size:12px}
+#setHead button.on{border-color:#8b5cf6;color:#e2e8f0;background:rgba(139,92,246,.16)}
+#setBody{flex:1;overflow-y:auto;padding:4px 12px 14px}
+.cgrid,.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 12px}
+.sgh{font-size:10px;color:#8193a5;letter-spacing:.5px;margin:12px 0 2px;line-height:1.4}
+.sgrid button{flex:none;padding:12px 6px;font-size:12px;line-height:1.25}
+.ctile{flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px;text-align:left;background:#0b1220;background:linear-gradient(135deg,color-mix(in srgb,var(--c) 18%,#0b1220),#0b1220 70%);border:1px solid #263447;border-left:3px solid var(--c);border-radius:10px;color:#e2e8f0}
+.ctile .ce{font-size:20px;line-height:1.1}
+.ctile .cn{font-size:12px;font-weight:bold;color:var(--c)}
+.ctile .cv{font-size:10px;color:#a7b6c8}
+body.help #dock button,body.help #setSheet button{outline:1px dashed #fbbf24;outline-offset:-2px}
 #view:not(.full) #vbar{padding-top:8px}
 #vtabs{display:flex;gap:6px;padding:6px 10px;border-bottom:1px solid #263447}
 #vtabs button{flex:1;padding:8px 4px;font-size:11px}
@@ -3108,6 +3129,7 @@ function restorePreset(){
  wxSet(SNAP.wx);acSet(SNAP.ac);SNAP=null;syncBtns();
 }
 function openView(topic){
+ try{if(typeof setOpen==="function"&&SET.open)setOpen(false)}catch(e){}
  const s=SRC[topic]||["",""];
  if(!VIEW.open){VIEW.bh=$("bottom").style.display;VIEW.sh=$("bShow").style.display;$("bottom").style.display="none";$("bShow").style.display="none";VIEW.open=true}
  VIEW.topic=topic;VIEW.src=s[1];
@@ -3462,7 +3484,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v28 · 2026-10-30";
+const APP_VER="v29 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3693,6 +3715,14 @@ function legendText(){
 }
 $("bLeg").onclick=()=>flash(legendText(),30000);
 const HELP_TEXT={
+ dGlobe:"🌍 Gömb: visszavisz a földgömbhöz, becsukja a megnyitott kártyát és a beállításokat.",
+ dSearch:"🔍 Keresés: megnyitja a helykeresőt a kedvencekkel.",
+ dSet:"⚙ Beállítások: az adatkártyák, a térképrétegek és a rendszer-beállítások egy helyen.",
+ sFx:"✨ Látványháttér: a kártyák mozgó háttere. Be, takarékos (kisebb felbontás, kevesebb akku) vagy ki.",
+ st_cards:"📊 Kártyák: a részletes adatnézetek egy rácsban, élő előnézettel.",
+ st_layers:"🌐 Rétegek: a gömbön megjeleníthető térképrétegek kapcsolói.",
+ st_sys:"🛠 Rendszer: megjelenítés, adatok, értesítések és eszközök.",
+ setClose:"Bezárja a beállításokat.",
  bRef:"⟳ Frissítés: újra lekéri az űridőjárási és a helyi adatokat. Az app amúgy is magától frissít.",
  bRot:"⟲ Önforgás: a földgömb magától forog. Kikapcsolva kézzel forgatod, húzással.",
  bPick:"◎ Kijelöl: a képernyő közepén lévő célkereszt alatti pontot teszi meg a vizsgált helynek; a számítások ezután arra a helyre készülnek.",
@@ -3750,7 +3780,7 @@ const HELP_TEXT={
  skyRiver:"Folyó: a hely körüli legnagyobb vízfolyás hozama (GloFAS modell, nem mérőállomás) és szintje a saját 30 napjához mérve.",
  skyFoot:"Összecsukás: koppints rá, és az összkép újra egy sorra zsugorodik."
 };
-function helpTextFor(k){return HELP_TEXT[k]||(String(k).indexOf("sky")===0?"Az összkép egyik sora. Súgó nélkül koppintva megnyílik a részletes nézete.":"Ehhez még nincs súgó.")}
+function helpTextFor(k){if(String(k).indexOf("ct_")===0){const c=CARDS.find(x=>"ct_"+x[0]===k);return "Kártya: koppintásra megnyílik a részletes nézet"+(c?" ("+c[2]+")":"")+", mozgó, mért adatokból hajtott háttérrel."}return HELP_TEXT[k]||(String(k).indexOf("sky")===0?"Az összkép egyik sora. Súgó nélkül koppintva megnyílik a részletes nézete.":"Ehhez még nincs súgó.")}
 const HELP={on:false};
 function helpKey(el){return el.id||(el.querySelector&&el.querySelector("span")?el.querySelector("span").textContent:"")}
 $("bHelp").onclick=()=>{
@@ -3759,7 +3789,7 @@ $("bHelp").onclick=()=>{
 };
 document.addEventListener("click",ev=>{
  if(!HELP.on)return;
- const el=ev.target&&ev.target.closest?ev.target.closest("#btns button,#tiles .t,#skyCard>div,#aiBar,#bMenu,#bToggle,#bHide,#bQ"):null;
+ const el=ev.target&&ev.target.closest?ev.target.closest("#btns button,#tiles .t,#skyCard>div,#aiBar,#bMenu,#bToggle,#bHide,#bQ,#dock button,#setSheet button"):null;
  if(!el||el.id==="bHelp")return;
  ev.stopPropagation();ev.preventDefault();
  flash("❓ "+helpTextFor(helpKey(el)),20000);
@@ -3938,6 +3968,80 @@ function fxLoop(now){
  const g=FX.ctx;g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,FX.w,FX.h);
  try{(FX_DRAW[FX.topic]||FX_DRAW.default)(g,dt,FX.t,fxData())}catch(e){}
 }
+
+/* ===== ALSÓ SÁV ÉS ⚙ BEÁLLÍTÁSOK (v29): a gombok témánként rendezve, az adatkártyák innen nyílnak ===== */
+const SET={open:false,tab:"cards"};
+const CARDS=[["solar","☀️","Napszél és Kp"],["aurora","🌌","Sarki fény"],["iss","🛰","ISS-átvonulás"],["sky","🔭","Esti égbolt"],["forecast","🌡","Előrejelzés"],["air","🌫","Levegő"],["river","🌊","Folyó"],["buoy","🛟","Bóják"],["quake","🌋","Földrengések"],["hf","📡","HF-rádió"],["ac","✈","Repülők"],["schumann","〰","Schumann"],["sources","📶","Források"]];
+const SETGROUPS={
+ layers:[["Térképrétegek a gömbön · narancs keret = bekapcsolva",["bQuake","bEonet","bAc","bOv","bWx","bBuoy","bOcean","bNight","bHf"]]],
+ sys:[["Megjelenítés",["bRot","bBloom","bSon","bPerf","#fx"]],["Adatok és értesítés",["bAi","bNotif","bWake","bGps","bRef","bLog"]],["Eszközök",["bPick","bSearch","bLeg","bHelp","bFc","bTwin","bSrc"]]]
+};
+function cardVal(t){
+ const f=(x,d)=>x===null||x===undefined||!Number.isFinite(Number(x))?"--":Number(x).toFixed(d);
+ try{
+  if(t==="solar")return f(D.speed,0)+" km/s · Kp "+f(D.kp,1);
+  if(t==="aurora"){const m=/Sarki fény:\s*([^·(]+)/.exec($("skyAu").textContent||"");return m?m[1].trim().slice(0,30):"számolás..."}
+  if(t==="iss"){const p=PASS.list&&PASS.list[0];return p?p.start.toLocaleString("hu-HU",{hour:"2-digit",minute:"2-digit"})+" · max "+p.maxEl.toFixed(0)+"°"+(p.vis?" · látható":""):"számolás..."}
+  if(t==="sky"){const m=/(\d+)\/100/.exec($("skySky").textContent||"");return m?m[1]+"/100":"--"}
+  if(t==="forecast"){const a=fcAnalyze();return a?f(a.tMin,0)+"…"+f(a.tMax,0)+" °C":"betöltés..."}
+  if(t==="air")return "AQI "+f(D.aqi,0)+" · PM2,5 "+f(D.pm25,0);
+  if(t==="river"){const r=D.river;return !r?"betöltés...":r.none?"nincs adat":r.small?"kis vízfolyás":(r.lvl||"normál")}
+  if(t==="buoy")return BU.list?BU.list.length+" mért bója":"betöltés...";
+  if(t==="quake")return (QKF||[]).filter(q=>q.properties&&q.properties.mag>=4.5).length+" db M4,5+ ma";
+  if(t==="hf")return "röntgen "+(D.flare?D.flare.c+D.flare.n:"--");
+  if(t==="ac")return AC.on?(AC.list?AC.list.length+" gép":"betöltés..."):"kikapcsolva";
+  if(t==="schumann")return "tomszki mérés";
+  if(t==="sources"){const r=SRCST&&SRCST.res;return r&&r.length?r.filter(x=>x.ok).length+"/"+r.length+" elérhető":"ellenőrzés"}
+ }catch(e){}
+ return "--";
+}
+function fxLabel(){return "✨ Látványháttér: "+({on:"be",eco:"takarékos",off:"ki"})[FX.mode]}
+function refreshCards(){CARDS.forEach(c=>{const e=$("cv_"+c[0]);if(e)e.textContent=cardVal(c[0])})}
+function setTab(n){
+ SET.tab=n;["cards","layers","sys"].forEach(k=>{$("sp_"+k).style.display=k===n?"block":"none";$("st_"+k).classList.toggle("on",k===n)});
+ try{gset("solarisSetTab",n)}catch(e){}
+ if(n==="cards")refreshCards();
+}
+function setOpen(on){
+ SET.open=!!on;$("setSheet").style.display=on?"flex":"none";$("dSet").classList.toggle("on",!!on);$("dGlobe").classList.toggle("on",!on);
+ if(on){refreshCards();const fb=$("sFx");if(fb)fb.textContent=fxLabel()}
+}
+function buildSettings(){
+ const mk=(tag,id,cls,txt)=>{const e=document.createElement(tag);if(id)e.id=id;if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e};
+ /* felső sáv + lap */
+ const sheet=mk("div","setSheet"),head=mk("div","setHead"),body=mk("div","setBody");
+ [["cards","📊 Kártyák"],["layers","🌐 Rétegek"],["sys","🛠 Rendszer"]].forEach(([k,n])=>{const b=mk("button","st_"+k,"",n);b.onclick=()=>setTab(k);head.appendChild(b)});
+ const x=mk("button","setClose","","✕");x.style.flex="none";x.style.padding="9px 14px";x.onclick=()=>setOpen(false);head.appendChild(x);
+ const pc=mk("div","sp_cards"),pl=mk("div","sp_layers"),ps=mk("div","sp_sys");
+ const g=mk("div","","cgrid");
+ CARDS.forEach(([t,em,nm])=>{
+  const b=mk("button","ct_"+t,"ctile");b.style.setProperty("--c",FX_ACC[t]||"#8b5cf6");
+  b.appendChild(mk("span","","ce",em));b.appendChild(mk("span","","cn",nm));b.appendChild(mk("span","cv_"+t,"cv","--"));
+  b.onclick=()=>{setOpen(false);openView(t)};g.appendChild(b);
+ });
+ pc.appendChild(mk("div","","sgh","Koppints egy kártyára: a részletes nézet mozgó, mért adatokból hajtott háttérrel nyílik meg"));pc.appendChild(g);
+ const fill=(pane,groups)=>groups.forEach(([title,ids])=>{
+  pane.appendChild(mk("div","","sgh",title));const grid=mk("div","","sgrid");
+  ids.forEach(id=>{
+   if(id==="#fx"){const b=mk("button","sFx","",fxLabel());b.onclick=()=>{FX.mode=FX.mode==="on"?"eco":FX.mode==="eco"?"off":"on";try{gset("solarisFx",FX.mode)}catch(e){}try{fxApply()}catch(e){}b.textContent=fxLabel();flash(fxLabel(),1800)};grid.appendChild(b);return}
+   const el=$(id);if(el)grid.appendChild(el);
+  });
+  pane.appendChild(grid);
+ });
+ fill(pl,SETGROUPS.layers);fill(ps,SETGROUPS.sys);
+ body.appendChild(pc);body.appendChild(pl);body.appendChild(ps);sheet.appendChild(head);sheet.appendChild(body);document.body.appendChild(sheet);
+ /* alsó sáv */
+ const dock=mk("div","dock");
+ [["dGlobe","🌍","Gömb",()=>{setOpen(false);if(VIEW.open)closeView()}],["dSearch","🔍","Keresés",()=>{setOpen(false);if(VIEW.open)closeView();$("bSearch").onclick()}],["dSet","⚙","Beállítások",()=>setOpen(!SET.open)]].forEach(([id,ic,lb,fn])=>{
+  const b=mk("button",id);b.setAttribute("aria-label",lb);b.appendChild(mk("span","","di",ic));b.appendChild(mk("span","","dl",lb));b.onclick=fn;dock.appendChild(b);
+ });
+ document.body.appendChild(dock);
+ $("dGlobe").classList.add("on");
+ let t0="cards";try{const s0=gget("solarisSetTab");if(s0==="cards"||s0==="layers"||s0==="sys")t0=s0}catch(e){}
+ setTab(t0);
+ setInterval(()=>{if(SET.open&&SET.tab==="cards")refreshCards()},5000);
+}
+buildSettings();
 
 /* ===== INDÍTÁS ===== */
 $("bRef").onclick=async()=>{const b=$("bRef");b.disabled=true;b.textContent="⟳ Lekérés...";await Promise.allSettled([fetchGlobal(),fetchLocal()]);b.disabled=false;b.textContent="⟳ Frissítés"};
