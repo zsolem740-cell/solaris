@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T01:55:07.830Z",
+ "updated": "2026-10-31T02:45:50.914Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
@@ -10,82 +10,82 @@
  "sources": {
   "noaa_mag": {
    "ok": true,
-   "ms": 33
-  },
-  "noaa_kp": {
-   "ok": true,
-   "ms": 286
-  },
-  "noaa_kp_forecast": {
-   "ok": true,
-   "ms": 227
-  },
-  "noaa_goes_flux": {
-   "ok": true,
-   "ms": 232
+   "ms": 92
   },
   "noaa_wind": {
    "ok": true,
-   "ms": 31
+   "ms": 48
   },
-  "usgs": {
+  "noaa_kp_forecast": {
    "ok": true,
-   "ms": 522
+   "ms": 187
+  },
+  "noaa_kp": {
+   "ok": true,
+   "ms": 247
+  },
+  "noaa_goes_flux": {
+   "ok": true,
+   "ms": 190
   },
   "open_meteo": {
    "ok": true,
-   "ms": 777
+   "ms": 305
+  },
+  "usgs": {
+   "ok": true,
+   "ms": 514
   },
   "om_daily": {
    "ok": true,
-   "ms": 204
+   "ms": 189
   },
   "om_pressure": {
    "ok": true,
-   "ms": 112
+   "ms": 37
   },
   "om_flood": {
    "ok": true,
-   "ms": 375
+   "ms": 497
   },
   "hungaromet": {
    "ok": true,
-   "ms": 1586
+   "ms": 2297
   },
   "om_models": {
    "ok": true,
-   "ms": 104
+   "ms": 39
   },
   "om_models_16414": {
    "ok": true,
-   "ms": 103
+   "ms": 44
   }
  },
  "current": {
   "kp": 4.33,
   "kpMax24": 5,
-  "flux": 4.5572332396659476e-7,
-  "flare": "B4.6",
-  "speed": 312,
-  "bz": 0.647,
+  "flux": 2.1531772631533386e-7,
+  "flare": "B2.2",
+  "speed": 315.3,
+  "bz": -1.121,
   "tmin12": 5.7,
   "gust12": 37.4,
   "dp3": -2,
-  "pressure": 1027.9
+  "pressure": 1027.5
  },
  "csi": {
-  "t": "2026-10-31T01:55:07.830Z",
-  "csi": 0.339,
+  "t": "2026-10-31T02:45:50.914Z",
+  "csi": 0.327,
   "comp": {
    "p1": 0,
    "p2": 0,
-   "p3": 1.257,
+   "p3": 1.183,
    "p4": 0,
    "p5": 1
   }
  },
  "score": {
-  "records": 10,
+  "records": 11,
   "verified": 0,
   "since": null
  },
@@ -94,7 +94,7 @@
   "stats": {}
  },
  "scoreObs": {
-  "records": 7,
+  "records": 8,
   "verified": 0,
   "since": null
  },
@@ -107,8 +107,8 @@
    "elev": 239.1,
    "distKm": 17.370827402768466
   },
-  "last": "2026-10-31T01",
-  "rows": 50,
+  "last": "2026-10-31T02",
+  "rows": 51,
   "via": "SYNOP órás fájl",
   "stale": false,
   "error": null
@@ -120,8 +120,8 @@
   "now": true
  },
  "history": {
-  "rows": 11,
-  "withCsi": 10,
+  "rows": 12,
+  "withCsi": 11,
   "since": "2026-10-30T14:04Z"
  },
  "recent": [
