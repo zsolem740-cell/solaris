@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T20:33:34.261Z",
+ "updated": "2026-10-31T21:35:19.537Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
@@ -8,64 +8,88 @@
   "sent": 1
  },
  "sources": {
-  "noaa_kp_forecast": {
-   "ok": true,
-   "ms": 133
-  },
   "noaa_kp": {
    "ok": true,
-   "ms": 167
+   "ms": 264
+  },
+  "noaa_kp_forecast": {
+   "ok": true,
+   "ms": 218
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 135
+   "ms": 222
   },
   "noaa_wind": {
    "ok": true,
-   "ms": 19
+   "ms": 39
   },
   "noaa_mag": {
    "ok": true,
-   "ms": 14
+   "ms": 49
   },
   "open_meteo": {
    "ok": true,
-   "ms": 414
+   "ms": 474
   },
   "usgs": {
    "ok": true,
-   "ms": 571
+   "ms": 622
+  },
+  "om_daily": {
+   "ok": true,
+   "ms": 102
+  },
+  "om_pressure": {
+   "ok": true,
+   "ms": 45
+  },
+  "om_flood": {
+   "ok": true,
+   "ms": 487
+  },
+  "hungaromet": {
+   "ok": true,
+   "ms": 3862
+  },
+  "om_models": {
+   "ok": true,
+   "ms": 170
+  },
+  "om_models_16414": {
+   "ok": true,
+   "ms": 44
   },
   "geosphere": {
    "ok": true,
-   "ms": 2832
+   "ms": 2427
   }
  },
  "current": {
-  "kp": 3.33,
-  "kpMax24": 6,
-  "flux": 5.922987043049943e-7,
-  "flare": "B5.9",
-  "speed": 335.4,
-  "bz": -7.0390000000000015,
+  "kp": 6,
+  "kpMax24": 4.67,
+  "flux": 4.0259797629005334e-7,
+  "flare": "B4.0",
+  "speed": 347.6,
+  "bz": -3.4530000000000003,
   "tmin12": 5.8,
-  "gust12": 27.7,
-  "dp3": -0.7999999999999545,
-  "pressure": 1025.1
+  "gust12": 28.8,
+  "dp3": -0.6000000000001364,
+  "pressure": 1024.9
  },
  "csi": {
-  "t": "2026-10-31T20:14:56.751Z",
-  "csi": 0.242,
+  "t": "2026-10-31T21:35:19.537Z",
+  "csi": 0.594,
   "comp": {
-   "p1": 0,
+   "p1": 2,
    "p2": 0,
-   "p3": 0.613,
+   "p3": 0.559,
    "p4": 0,
-   "p5": 1
+   "p5": 1.4
   }
  },
  "score": {
-  "records": 29,
+  "records": 30,
   "verified": 0,
   "since": null
  },
@@ -75,7 +99,7 @@
  },
  "scoreObs": {
   "records": 25,
-  "verified": 1,
+  "verified": 2,
   "since": "2026-10-30T19"
  },
  "obs": {
@@ -87,8 +111,8 @@
    "elev": 239.1,
    "distKm": 17.370827402768466
   },
-  "last": "2026-10-31T19",
-  "rows": 68,
+  "last": "2026-10-31T21",
+  "rows": 70,
   "via": "SYNOP órás fájl",
   "stale": false,
   "error": null
@@ -97,14 +121,19 @@
   "enabled": true,
   "from": 22,
   "to": 7,
-  "now": false
+  "now": true
  },
  "history": {
-  "rows": 30,
-  "withCsi": 29,
+  "rows": 31,
+  "withCsi": 30,
   "since": "2026-10-30T14:04Z"
  },
  "recent": [
+  {
+   "t": "2026-10-31T21:35:19.537Z",
+   "key": "kp",
+   "title": "Geomágneses vihar: Kp 6.0"
+  },
   {
    "t": "2026-10-31T20:33:34.261Z",
    "key": "kpForecast",
@@ -173,7 +202,7 @@
   "quakeRadiusKm": 600
  },
  "scoreObsAt": {
-  "records": 1,
+  "records": 2,
   "verified": 0,
   "since": null
  },
@@ -186,8 +215,8 @@
    "elev": 215,
    "distKm": 22.84307300494139
   },
-  "last": "2026-10-31T20",
-  "rows": 50,
+  "last": "2026-10-31T21",
+  "rows": 51,
   "via": "GeoSphere TAWES 10 perces",
   "stale": false,
   "error": null
