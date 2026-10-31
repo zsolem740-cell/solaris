@@ -1,40 +1,64 @@
 {
- "updated": "2026-10-31T19:59:29.346Z",
+ "updated": "2026-10-31T20:14:56.751Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
   "configured": true,
-  "attempted": 1,
-  "sent": 1
+  "attempted": 0,
+  "sent": 0
  },
  "sources": {
-  "noaa_kp": {
+  "noaa_wind": {
    "ok": true,
-   "ms": 160
+   "ms": 75
   },
   "noaa_kp_forecast": {
    "ok": true,
-   "ms": 104
+   "ms": 134
+  },
+  "noaa_kp": {
+   "ok": true,
+   "ms": 193
   },
   "noaa_mag": {
    "ok": true,
-   "ms": 29
+   "ms": 47
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 109
-  },
-  "usgs": {
-   "ok": true,
-   "ms": 156
-  },
-  "noaa_wind": {
-   "ok": true,
-   "ms": 26
+   "ms": 144
   },
   "open_meteo": {
    "ok": true,
-   "ms": 703
+   "ms": 186
+  },
+  "usgs": {
+   "ok": true,
+   "ms": 241
+  },
+  "om_daily": {
+   "ok": true,
+   "ms": 79
+  },
+  "om_pressure": {
+   "ok": true,
+   "ms": 20
+  },
+  "om_flood": {
+   "ok": true,
+   "ms": 398
+  },
+  "hungaromet": {
+   "ok": true,
+   "ms": 2915
+  },
+  "om_models": {
+   "ok": true,
+   "ms": 26
+  },
+  "om_models_16414": {
+   "ok": true,
+   "ms": 25
   }
  },
  "current": {
@@ -42,26 +66,26 @@
   "kpMax24": 4.67,
   "flux": 5.922987043049943e-7,
   "flare": "B5.9",
-  "speed": 332.9,
-  "bz": -3.1959999999999997,
+  "speed": 330.6,
+  "bz": -5.555,
   "tmin12": 5.8,
-  "gust12": 23,
-  "dp3": -0.900000000000091,
-  "pressure": 1025.4
+  "gust12": 27.7,
+  "dp3": -0.7999999999999545,
+  "pressure": 1025.1
  },
  "csi": {
-  "t": "2026-10-31T19:06:03.112Z",
-  "csi": 0.252,
+  "t": "2026-10-31T20:14:56.751Z",
+  "csi": 0.242,
   "comp": {
    "p1": 0,
    "p2": 0,
-   "p3": 0.679,
+   "p3": 0.613,
    "p4": 0,
    "p5": 1
   }
  },
  "score": {
-  "records": 28,
+  "records": 29,
   "verified": 0,
   "since": null
  },
@@ -71,8 +95,8 @@
  },
  "scoreObs": {
   "records": 25,
-  "verified": 0,
-  "since": null
+  "verified": 1,
+  "since": "2026-10-30T19"
  },
  "obs": {
   "station": {
@@ -83,8 +107,8 @@
    "elev": 239.1,
    "distKm": 17.370827402768466
   },
-  "last": "2026-10-31T18",
-  "rows": 67,
+  "last": "2026-10-31T19",
+  "rows": 68,
   "via": "SYNOP órás fájl",
   "stale": false,
   "error": null
@@ -96,8 +120,8 @@
   "now": false
  },
  "history": {
-  "rows": 29,
-  "withCsi": 28,
+  "rows": 30,
+  "withCsi": 29,
   "since": "2026-10-30T14:04Z"
  },
  "recent": [
