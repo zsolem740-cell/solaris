@@ -1,0 +1,68 @@
+/* Osztrák (GeoSphere) mért állomás: önálló kiegészítő lépés a háttérfigyelő UTÁN (a watch.mjs-t nem módosítja).
+   Óránként egyszer frissíti az osztrák állomás mérését, elmenti a modellek jóslatát az állomás pontjára, és 25 óra múlva
+   kiértékeli. Csak jelentés: a javított előrejelzés kalibrálását nem befolyásolja. A hibája nem állítja le a figyelőt. */
+import fs from "node:fs";
+import { updateGeo } from "./geo.mjs";
+import { recordForecast, verifyForecasts, TRACKS } from "./score.mjs";
+import { obsTruth } from "./obs.mjs";
+
+const CFG = JSON.parse(fs.readFileSync("alert-config.json", "utf8"));
+const NOW = Date.now(), hourKey = new Date(NOW).toISOString().slice(0, 13);
+const readJ = (f, d) => { try { return JSON.parse(fs.readFileSync(f, "utf8")); } catch (e) { return d; } };
+const SOURCES = {};
+const note = (name, ok, ms, err) => { SOURCES[name] = { ok, ms, ...(err ? { error: err } : {}) }; };
+async function get(name, url, ms = 20000) {
+  const t0 = Date.now(), ac = new AbortController(), to = setTimeout(() => ac.abort(), ms);
+  try {
+    const r = await fetch(url, { signal: ac.signal, headers: { "User-Agent": "solaris-yantra-watch" } });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const j = await r.json();
+    note(name, true, Date.now() - t0);
+    return j;
+  } catch (e) { note(name, false, Date.now() - t0, String((e && e.message) || e)); return null; } finally { clearTimeout(to); }
+}
+
+fs.mkdirSync("data", { recursive: true });
+let ST = readJ("data/geo_state.json", {});
+let OBS_AT = readJ("data/obs_at.json", null);
+let SCORE_AT = readJ("data/scorecard_obs_at.json", { models: {}, verified: 0 });
+let PENDING_AT = readJ("data/forecasts_obs_at.json", []);
+
+if (ST.last !== hourKey) {
+  try { OBS_AT = await updateGeo({ CFG, NOW, prev: OBS_AT, note }); } catch (e) { note("geosphere", false, 0, String((e && e.message) || e)); }
+  if (OBS_AT && OBS_AT.station && OBS_AT.rows && OBS_AT.rows.length) {
+    try {
+      const tag = "at" + String(OBS_AT.station.id);
+      const rf = await recordForecast({ get, CFG, NOW, scs: [{ id: "obs_at", sc: SCORE_AT }], track: TRACKS.obs, lat: OBS_AT.station.lat, lon: OBS_AT.station.lon, tag });
+      if (rf) PENDING_AT.push(rf.rec);
+      const v = await verifyForecasts({ get, CFG, NOW, pending: PENDING_AT, sc: SCORE_AT, track: TRACKS.obs, truth: obsTruth(OBS_AT), lagMs: 25 * 36e5, maxAgeMs: 5 * 864e5, tag });
+      PENDING_AT = v.pending; SCORE_AT = v.sc;
+    } catch (e) { note("score_obs_at", false, 0, String((e && e.message) || e)); }
+  }
+  PENDING_AT = PENDING_AT.slice(-24 * 6);
+  ST = { last: hourKey, geosphere: SOURCES.geosphere || null, score: SOURCES.score_obs_at || null };
+  fs.writeFileSync("data/forecasts_obs_at.json", JSON.stringify(PENDING_AT));
+  fs.writeFileSync("data/scorecard_obs_at.json", JSON.stringify(SCORE_AT));
+  if (OBS_AT) fs.writeFileSync("data/obs_at.json", JSON.stringify(OBS_AT));
+  fs.writeFileSync("data/geo_state.json", JSON.stringify(ST));
+}
+
+/* A status.json-t a fő figyelő minden futáskor újraírja, ezért itt kiegészítjük az osztrák adatokkal. */
+try {
+  const st = readJ("data/status.json", null);
+  if (st) {
+    st.scoreObsAt = { records: PENDING_AT.length, verified: SCORE_AT.verified || 0, since: SCORE_AT.since || null };
+    st.obsAt = OBS_AT ? { station: OBS_AT.station, last: OBS_AT.rows && OBS_AT.rows.length ? OBS_AT.rows[OBS_AT.rows.length - 1].h : null, rows: OBS_AT.rows ? OBS_AT.rows.length : 0, via: OBS_AT.via, stale: !!OBS_AT.stale, error: OBS_AT.error || null } : null;
+    st.sources = { ...(st.sources || {}) };
+    if (ST.geosphere) st.sources.geosphere = ST.geosphere;
+    if (ST.score && ST.score.ok === false) st.sources.score_obs_at = ST.score;
+    if (st.diag && Array.isArray(st.diag.lines)) {
+      const last = OBS_AT && OBS_AT.rows && OBS_AT.rows.length ? Date.parse(OBS_AT.rows[OBS_AT.rows.length - 1].h + ":00:00Z") : 0;
+      st.diag.lines = st.diag.lines.filter(l => !/Osztrák állomás/.test(l));
+      if (OBS_AT && OBS_AT.station) st.diag.lines.push(!last || NOW - last > 6 * 36e5 ? `ℹ Osztrák állomás: ${OBS_AT.station.name} adata elavult (több mint 6 órás).` : `✅ Osztrák állomás (GeoSphere): ${OBS_AT.station.name}, ${Math.round(OBS_AT.station.distKm)} km, ${OBS_AT.rows.length} órányi mérés${OBS_AT.rows.some(r => r.r !== null) ? ", csapadékot is mér" : ""}.`);
+      else st.diag.lines.push("ℹ Osztrák állomás (GeoSphere): még nincs adat.");
+    }
+    fs.writeFileSync("data/status.json", JSON.stringify(st, null, 1));
+  }
+} catch (e) { /* a kiegészítés hibája nem állíthatja le a figyelőt */ }
+console.log("Osztrák állomás:", OBS_AT && OBS_AT.station ? OBS_AT.station.name + " (" + Math.round(OBS_AT.station.distKm) + " km), " + OBS_AT.rows.length + " sor" : "nincs adat", ST.geosphere && ST.geosphere.error ? "· hiba: " + ST.geosphere.error : "");

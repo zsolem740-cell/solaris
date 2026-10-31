@@ -1,0 +1,45 @@
+name: Háttérfigyelő
+
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:
+    inputs:
+      test:
+        description: "Teszt-értesítés küldése (1 = igen, 0 = nem)"
+        default: "0"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Figyelő futtatása
+        id: run
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          TEST: ${{ github.event.inputs.test }}
+        run: node watch.mjs
+      - name: Osztrák állomás (GeoSphere)
+        run: |
+          cp geo.mjs.txt geo.mjs
+          cp geo-run.mjs.txt geo-run.mjs
+          node geo-run.mjs
+        continue-on-error: true
+      - name: Eredmények mentése
+        if: steps.run.outputs.commit == 'true'
+        run: |
+          git config user.name "solaris-watch"
+          git config user.email "solaris-watch@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet || (git commit -m "Háttérfigyelő: adatok frissítése" && git pull --rebase && git push)

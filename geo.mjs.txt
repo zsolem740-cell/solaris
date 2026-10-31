@@ -1,0 +1,136 @@
+/* GeoSphere Austria (a volt ZAMG) TAWES állomási mérései: ingyenes nyílt adat, kulcs nélkül, CC BY 4.0.
+   Forrásmegjelölés: „Daten: GeoSphere Austria (data.hub.geosphere.at), CC BY 4.0".
+   A Körmendhez legközelebbi osztrák állomásról 10 perces nyers méréseket kér, és óránkénti sorokat készít belőlük
+   UGYANABBAN a formában, mint az obs.mjs (HungaroMet), így a skórkártya-kód változtatás nélkül használhatja.
+   Csak jelentés: a javított (kalibrált) előrejelzést nem befolyásolja. */
+import { distKm } from "./obs.mjs";
+
+export const GEO_SOURCE = "Daten: GeoSphere Austria (data.hub.geosphere.at), CC BY 4.0";
+const BASE = "https://dataset.api.hub.geosphere.at/v1/station/historical/tawes-v1-10min";
+const MAX_KM = 45, KEEP_H = 96, FETCH_H = 50, CANDS = 6, SW = 10;
+const fin = Number.isFinite;
+
+export async function getJson(url, ms = 25000) {
+  const ac = new AbortController(), t = setTimeout(() => ac.abort(), ms);
+  try {
+    const r = await fetch(url, { signal: ac.signal, headers: { accept: "application/json" } });
+    if (!r.ok) { const e = new Error("HTTP " + r.status); e.status = r.status; throw e; }
+    return await r.json();
+  } finally { clearTimeout(t); }
+}
+
+/* Állomásjelöltek: a korábban választott elöl marad (ha nincs nála sokkal közelebbi), utána távolság szerint. */
+export function rankGeoStations(meta, CFG, prev) {
+  const list = (meta && meta.stations) || [], st = new Map();
+  for (const s of list) {
+    const lat = Number(s.lat), lon = Number(s.lon);
+    if (!fin(lat) || !fin(lon) || s.is_active === false) continue;
+    const el = Number(s.altitude);
+    st.set(String(s.id), { id: String(s.id), name: s.name || String(s.id), lat, lon, elev: fin(el) ? el : null, distKm: distKm(CFG.lat, CFG.lon, lat, lon) });
+  }
+  const all = [...st.values()].filter(s => s.distKm <= MAX_KM).sort((a, b) => a.distKm - b.distKm);
+  if (!all.length) return { cands: [], nearest: [...st.values()].sort((a, b) => a.distKm - b.distKm)[0] || null };
+  const old = prev && prev.station && st.get(String(prev.station.id));
+  const cands = all.slice(0, CANDS);
+  if (old && old.distKm <= all[0].distKm + SW && old.distKm <= MAX_KM) { const i = cands.findIndex(c => c.id === old.id); if (i > 0) cands.splice(i, 1); if (i !== 0) cands.unshift(old); }
+  return { cands: cands.slice(0, CANDS), nearest: all[0] };
+}
+
+/* A GeoJSON-válasz: közös időbélyeg-lista + állomásonként paraméter → értéksor. */
+export function parseGeoJson(j) {
+  const ts = ((j && j.timestamps) || []).map(t => Date.parse(t)), out = new Map();
+  for (const f of (j && j.features) || []) {
+    const p = f && f.properties, id = String(p && p.station), P = (p && p.parameters) || {}, o = {};
+    for (const k of Object.keys(P)) o[k] = { unit: String(P[k].unit || ""), data: (P[k].data || []).map(v => (v === null || v === undefined || !fin(Number(v))) ? null : Number(v)) };
+    out.set(id, o);
+  }
+  return { ts, stations: out };
+}
+
+const conv = {
+  temp: (v, u) => (/^\s*k\s*$/i.test(u) ? v - 273.15 : v),
+  pres: (v, u) => (/^\s*pa\s*$/i.test(u) ? v / 100 : v),
+  wind: (v, u) => (/km\s*\/?\s*h|kmh/i.test(u) ? v / 3.6 : /\b(kn|kt|kts)\b/i.test(u) ? v * 0.514444 : /mph/i.test(u) ? v * 0.44704 : v),
+};
+export function toMsl(P, T, elev) {   /* állomási nyomás → tengerszinti (barometrikus képlet), ha nincs kész redukált érték */
+  if (!fin(P) || !fin(T) || !fin(elev)) return null;
+  return P * Math.pow(1 - (0.0065 * elev) / (T + 0.0065 * elev + 273.15), -5.257);
+}
+
+/* 10 perces értékek → óránkénti sorok (UTC). Pillanatérték a pontos órán (hőm., pára, nyomás, szél), lökés = max az előző órában, csapadék = az előző óra 10 perces összege (legalább 5/6 érték kell). */
+export function hourlyRows(parsed, id, elev) {
+  const S = parsed.stations.get(String(id));
+  if (!S) return [];
+  const idx = new Map(parsed.ts.map((t, i) => [t, i]));
+  const val = (name, i, kind) => { const p = S[name]; if (!p || p.data[i] === null || p.data[i] === undefined) return null; const v = p.data[i]; return kind && conv[kind] ? conv[kind](v, p.unit) : v; };
+  const pick = (names, i, kind) => { for (const n of names) { const v = val(n, i, kind); if (v !== null) return v; } return null; };
+  const rd = (v, d) => (v === null ? null : Number(v.toFixed(d)));
+  const rows = [];
+  for (const t of parsed.ts) {
+    if (t % 36e5 !== 0) continue;
+    const i = idx.get(t), tmp = pick(["TL"], i, "temp");
+    let p0 = pick(["PRED"], i, "pres");
+    if (p0 === null) { const P = pick(["P"], i, "pres"); p0 = P !== null ? toMsl(P, tmp, elev) : null; }
+    let fx = null, rs = 0, rn = 0;
+    for (let k = 0; k < 6; k++) {
+      const j = idx.get(t - k * 6e5);
+      if (j === undefined) continue;
+      const g = pick(["FFX", "FFAM", "FF"], j, "wind"); if (g !== null && (fx === null || g > fx)) fx = g;
+      const rr = val("RR", j); if (rr !== null) { rs += rr; rn++; }
+    }
+    rows.push({ ms: t, h: new Date(t).toISOString().slice(0, 13), t: rd(tmp, 1), p0: rd(p0, 1), u: rd(pick(["RF"], i), 0), r: rn >= 5 ? rd(rs, 1) : null, f: rd(pick(["FFAM", "FF"], i, "wind"), 1), fx: rd(fx, 1) });
+  }
+  return rows;
+}
+
+const WANT = ["TL", "RF", "P", "PRED", "FFAM", "FF", "FFX", "RR"];
+function availableParams(meta) {
+  const P = meta && meta.parameters;
+  const names = Array.isArray(P) ? P.map(p => p && (p.name || p.id)).filter(Boolean) : (P && typeof P === "object" ? Object.keys(P) : []);
+  return names.length ? WANT.filter(w => names.includes(w)) : WANT;
+}
+function dataUrl(params, ids, from, to, joined) {
+  const ps = joined ? "parameters=" + params.join(",") : params.map(p => "parameters=" + p).join("&");
+  const ss = joined ? "station_ids=" + ids.join(",") : ids.map(i => "station_ids=" + i).join("&");
+  const iso = ms => new Date(ms).toISOString().slice(0, 16);
+  return `${BASE}?${ps}&${ss}&start=${iso(from)}&end=${iso(to)}&output_format=geojson`;
+}
+
+export async function updateGeo({ CFG, NOW, prev, note, fetchJson = getJson }) {
+  const t0 = Date.now(), errs = [];
+  let chosen = null, rows = null;
+  try {
+    const meta = await fetchJson(BASE + "/metadata");
+    const { cands, nearest } = rankGeoStations(meta, CFG, prev);
+    if (!cands.length) throw new Error(nearest ? `a legközelebbi osztrák állomás (${nearest.name}) ${nearest.distKm.toFixed(0)} km-re van` : "az állomáslista üres");
+    const params = availableParams(meta), from = NOW - FETCH_H * 36e5, to = NOW, ids = cands.map(c => c.id);
+    let data = null, lastErr = null;
+    for (const ps of [params, ["TL", "RF", "P", "FFAM", "FFX", "RR"].filter(p => params.includes(p)), ["TL"]]) {
+      if (!ps.includes("TL")) continue;
+      for (const joined of [false, true]) {
+        try { data = await fetchJson(dataUrl(ps, ids, from, to, joined)); break; } catch (e) { lastErr = e; if (e && e.status && e.status !== 400 && e.status !== 422) break; }
+      }
+      if (data) break;
+    }
+    if (!data) throw lastErr || new Error("nincs válasz");
+    const parsed = parseGeoJson(data);
+    for (const c of cands) {
+      const r = hourlyRows(parsed, c.id, c.elev), recent = r.filter(x => x.t !== null && NOW - x.ms < 6 * 36e5);
+      if (recent.length >= 2) { chosen = c; rows = r; break; }
+    }
+    if (!chosen) throw new Error("egyik közeli állomás sem adott friss hőmérsékletet");
+  } catch (e) { errs.push(String((e && e.message) || e)); }
+  const ms = Date.now() - t0;
+  if (!chosen || !rows) {
+    const err = errs.join(" | ").slice(0, 300) || "ismeretlen hiba";
+    note("geosphere", false, ms, err);
+    return prev ? { ...prev, error: err } : null;
+  }
+  const map = new Map();
+  if (prev && prev.station && prev.station.id === chosen.id) for (const r of prev.rows || []) map.set(Date.parse(r.h + ":00:00Z"), r);
+  for (const r of rows) map.set(r.ms, { h: r.h, t: r.t, p0: r.p0, u: r.u, r: r.r, f: r.f, fx: r.fx });
+  const out = [...map.entries()].sort((a, b) => a[0] - b[0]).slice(-KEEP_H).map(e => e[1]);
+  const last = out.length ? Date.parse(out[out.length - 1].h + ":00:00Z") : 0, stale = NOW - last > 6 * 36e5;
+  note("geosphere", true, ms, stale ? "az utolsó mérés több mint 6 órás" : undefined);
+  return { source: GEO_SOURCE, updated: new Date(NOW).toISOString(), via: "GeoSphere TAWES 10 perces", stale, station: chosen, rows: out };
+}
