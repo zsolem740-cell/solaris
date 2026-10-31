@@ -102,7 +102,7 @@ body.help #btns button,body.help #tiles .t,body.help #skyCard>div{outline:1px da
 #view.fx #vTitle{text-shadow:0 0 14px var(--acc,#8b5cf6)}
 #view.in{animation:viewIn .38s cubic-bezier(.2,.8,.2,1)}
 @keyframes viewIn{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
-#vFxBtn{flex:none;padding:6px 8px;font-size:11px}
+#vFxBtn{flex:none;padding:6px 10px;font-size:13px}
 @media (prefers-reduced-motion:reduce){#view.in{animation:none}}
 #view:not(.full) #vbar{padding-top:8px}
 #vtabs{display:flex;gap:6px;padding:6px 10px;border-bottom:1px solid #263447}
@@ -3226,7 +3226,7 @@ function loadScript(src){return new Promise((res,rej)=>{const s=document.createE
 async function blSetup(){
  const B="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/";
  for(const f of ["shaders/CopyShader.js","shaders/LuminosityHighPassShader.js","shaders/GammaCorrectionShader.js","postprocessing/EffectComposer.js","postprocessing/RenderPass.js","postprocessing/ShaderPass.js","postprocessing/UnrealBloomPass.js"])await loadScript(B+f);
- const c=new THREE.EffectComposer(renderer);c.setPixelRatio(1);c.setSize(innerWidth,innerHeight);
+ const c=new THREE.EffectComposer(renderer);c.setPixelRatio(Math.min(renderer.getPixelRatio?renderer.getPixelRatio():1,1.5));c.setSize(innerWidth,innerHeight);
  c.addPass(new THREE.RenderPass(scene,cam));
  c.addPass(new THREE.UnrealBloomPass(new THREE.Vector2(innerWidth/2,innerHeight/2),.9,.55,.6));
  c.addPass(new THREE.ShaderPass(THREE.GammaCorrectionShader));
@@ -3462,7 +3462,7 @@ $("bPerf").onclick=()=>{
 };
 $("bTwin").onclick=()=>{location.href="twin.html"};
 /* ===== VERZIÓ · FORRÁSOK ÁLLAPOTA · HÁTTÉRFIGYELŐ-ÁLLAPOT ===== */
-const APP_VER="v27 · 2026-10-30";
+const APP_VER="v28 · 2026-10-30";
 SRC.sources=["📶 Források és verzió","https://github.com/zsolem740-cell/solaris/actions"];
 PRE.sources=[];
 const SRCST={res:null,watch:null,sw:"",busy:false,at:0};
@@ -3921,7 +3921,7 @@ function fxSize(){
 function fxApply(){
  if(!FX.cv)return;
  const v=$("view"),on=FX.mode!=="off"&&VIEW.open;
- $("vFxBtn").textContent=FX.mode==="off"?"✨ ki":FX.mode==="eco"?"✨ takarék":"✨ be";
+ const fb=$("vFxBtn");fb.textContent="✨";fb.style.opacity=FX.mode==="off"?".4":FX.mode==="eco"?".7":"1";fb.title="Látványháttér: "+({on:"be",eco:"takarékos",off:"ki"})[FX.mode];
  v.classList.toggle("fx",on);cancelAnimationFrame(FX.raf);FX.raf=0;
  if(!on){FX.ctx.clearRect(0,0,FX.w,FX.h);return}
  fxSize();FX.last=0;FX.t=0;FX.raf=requestAnimationFrame(fxLoop);
