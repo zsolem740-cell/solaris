@@ -1,0 +1,124 @@
+/* M1 – Solaris Core: P8-szabványú fizikai tényvektor (environment_truth_matrix.json).
+   A háttérfigyelő UTÁN fut (kiegészítő modul), a data/status.json mért értékeiből dolgozik, és
+   óránként egyszer az USGS-től lekérdezi a földrengéseket. Kimenet: data/metrics/environment_truth_matrix.json.
+
+   G (stationarity_G, 0..1): fizikai nyugalom. 1,0 = nyugodt környezet; kicsi érték = fizikai anomália.
+      Összetevők (mind 0..1 „feszültség"): Kp, Bz (déli irány), napszél sebessége, napkitörés (röntgen-fluxus),
+      földrengés (a Körmend körüli 600 km-es körzetben), széllökés, gyors nyomásesés, CSI (σ).
+      A feszültségek „zaj-VAGY" módon összegződnek: stressz = 1 − Π(1 − súly·összetevő); G = 1 − stressz.
+   V (validity_V): a mérési források rendelkezésre állása (működő források / összes forrás).
+   S (noise_S): mérési zaj = 1 − V (a hiányzó adatok aránya).
+   atm_score = G · S · (1 − V)   (a modul a saját mérési minőségén is kiszámolja a szerződés szerinti ATM-et)
+   status: "ANOMALY", ha aktív az űridőjárási anomália (Kp ≥ 5, Bz ≤ −10 nT, M/X kitörés vagy napszél ≥ 700 km/s), különben "NOMINAL".
+   A földrengés és a vihar külön számmezőkben (earthquake_max_mag, wind_gust_kmh, pressure_drop_3h) és a dynamic_payload.flags listában jelenik meg.
+   Csak mért vagy forrásból jövő adatot használ; nem becsül, nem szimulál. */
+import fs from "node:fs";
+
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const num = (v) => (typeof v === "number" && Number.isFinite(v) ? v : null);
+const r = (v, d = 3) => (v === null || v === undefined ? null : Number(v.toFixed(d)));
+export const W_DEFAULT = [0.9, 0.8, 0.6, 0.9];                 // [Kp, Bz, napszél, napkitörés]
+const W_FIX = { quake: 0.9, gust: 0.7, dp: 0.5, csi: 0.5 };
+
+const FLARE_BASE = { A: 1e-8, B: 1e-7, C: 1e-6, M: 1e-5, X: 1e-4 };
+export function fluxOf(cur) {
+  const f = num(cur.flux);
+  if (f !== null && f > 0) return f;
+  const m = typeof cur.flare === "string" ? /^([ABCMX])(\d+(?:\.\d+)?)/i.exec(cur.flare) : null;
+  return m ? FLARE_BASE[m[1].toUpperCase()] * parseFloat(m[2]) : null;
+}
+export function flareStress(cur) {
+  const f = fluxOf(cur);
+  return f === null ? 0 : clamp((Math.log10(f) + 6.5) / 2.5);   // C1 ≈ 0,2 · M1 ≈ 0,6 · X1 = 1,0
+}
+
+/* A számítás tiszta függvény: mért értékek → P8-adatcsomag. */
+export function compute({ cur = {}, csi = null, quake = null, srcOk = 0, srcTotal = 0, w = W_DEFAULT, nowMs = Date.now(), place = "Körmend" }) {
+  const kp = num(cur.kp), kmx = num(cur.kpMax24), bz = num(cur.bz), sp = num(cur.speed), gust = num(cur.gust12), dp = num(cur.dp3), cs = num(csi && csi.csi);
+  const qmax = quake ? num(quake.localMax) : null;
+  const c = {
+    kp: kp === null ? 0 : clamp((Math.max(kp, 0.7 * (kmx ?? 0)) - 3) / 5),
+    bz: bz === null ? 0 : clamp((-bz - 4) / 10),
+    wind: sp === null ? 0 : clamp((sp - 450) / 450),
+    flare: flareStress(cur),
+    quake: qmax === null ? 0 : clamp((qmax - 3) / 3),
+    gust: gust === null ? 0 : clamp((gust - 40) / 60),
+    dp: dp === null ? 0 : clamp((-dp - 2) / 8),
+    csi: cs === null ? 0 : clamp((cs - 0.3) / 2),
+  };
+  const ww = Array.isArray(w) && w.length >= 4 && w.slice(0, 4).every((x) => Number.isFinite(x)) ? w.slice(0, 4).map((x) => clamp(x, 0, 1)) : W_DEFAULT;
+  const keep = (1 - ww[0] * c.kp) * (1 - ww[1] * c.bz) * (1 - ww[2] * c.wind) * (1 - ww[3] * c.flare)
+    * (1 - W_FIX.quake * c.quake) * (1 - W_FIX.gust * c.gust) * (1 - W_FIX.dp * c.dp) * (1 - W_FIX.csi * c.csi);
+  const stress = clamp(1 - keep), G = clamp(1 - stress, 0.02, 1);
+  const V = srcTotal > 0 ? clamp(srcOk / srcTotal) : 0, S = 1 - V;
+  const fl = fluxOf(cur);
+  const geomag = (kp !== null && kp >= 5) || (bz !== null && bz <= -10);
+  const solar = (fl !== null && fl >= 1e-5) || (sp !== null && sp >= 700);
+  const flags = [];
+  if (geomag) flags.push("geomagnetic");
+  if (solar) flags.push("solar");
+  if (qmax !== null && qmax >= 4.5) flags.push("earthquake");
+  if ((gust !== null && gust >= 60) || (dp !== null && -dp >= 6)) flags.push("storm");
+  return {
+    header: { module_id: "M1_SOLARIS", version: "1.0.0", timestamp: Math.floor(nowMs / 1000), p8_signature: "PHYSICAL_GROUND_TRUTH" },
+    core_metrics: { status: geomag || solar ? "ANOMALY" : "NOMINAL", stationarity_G: r(G), noise_S: r(S), validity_V: r(V), atm_score: r(G * S * (1 - V), 4) },
+    dynamic_payload: {
+      place, solar_wind_speed_kms: sp, bz_vector_nt: bz, kp_index: kp, kp_max_24h: kmx, flare_level: cur.flare ?? null,
+      wind_gust_kmh: gust === null ? null : r(gust, 0), pressure_drop_3h: dp === null ? null : r(Math.max(0, -dp), 1), pressure_hpa: num(cur.pressure) === null ? null : r(cur.pressure, 1),
+      earthquake_max_mag: qmax, earthquake_count_local_24h: quake ? num(quake.localN) : null, earthquake_global_max_mag_24h: quake ? num(quake.globalMax) : null,
+      csi_sigma: cs, sources_ok: `${srcOk}/${srcTotal}`, flags,
+      stress_components: Object.fromEntries(Object.entries(c).map(([k, v]) => [k, r(v)])), risk_score: Math.round(100 * stress),
+    },
+    weights_vector: ww,
+  };
+}
+
+const readJ = (f, d) => { try { return JSON.parse(fs.readFileSync(f, "utf8")); } catch (e) { return d; } };
+
+async function getJson(url, ms = 15000) {
+  const ac = new AbortController(), t = setTimeout(() => ac.abort(), ms);
+  try {
+    const res = await fetch(url, { signal: ac.signal, headers: { "User-Agent": "solaris-yantra-m1" } });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return await res.json();
+  } finally { clearTimeout(t); }
+}
+
+/* Földrengések (USGS, óránként egyszer): a helyi körzet (600 km, M ≥ 2,5, 24 óra) és a világ M ≥ 4,5 összesítője. */
+export async function loadQuakes(lat, lon, nowMs, cache) {
+  const hour = new Date(nowMs).toISOString().slice(0, 13);
+  if (cache && cache.hour === hour && cache.quake) return { quake: cache.quake, cached: true };
+  const since = new Date(nowMs - 24 * 36e5).toISOString();
+  const [loc, glob] = await Promise.allSettled([
+    getJson(`https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&latitude=${lat}&longitude=${lon}&maxradiuskm=600&minmagnitude=2.5&starttime=${since}`),
+    getJson("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_day.geojson"),
+  ]);
+  const mags = (res) => (res.status === "fulfilled" && res.value && Array.isArray(res.value.features) ? res.value.features.map((f) => num(f.properties && f.properties.mag)).filter((m) => m !== null) : null);
+  const lm = mags(loc), gm = mags(glob);
+  if (lm === null && gm === null) return { quake: null, cached: false };
+  return { quake: { localMax: lm ? (lm.length ? Math.max(...lm) : 0) : null, localN: lm ? lm.length : null, globalMax: gm ? (gm.length ? Math.max(...gm) : 0) : null }, hour, cached: false };
+}
+
+export async function main() {
+  const st = readJ("data/status.json", null);
+  if (!st || !st.current) { console.log("M1: nincs data/status.json, kihagyom."); return null; }
+  const cfg = readJ("alert-config.json", {});
+  const lat = cfg.lat ?? 46.9833, lon = cfg.lon ?? 16.6, nowMs = Date.now();
+  const wf = readJ("data/metrics/weights_M1.json", null);
+  const w = Array.isArray(wf) ? wf : wf && wf.weights_vector;
+  const cacheF = "data/metrics/m1_cache.json";
+  const cache = readJ(cacheF, null);
+  let quake = null;
+  try {
+    const q = await loadQuakes(lat, lon, nowMs, cache);
+    quake = q.quake;
+    if (quake && !q.cached) { fs.mkdirSync("data/metrics", { recursive: true }); fs.writeFileSync(cacheF, JSON.stringify({ hour: q.hour, quake })); }
+  } catch (e) { quake = null; }
+  const srcs = Object.values(st.sources || {});
+  const out = compute({ cur: st.current, csi: st.csi, quake, srcOk: srcs.filter((s) => s && s.ok).length, srcTotal: srcs.length, w, nowMs, place: cfg.place || "Körmend" });
+  fs.mkdirSync("data/metrics", { recursive: true });
+  fs.writeFileSync("data/metrics/environment_truth_matrix.json", JSON.stringify(out, null, 1));
+  console.log(`M1: G ${out.core_metrics.stationarity_G} · ${out.core_metrics.status} · jelzők: ${out.dynamic_payload.flags.join(", ") || "nincs"} · kockázat ${out.dynamic_payload.risk_score}/100 · földrengés-adat: ${quake ? "van" : "nincs"}`);
+  return out;
+}
+if (process.argv[1] && process.argv[1].endsWith("m1-run.mjs")) await main();
