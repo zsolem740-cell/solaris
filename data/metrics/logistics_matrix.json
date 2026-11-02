@@ -2,15 +2,15 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.0.0",
-  "timestamp": 1793584605,
+  "timestamp": 1793586558,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
-  "status": "NOMINAL",
-  "stationarity_G": 0.6,
+  "status": "ANOMALY",
+  "stationarity_G": 0.502,
   "noise_S": 0.333,
   "validity_V": 0.667,
-  "atm_score": 0.067
+  "atm_score": 0.056
  },
  "dynamic_payload": {
   "live_24h": [
@@ -30,29 +30,46 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-02T02:29:18.743Z",
+    "hour": "2026-11-02T02",
+    "G": 0.502,
+    "V": 0.667,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 19,
+      "g": 0.304
+     },
+     "danube_passau": {
+      "cm": 388,
+      "g": 0.7
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
    {
     "date": "2026-11-02",
-    "n": 1,
-    "v_sum": 0.667,
-    "n_g": 1,
-    "g_sum": 0.6,
-    "G_min": 0.6,
-    "G_avg": 0.6,
+    "n": 2,
+    "v_sum": 1.334,
+    "n_g": 2,
+    "g_sum": 1.102,
+    "G_min": 0.502,
+    "G_avg": 0.551,
     "V_avg": 0.667
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 1,
-    "v_sum": 0.667,
-    "n_g": 1,
-    "g_sum": 0.6,
-    "G_min": 0.6,
-    "G_avg": 0.6,
+    "n": 2,
+    "v_sum": 1.334,
+    "n_g": 2,
+    "g_sum": 1.102,
+    "G_min": 0.502,
+    "G_avg": 0.551,
     "V_avg": 0.667
    }
   ],
@@ -60,24 +77,54 @@
    "rhine_kaub": {
     "label": "Rajna · Kaub",
     "station": "KAUB",
-    "cm": 18,
-    "measured_at": "2026-11-02T02:45:00+01:00",
+    "cm": 19,
+    "measured_at": "2026-11-02T03:15:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
-    "g": 0.6,
-    "basis": "MNW/MHW-állapot (durva)"
+    "mnw": 65,
+    "nnw": 25,
+    "characteristics": {
+     "TUGLW": 190,
+     "NW": 25,
+     "MW": 208,
+     "HSW": 640,
+     "HW": 719,
+     "GLW": 77,
+     "M_I": 460,
+     "NNW": 25,
+     "HHW": 825,
+     "M_II": 640,
+     "MNW": 65,
+     "MHW": 544
+    },
+    "g": 0.304,
+    "basis": "MNW/NNW (hivatalos statisztika)"
    },
    "danube_passau": {
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
-    "cm": 387,
-    "measured_at": "2026-11-02T02:45:00+01:00",
+    "cm": 388,
+    "measured_at": "2026-11-02T03:15:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 780,
-    "g": 0.6,
-    "basis": "MNW/MHW-állapot (durva)"
+    "mnw": 404,
+    "nnw": 372,
+    "characteristics": {
+     "HHW": 1289,
+     "NNW": 372,
+     "MNW": 404,
+     "NW": 393,
+     "ZS_I": 354,
+     "MW": 490,
+     "RNW": 415,
+     "HSW": 780,
+     "MHW": 841,
+     "HW": 1081
+    },
+    "g": 0.7,
+    "basis": "MNW/NNW (hivatalos statisztika)"
    },
    "border_hu": {
     "label": "Magyar határátkelők (Röszke, Tompa, Záhony)",
@@ -86,7 +133,9 @@
    }
   },
   "coverage": "2/3",
-  "flags": [],
+  "flags": [
+   "rhine_low_water"
+  ],
   "notes": [
    "A határátkelők csatornája nincs értelmezve (nincs hivatalos nyílt forrás), ezért null.",
    "A Duna-csatorna a német szakasz (Passau), nem a magyar."
