@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1793627742,
+  "timestamp": 1793631470,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -98,15 +98,21 @@
     "hour": "2026-11-02T13",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-02T14:57:50.501Z",
+    "hour": "2026-11-02T14",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
    {
     "date": "2026-11-02",
-    "n": 5,
-    "v_sum": 5,
-    "n_g": 5,
-    "g_sum": 5,
+    "n": 6,
+    "v_sum": 6,
+    "n_g": 6,
+    "g_sum": 6,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 1
@@ -115,10 +121,10 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 5,
-    "v_sum": 5,
-    "n_g": 5,
-    "g_sum": 5,
+    "n": 6,
+    "v_sum": 6,
+    "n_g": 6,
+    "g_sum": 6,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 1
