@@ -1,16 +1,16 @@
 {
  "header": {
   "module_id": "M3_LOGISTICS",
-  "version": "1.0.0",
-  "timestamp": 1793601157,
+  "version": "1.1.0",
+  "timestamp": 1793604493,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "ANOMALY",
-  "stationarity_G": 0.565,
-  "noise_S": 0.333,
-  "validity_V": 0.667,
-  "atm_score": 0.063
+  "stationarity_G": 0.508,
+  "noise_S": 0.2,
+  "validity_V": 0.8,
+  "atm_score": 0.02
  },
  "dynamic_payload": {
   "live_24h": [
@@ -115,30 +115,47 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-02T07:28:13.872Z",
+    "hour": "2026-11-02T07",
+    "G": 0.508,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 21,
+      "g": 0.336
+     },
+     "danube_passau": {
+      "cm": 393,
+      "g": 0.794
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
    {
     "date": "2026-11-02",
-    "n": 6,
-    "v_sum": 4.002,
-    "n_g": 6,
-    "g_sum": 3.237,
+    "n": 7,
+    "v_sum": 4.802,
+    "n_g": 7,
+    "g_sum": 3.745,
     "G_min": 0.502,
-    "G_avg": 0.54,
-    "V_avg": 0.667
+    "G_avg": 0.535,
+    "V_avg": 0.686
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 6,
-    "v_sum": 4.002,
-    "n_g": 6,
-    "g_sum": 3.237,
+    "n": 7,
+    "v_sum": 4.802,
+    "n_g": 7,
+    "g_sum": 3.745,
     "G_min": 0.502,
-    "G_avg": 0.54,
-    "V_avg": 0.667
+    "G_avg": 0.535,
+    "V_avg": 0.686
    }
   ],
   "channels": {
@@ -146,7 +163,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 21,
-    "measured_at": "2026-11-02T07:30:00+01:00",
+    "measured_at": "2026-11-02T08:15:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -204,14 +221,17 @@
   "flags": [
    "rhine_low_water"
   ],
+  "v_min": 0.5,
+  "weights_basis": "szakértői becslés",
   "notes": [
    "A határátkelők csatornája nincs értelmezve (nincs hivatalos nyílt forrás), ezért null.",
-   "A Duna-csatorna a német szakasz (Passau), nem a magyar."
+   "A Duna-csatorna a német szakasz (Passau), nem a magyar.",
+   "A csatornák súlyai szakértői becslések (Kaub 0,5; Passau 0,3; határátkelők 0,2), nem mért adatok."
   ]
  },
  "weights_vector": [
-  1,
-  1,
-  1
+  0.5,
+  0.3,
+  0.2
  ]
 }

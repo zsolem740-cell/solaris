@@ -1,0 +1,43 @@
+{
+ "timestamp": 1793604489,
+ "spec": "P8 v1.1",
+ "summary": {
+  "checked": 3,
+  "errors": 0,
+  "deviations": 2,
+  "warnings": 0
+ },
+ "modules": {
+  "M1": {
+   "available": true,
+   "source": "helyi",
+   "module": "M1_SOLARIS",
+   "kind": "physical",
+   "errors": [],
+   "deviations": [
+    "a gördülő tár (live_24h, daily_30d, monthly_12m) hiányzik a dynamic_payload-ból"
+   ],
+   "warnings": []
+  },
+  "M3": {
+   "available": true,
+   "source": "helyi",
+   "module": "M3_LOGISTICS",
+   "kind": "physical",
+   "errors": [],
+   "deviations": [],
+   "warnings": []
+  },
+  "M2": {
+   "available": true,
+   "source": "letöltve",
+   "module": "M2_MEDIA_ZAJ",
+   "kind": "information",
+   "errors": [],
+   "deviations": [
+    "a gördülő tár (live_24h, daily_30d, monthly_12m) hiányzik a dynamic_payload-ból"
+   ],
+   "warnings": []
+  }
+ }
+}
