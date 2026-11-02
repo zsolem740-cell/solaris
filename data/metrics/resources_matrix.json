@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1793623255,
+  "timestamp": 1793627742,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -65,7 +65,8 @@
   },
   "notes": [
    "A talajnedvesség reanalízis-elemzés (ERA5-Land), nem mérés, és néhány napos késéssel érkezik.",
-   "A csatornák súlyai szakértői becslések."
+   "A csatornák súlyai szakértői becslések.",
+   "Talajnedvesség lekérdezési hiba: HTTP 503"
   ],
   "live_24h": [
    {
@@ -91,15 +92,21 @@
     "hour": "2026-11-02T12",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-02T13:55:42.856Z",
+    "hour": "2026-11-02T13",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
    {
     "date": "2026-11-02",
-    "n": 4,
-    "v_sum": 4,
-    "n_g": 4,
-    "g_sum": 4,
+    "n": 5,
+    "v_sum": 5,
+    "n_g": 5,
+    "g_sum": 5,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 1
@@ -108,10 +115,10 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 4,
-    "v_sum": 4,
-    "n_g": 4,
-    "g_sum": 4,
+    "n": 5,
+    "v_sum": 5,
+    "n_g": 5,
+    "g_sum": 5,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 1
