@@ -1,0 +1,117 @@
+/* Önfrissítő csomagkezelő (Solaris kiegészítő modul, 00-update-run.mjs.txt).
+   Cél: a modulok frissítéséhez elég EGY fájlt feltölteni (upd-ÉÉÉÉHHNN-SS.txt), nem kell az egyes modulokat átnevezve, külön-külön feltölteni.
+   Működés (minden futáskor, a többi kiegészítő modul előtt, mert a neve 00-val kezdődik):
+     1. Megkeresi a tár gyökerében az upd-*.txt csomagokat, és a LEGUTOLSÓ ÉRVÉNYESET veszi (névsorrend = kiadási sorrend).
+     2. Ellenőrzi: formátum, fájlnevek (csak gyökérbeli kisbetűs *.mjs), méret, SHA-256 (másolási hiba ellen), minden modul szintaxisa (node --check).
+        Bármelyik hiba esetén a csomagot elveti, és az előzőt próbálja; ha egyik sem jó, semmit nem változtat.
+     3. A modulokat felülírja a munkakönyvtárban (a futás idejére; a tárban lévő csomag miatt minden futáskor újra érvényesül, commit nem kell).
+     4. Az új modulokat (amelyeknek nincs .mjs.txt párjuk a tárban, ezért a futtató ciklus nem ismeri) maga futtatja le, névsorrendben.
+   Biztonság: csak a tár tulajdonosa tölthet fel fájlt; a csomag nem írhat felül más fájlt (watch.yml, adatok, saját magát), és nem léphet ki a gyökérből.
+   A csomag felépítése (JSON): { "format": "solaris-update-1", "created": "...", "files": { "m1-run.mjs": "<forrás>", ... }, "sha256": "<a fájlok hash-e>" } */
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import crypto from "node:crypto";
+import { spawnSync } from "node:child_process";
+
+export const FORMAT = "solaris-update-1";
+export const NAME_RE = /^[a-z0-9][a-z0-9_-]*\.mjs$/;
+export const PROTECTED = new Set(["00-update-run.mjs"]);
+export const NOT_UPDATABLE = { "watch.mjs": "a főfigyelő a frissítő ELŐTT fut, ezt a fájlt a csomag nem tudja frissíteni (külön kell feltölteni)" };
+export const MAX_FILES = 30, MAX_FILE_BYTES = 200000;
+
+/* A csomag tartalmi hash-e: a fájlnév-sorba rendezett [név, tartalom] párok JSON-ja. */
+export function contentHash(files) {
+  const entries = Object.keys(files).sort().map((k) => [k, files[k]]);
+  return crypto.createHash("sha256").update(JSON.stringify(entries), "utf8").digest("hex");
+}
+
+export function buildPackage(files, created = new Date().toISOString()) {
+  return JSON.stringify({ format: FORMAT, created, files, sha256: contentHash(files) });
+}
+
+/* Szerkezeti ellenőrzés (nem ír fájlt). Visszatér: { ok, errors, pkg }. */
+export function validate(text) {
+  const errors = [];
+  let pkg = null;
+  try { pkg = JSON.parse(text); } catch (e) { return { ok: false, errors: ["nem érvényes JSON"], pkg: null }; }
+  if (!pkg || typeof pkg !== "object" || pkg.format !== FORMAT) return { ok: false, errors: ["ismeretlen formátum"], pkg: null };
+  const files = pkg.files;
+  if (!files || typeof files !== "object" || Array.isArray(files)) return { ok: false, errors: ["a files mező hiányzik"], pkg: null };
+  const names = Object.keys(files);
+  if (!names.length) errors.push("üres csomag");
+  if (names.length > MAX_FILES) errors.push(`túl sok fájl (${names.length} > ${MAX_FILES})`);
+  for (const n of names) {
+    if (!NAME_RE.test(n)) errors.push(`nem engedélyezett fájlnév: ${n}`);
+    else if (PROTECTED.has(n)) errors.push(`védett fájl: ${n}`);
+    else if (NOT_UPDATABLE[n]) errors.push(`${n}: ${NOT_UPDATABLE[n]}`);
+    if (typeof files[n] !== "string" || !files[n].length) errors.push(`üres vagy nem szöveges tartalom: ${n}`);
+    else if (Buffer.byteLength(files[n], "utf8") > MAX_FILE_BYTES) errors.push(`túl nagy fájl: ${n}`);
+  }
+  if (!errors.length && contentHash(files) !== pkg.sha256) errors.push("a SHA-256 nem egyezik (hibás másolás vagy sérült fájl)");
+  return { ok: errors.length === 0, errors, pkg };
+}
+
+/* Szintaxis-ellenőrzés ideiglenes mappában: minden modul node --check-en átmegy-e. */
+export function syntaxCheck(files) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "solaris-upd-"));
+  const bad = [];
+  try {
+    for (const [n, src] of Object.entries(files)) {
+      const f = path.join(dir, n);
+      fs.writeFileSync(f, src, "utf8");
+      const r = spawnSync(process.execPath, ["--check", f], { encoding: "utf8" });
+      if (r.status !== 0) bad.push(`${n}: ${(r.stderr || "").split("\n").find((l) => l.trim()) || "szintaxis-hiba"}`);
+    }
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+  return bad;
+}
+
+/* A legutolsó érvényes csomag kiválasztása a mappából. */
+export function pickPackage(dir = ".") {
+  const names = fs.readdirSync(dir).filter((f) => /^upd-[a-z0-9_.-]+\.txt$/i.test(f)).sort();
+  const skipped = [];
+  for (let i = names.length - 1; i >= 0; i--) {
+    const text = fs.readFileSync(path.join(dir, names[i]), "utf8");
+    const v = validate(text);
+    if (v.ok) {
+      const bad = syntaxCheck(v.pkg.files);
+      if (!bad.length) return { name: names[i], pkg: v.pkg, skipped };
+      skipped.push(`${names[i]}: ${bad.join("; ")}`);
+    } else skipped.push(`${names[i]}: ${v.errors.join("; ")}`);
+  }
+  return { name: null, pkg: null, skipped };
+}
+
+export function applyPackage(pkg, dir = ".") {
+  const created = [], updated = [];
+  for (const [n, src] of Object.entries(pkg.files)) {
+    const f = path.join(dir, n);
+    const existed = fs.existsSync(f);
+    if (existed && fs.readFileSync(f, "utf8") === src) { continue; }
+    fs.writeFileSync(f, src, "utf8");
+    (existed ? updated : created).push(n);
+  }
+  return { created, updated };
+}
+
+export async function main(dir = ".", { runNew = true } = {}) {
+  const sel = pickPackage(dir);
+  for (const s of sel.skipped) console.log(`Frissítő: ELVETVE – ${s}`);
+  if (!sel.pkg) { if (!sel.skipped.length) console.log("Frissítő: nincs csomag, nincs teendő."); return { applied: null, ...sel }; }
+  const before = new Set(Object.keys(sel.pkg.files).filter((n) => fs.existsSync(path.join(dir, n))));
+  const { created, updated } = applyPackage(sel.pkg, dir);
+  console.log(`Frissítő: ${sel.name} · ${Object.keys(sel.pkg.files).length} modul (${updated.length} felülírva, ${created.length} új, ${Object.keys(sel.pkg.files).length - updated.length - created.length} változatlan)`);
+  const ran = [];
+  if (runNew) {
+    // azok a modulok, amelyeknek nem volt .mjs párja a futtató ciklus indulásakor, a ciklus nem ismeri: ezeket futtatjuk le
+    for (const n of Object.keys(sel.pkg.files).sort()) {
+      if (!/-run\.mjs$/.test(n) || before.has(n)) continue;
+      const r = spawnSync(process.execPath, [n], { cwd: dir, stdio: "inherit" });
+      ran.push({ n, status: r.status });
+      if (r.status !== 0) console.log(`   hiba: ${n} (kilépési kód ${r.status})`);
+    }
+  }
+  return { applied: sel.name, updated, created, ran, skipped: sel.skipped };
+}
+if (process.argv[1] && process.argv[1].endsWith("00-update-run.mjs")) await main();
