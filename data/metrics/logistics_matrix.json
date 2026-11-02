@@ -2,15 +2,15 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1793620323,
+  "timestamp": 1793623259,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "ANOMALY",
-  "stationarity_G": 0.508,
-  "noise_S": 0.2,
-  "validity_V": 0.8,
-  "atm_score": 0.02
+  "stationarity_G": 0.336,
+  "noise_S": 0.5,
+  "validity_V": 0.5,
+  "atm_score": 0.084
  },
  "dynamic_payload": {
   "live_24h": [
@@ -183,30 +183,44 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-02T12:40:59.542Z",
+    "hour": "2026-11-02T12",
+    "G": 0.336,
+    "V": 0.5,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 21,
+      "g": 0.336
+     },
+     "danube_passau": null,
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
    {
     "date": "2026-11-02",
-    "n": 10,
-    "v_sum": 7.202,
-    "n_g": 10,
-    "g_sum": 5.269,
-    "G_min": 0.502,
-    "G_avg": 0.527,
-    "V_avg": 0.72
+    "n": 11,
+    "v_sum": 7.702,
+    "n_g": 11,
+    "g_sum": 5.605,
+    "G_min": 0.336,
+    "G_avg": 0.51,
+    "V_avg": 0.7
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 10,
-    "v_sum": 7.202,
-    "n_g": 10,
-    "g_sum": 5.269,
-    "G_min": 0.502,
-    "G_avg": 0.527,
-    "V_avg": 0.72
+    "n": 11,
+    "v_sum": 7.702,
+    "n_g": 11,
+    "g_sum": 5.605,
+    "G_min": 0.336,
+    "G_avg": 0.51,
+    "V_avg": 0.7
    }
   ],
   "channels": {
@@ -214,7 +228,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 21,
-    "measured_at": "2026-11-02T12:45:00+01:00",
+    "measured_at": "2026-11-02T13:30:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -239,28 +253,9 @@
    },
    "danube_passau": {
     "label": "Duna · Passau (Németország)",
-    "station": "PASSAU DONAU",
-    "cm": 393,
-    "measured_at": "2026-11-02T07:30:00+01:00",
-    "state": "commented",
-    "nsw": null,
-    "hsw": 780,
-    "mnw": 404,
-    "nnw": 372,
-    "characteristics": {
-     "HHW": 1289,
-     "NNW": 372,
-     "MNW": 404,
-     "NW": 393,
-     "ZS_I": 354,
-     "MW": 490,
-     "RNW": 415,
-     "HSW": 780,
-     "MHW": 841,
-     "HW": 1081
-    },
-    "g": 0.794,
-    "basis": "MNW/NNW (hivatalos statisztika)"
+    "cm": null,
+    "g": null,
+    "error": "HTTP 404"
    },
    "border_hu": {
     "label": "Magyar határátkelők (Röszke, Tompa, Záhony)",
@@ -268,7 +263,7 @@
     "g": null
    }
   },
-  "coverage": "2/3",
+  "coverage": "1/3",
   "flags": [
    "rhine_low_water"
   ],
