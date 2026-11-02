@@ -1,10 +1,10 @@
 {
- "timestamp": 1793604770,
+ "timestamp": 1793607842,
  "spec": "P8 v1.1",
  "summary": {
-  "checked": 3,
+  "checked": 4,
   "errors": 0,
-  "deviations": 1,
+  "deviations": 0,
   "warnings": 0
  },
  "modules": {
@@ -26,15 +26,22 @@
    "deviations": [],
    "warnings": []
   },
+  "M7": {
+   "available": true,
+   "source": "helyi",
+   "module": "M7_RESOURCES",
+   "kind": "physical",
+   "errors": [],
+   "deviations": [],
+   "warnings": []
+  },
   "M2": {
    "available": true,
    "source": "letöltve",
    "module": "M2_MEDIA_ZAJ",
    "kind": "information",
    "errors": [],
-   "deviations": [
-    "a gördülő tár (live_24h, daily_30d, monthly_12m) hiányzik a dynamic_payload-ból"
-   ],
+   "deviations": [],
    "warnings": []
   }
  }
