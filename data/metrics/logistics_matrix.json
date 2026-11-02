@@ -2,15 +2,15 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.0.0",
-  "timestamp": 1793589811,
+  "timestamp": 1793593957,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "ANOMALY",
-  "stationarity_G": 0.511,
+  "stationarity_G": 0.521,
   "noise_S": 0.333,
   "validity_V": 0.667,
-  "atm_score": 0.057
+  "atm_score": 0.058
  },
  "dynamic_payload": {
   "live_24h": [
@@ -64,29 +64,46 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-02T04:32:37.492Z",
+    "hour": "2026-11-02T04",
+    "G": 0.521,
+    "V": 0.667,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 19,
+      "g": 0.304
+     },
+     "danube_passau": {
+      "cm": 390,
+      "g": 0.738
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
    {
     "date": "2026-11-02",
-    "n": 3,
-    "v_sum": 2.001,
-    "n_g": 3,
-    "g_sum": 1.613,
+    "n": 4,
+    "v_sum": 2.668,
+    "n_g": 4,
+    "g_sum": 2.134,
     "G_min": 0.502,
-    "G_avg": 0.538,
+    "G_avg": 0.534,
     "V_avg": 0.667
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 3,
-    "v_sum": 2.001,
-    "n_g": 3,
-    "g_sum": 1.613,
+    "n": 4,
+    "v_sum": 2.668,
+    "n_g": 4,
+    "g_sum": 2.134,
     "G_min": 0.502,
-    "G_avg": 0.538,
+    "G_avg": 0.534,
     "V_avg": 0.667
    }
   ],
@@ -95,7 +112,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 19,
-    "measured_at": "2026-11-02T04:15:00+01:00",
+    "measured_at": "2026-11-02T05:30:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -121,8 +138,8 @@
    "danube_passau": {
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
-    "cm": 389,
-    "measured_at": "2026-11-02T04:15:00+01:00",
+    "cm": 390,
+    "measured_at": "2026-11-02T05:30:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 780,
@@ -140,7 +157,7 @@
      "MHW": 841,
      "HW": 1081
     },
-    "g": 0.719,
+    "g": 0.738,
     "basis": "MNW/NNW (hivatalos statisztika)"
    },
    "border_hu": {
