@@ -1,0 +1,100 @@
+{
+ "header": {
+  "module_id": "M3_LOGISTICS",
+  "version": "1.0.0",
+  "timestamp": 1793584605,
+  "p8_signature": "PHYSICAL_GROUND_TRUTH"
+ },
+ "core_metrics": {
+  "status": "NOMINAL",
+  "stationarity_G": 0.6,
+  "noise_S": 0.333,
+  "validity_V": 0.667,
+  "atm_score": 0.067
+ },
+ "dynamic_payload": {
+  "live_24h": [
+   {
+    "t": "2026-11-02T01:56:45.318Z",
+    "hour": "2026-11-02T01",
+    "G": 0.6,
+    "V": 0.667,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 18,
+      "g": 0.6
+     },
+     "danube_passau": {
+      "cm": 387,
+      "g": 0.6
+     },
+     "border_hu": null
+    }
+   }
+  ],
+  "daily_30d": [
+   {
+    "date": "2026-11-02",
+    "n": 1,
+    "v_sum": 0.667,
+    "n_g": 1,
+    "g_sum": 0.6,
+    "G_min": 0.6,
+    "G_avg": 0.6,
+    "V_avg": 0.667
+   }
+  ],
+  "monthly_12m": [
+   {
+    "month": "2026-11",
+    "n": 1,
+    "v_sum": 0.667,
+    "n_g": 1,
+    "g_sum": 0.6,
+    "G_min": 0.6,
+    "G_avg": 0.6,
+    "V_avg": 0.667
+   }
+  ],
+  "channels": {
+   "rhine_kaub": {
+    "label": "Rajna · Kaub",
+    "station": "KAUB",
+    "cm": 18,
+    "measured_at": "2026-11-02T02:45:00+01:00",
+    "state": "low",
+    "nsw": null,
+    "hsw": 640,
+    "g": 0.6,
+    "basis": "MNW/MHW-állapot (durva)"
+   },
+   "danube_passau": {
+    "label": "Duna · Passau (Németország)",
+    "station": "PASSAU DONAU",
+    "cm": 387,
+    "measured_at": "2026-11-02T02:45:00+01:00",
+    "state": "low",
+    "nsw": null,
+    "hsw": 780,
+    "g": 0.6,
+    "basis": "MNW/MHW-állapot (durva)"
+   },
+   "border_hu": {
+    "label": "Magyar határátkelők (Röszke, Tompa, Záhony)",
+    "cm": null,
+    "g": null
+   }
+  },
+  "coverage": "2/3",
+  "flags": [],
+  "notes": [
+   "A határátkelők csatornája nincs értelmezve (nincs hivatalos nyílt forrás), ezért null.",
+   "A Duna-csatorna a német szakasz (Passau), nem a magyar."
+  ]
+ },
+ "weights_vector": [
+  1,
+  1,
+  1
+ ]
+}

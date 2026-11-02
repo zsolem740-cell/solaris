@@ -1,64 +1,40 @@
 {
- "updated": "2026-11-02T01:31:15.328Z",
+ "updated": "2026-11-02T01:56:43.838Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
   "configured": true,
-  "attempted": 0,
-  "sent": 0
+  "attempted": 1,
+  "sent": 1
  },
  "sources": {
+  "noaa_kp_forecast": {
+   "ok": true,
+   "ms": 153
+  },
   "noaa_kp": {
    "ok": true,
-   "ms": 170
+   "ms": 195
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 136
-  },
-  "noaa_kp_forecast": {
-   "ok": true,
-   "ms": 147
-  },
-  "noaa_wind": {
-   "ok": true,
-   "ms": 17
+   "ms": 162
   },
   "noaa_mag": {
    "ok": true,
-   "ms": 14
+   "ms": 47
   },
-  "open_meteo": {
+  "noaa_wind": {
    "ok": true,
-   "ms": 430
+   "ms": 33
   },
   "usgs": {
    "ok": true,
-   "ms": 541
+   "ms": 536
   },
-  "om_daily": {
+  "open_meteo": {
    "ok": true,
-   "ms": 130
-  },
-  "om_pressure": {
-   "ok": true,
-   "ms": 74
-  },
-  "om_flood": {
-   "ok": true,
-   "ms": 582
-  },
-  "hungaromet": {
-   "ok": true,
-   "ms": 2537
-  },
-  "om_models": {
-   "ok": true,
-   "ms": 89
-  },
-  "om_models_16414": {
-   "ok": true,
-   "ms": 88
+   "ms": 788
   },
   "geosphere": {
    "ok": true,
@@ -68,14 +44,14 @@
  "current": {
   "kp": 2,
   "kpMax24": 3,
-  "flux": 2.7595874030339473e-7,
-  "flare": "B2.8",
-  "speed": 542.18,
-  "bz": -2.269,
+  "flux": 2.617819916395092e-7,
+  "flare": "B2.6",
+  "speed": 484.51,
+  "bz": -1.95,
   "tmin12": 6.5,
   "gust12": 25.9,
-  "dp3": -1.3999999999998636,
-  "pressure": 1026.1
+  "dp3": -1.300000000000182,
+  "pressure": 1026.6
  },
  "csi": {
   "t": "2026-11-02T01:31:15.328Z",
@@ -121,7 +97,7 @@
   "enabled": true,
   "from": 22,
   "to": 7,
-  "now": true
+  "now": false
  },
  "history": {
   "rows": 59,
@@ -129,6 +105,11 @@
   "since": "2026-10-30T14:04Z"
  },
  "recent": [
+  {
+   "t": "2026-11-02T01:56:43.838Z",
+   "key": "test",
+   "title": "Teszt: a háttérfigyelő működik"
+  },
   {
    "t": "2026-11-01T20:10:31.362Z",
    "key": "test",
