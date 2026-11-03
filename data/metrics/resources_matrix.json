@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1793664456,
+  "timestamp": 1793669232,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -32,10 +32,10 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.373,
-    "valid_at": "2026-11-02T23:00:00.000Z",
-    "lag_h": 0,
-    "percentile": 0.101,
+    "value": 0.385,
+    "valid_at": "2026-11-03T23:00:00.000Z",
+    "lag_h": -22,
+    "percentile": 0.166,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    },
@@ -44,10 +44,10 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.404,
-    "valid_at": "2026-11-02T23:00:00.000Z",
-    "lag_h": 0,
-    "percentile": 0.351,
+    "value": 0.401,
+    "valid_at": "2026-11-03T23:00:00.000Z",
+    "lag_h": -22,
+    "percentile": 0.333,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    }
@@ -65,8 +65,7 @@
   },
   "notes": [
    "A talajnedvesség reanalízis-elemzés (ERA5-Land), nem mérés, és néhány napos késéssel érkezik.",
-   "A csatornák súlyai szakértői becslések.",
-   "Talajnedvesség lekérdezési hiba: This operation was aborted"
+   "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
    {
@@ -158,6 +157,12 @@
     "hour": "2026-11-03T00",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-03T01:27:12.450Z",
+    "hour": "2026-11-03T01",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -173,10 +178,10 @@
    },
    {
     "date": "2026-11-03",
-    "n": 1,
-    "v_sum": 1,
-    "n_g": 1,
-    "g_sum": 1,
+    "n": 2,
+    "v_sum": 2,
+    "n_g": 2,
+    "g_sum": 2,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 1
@@ -185,10 +190,10 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 15,
-    "v_sum": 15,
-    "n_g": 15,
-    "g_sum": 15,
+    "n": 16,
+    "v_sum": 16,
+    "n_g": 16,
+    "g_sum": 16,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 1
