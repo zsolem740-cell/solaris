@@ -1,8 +1,8 @@
 {
- "timestamp": 1793683635,
- "spec": "P8 v1.1",
+ "timestamp": 1793684390,
+ "spec": "P8 v1.2",
  "summary": {
-  "checked": 4,
+  "checked": 5,
   "errors": 0,
   "deviations": 0,
   "warnings": 0
@@ -30,6 +30,15 @@
    "available": true,
    "source": "helyi",
    "module": "M7_RESOURCES",
+   "kind": "physical",
+   "errors": [],
+   "deviations": [],
+   "warnings": []
+  },
+  "M5": {
+   "available": true,
+   "source": "helyi",
+   "module": "M5_FINANCE",
    "kind": "physical",
    "errors": [],
    "deviations": [],

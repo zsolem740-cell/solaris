@@ -1,0 +1,161 @@
+{
+ "header": {
+  "module_id": "M5_FINANCE",
+  "version": "1.0.0",
+  "timestamp": 1793684384,
+  "p8_signature": "OFFICIAL_RATES"
+ },
+ "core_metrics": {
+  "status": "NOMINAL",
+  "stationarity_G": 1,
+  "noise_S": 0,
+  "validity_V": 1,
+  "atm_score": 0
+ },
+ "dynamic_payload": {
+  "channels": {
+   "huf_eur": {
+    "label": "EUR/HUF – az MNB hivatalos napi árfolyama",
+    "type": "official",
+    "source": "MNB hivatalos devizaárfolyam (arfolyamok.asmx)",
+    "unit": "HUF/EUR",
+    "value": 364.88,
+    "prev": 365.8,
+    "date": "2026-11-02",
+    "prev_date": "2026-10-30",
+    "age_days": 1,
+    "chg_pct": -0.252,
+    "percentile": 0.452,
+    "baseline_n": 1240,
+    "g": 1,
+    "note": null
+   },
+   "huf_usd": {
+    "label": "USD/HUF – az MNB hivatalos napi árfolyama",
+    "type": "official",
+    "source": "MNB hivatalos devizaárfolyam (arfolyamok.asmx)",
+    "unit": "HUF/USD",
+    "value": 325.26,
+    "prev": 326.64,
+    "date": "2026-11-02",
+    "prev_date": "2026-10-30",
+    "age_days": 1,
+    "chg_pct": -0.422,
+    "percentile": 0.473,
+    "baseline_n": 1240,
+    "g": 1,
+    "note": null
+   },
+   "eur_usd": {
+    "label": "EUR/USD – az EKB hivatalos referencia-árfolyama",
+    "type": "official",
+    "source": "EKB adatportál, EXR/D.USD.EUR.SP00.A (hivatalos referencia-árfolyam)",
+    "unit": "USD/EUR",
+    "value": 1.1216,
+    "prev": 1.1172,
+    "date": "2026-11-02",
+    "prev_date": "2026-10-30",
+    "age_days": 1,
+    "chg_pct": 0.394,
+    "percentile": 0.7,
+    "baseline_n": 1268,
+    "g": 1,
+    "note": null
+   }
+  },
+  "coverage": "3/3",
+  "flags": [],
+  "v_min": 0.5,
+  "weights_basis": "szakértői becslés",
+  "reference": {
+   "ecb_key_rates": {
+    "mrr": {
+     "value": 2.65,
+     "date": "2026-09-16",
+     "age_days": 48,
+     "last_change": {
+      "date": "2026-09-16",
+      "from": 2.4,
+      "to": 2.65
+     },
+     "changed_recently": false
+    },
+    "dfr": {
+     "value": 2.5,
+     "date": "2026-09-16",
+     "age_days": 48,
+     "last_change": {
+      "date": "2026-09-16",
+      "from": 2.25,
+      "to": 2.5
+     },
+     "changed_recently": false
+    },
+    "mlf": {
+     "value": 2.9,
+     "date": "2026-09-16",
+     "age_days": 48,
+     "last_change": {
+      "date": "2026-09-16",
+      "from": 2.65,
+      "to": 2.9
+     },
+     "changed_recently": false
+    }
+   },
+   "source": "EKB adatportál, FM adatsor (irányadó kamatok)",
+   "note": "tájékoztató adat: nem számít a G-be és a V-be"
+  },
+  "baseline": {
+   "years": 5,
+   "method": "a napi |%| változás percentilise az utolsó 5 évi hivatalos adatsorból (az utolsó 14 nap nélkül)",
+   "built": "2026-11-03",
+   "n": {
+    "huf_eur": 1240,
+    "huf_usd": 1240,
+    "eur_usd": 1268
+   }
+  },
+  "notes": [
+   "Hivatalosan közzétett adatok (MNB, EKB), nem előrejelzés és nem ajánlás.",
+   "A csatornák súlyai szakértői becslések."
+  ],
+  "live_24h": [
+   {
+    "t": "2026-11-03T05:39:44.380Z",
+    "hour": "2026-11-03T05",
+    "G": 1,
+    "V": 1
+   }
+  ],
+  "daily_30d": [
+   {
+    "date": "2026-11-03",
+    "n": 1,
+    "v_sum": 1,
+    "n_g": 1,
+    "g_sum": 1,
+    "G_min": 1,
+    "G_avg": 1,
+    "V_avg": 1
+   }
+  ],
+  "monthly_12m": [
+   {
+    "month": "2026-11",
+    "n": 1,
+    "v_sum": 1,
+    "n_g": 1,
+    "g_sum": 1,
+    "G_min": 1,
+    "G_avg": 1,
+    "V_avg": 1
+   }
+  ]
+ },
+ "weights_vector": [
+  0.5,
+  0.3,
+  0.2
+ ]
+}

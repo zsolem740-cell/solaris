@@ -1,64 +1,40 @@
 {
- "updated": "2026-11-03T05:27:10.652Z",
+ "updated": "2026-11-03T05:39:43.079Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
   "configured": true,
-  "attempted": 0,
-  "sent": 0
+  "attempted": 1,
+  "sent": 1
  },
  "sources": {
-  "noaa_wind": {
-   "ok": true,
-   "ms": 69
-  },
-  "noaa_mag": {
-   "ok": true,
-   "ms": 41
-  },
   "noaa_kp": {
    "ok": true,
-   "ms": 143
+   "ms": 266
   },
   "noaa_kp_forecast": {
    "ok": true,
-   "ms": 86
+   "ms": 210
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 95
+   "ms": 213
+  },
+  "noaa_mag": {
+   "ok": true,
+   "ms": 74
+  },
+  "noaa_wind": {
+   "ok": true,
+   "ms": 60
   },
   "usgs": {
    "ok": true,
-   "ms": 172
+   "ms": 616
   },
   "open_meteo": {
    "ok": true,
-   "ms": 468
-  },
-  "om_daily": {
-   "ok": true,
-   "ms": 277
-  },
-  "om_pressure": {
-   "ok": true,
-   "ms": 106
-  },
-  "om_flood": {
-   "ok": true,
-   "ms": 423
-  },
-  "hungaromet": {
-   "ok": true,
-   "ms": 1891
-  },
-  "om_models": {
-   "ok": true,
-   "ms": 108
-  },
-  "om_models_15811": {
-   "ok": true,
-   "ms": 106
+   "ms": 766
   },
   "geosphere": {
    "ok": true,
@@ -68,10 +44,10 @@
  "current": {
   "kp": 0.67,
   "kpMax24": 2,
-  "flux": 3.549190239482414e-7,
+  "flux": 3.503241146063374e-7,
   "flare": "B3.5",
-  "speed": 467.31,
-  "bz": -1.686,
+  "speed": 430.49,
+  "bz": -1.124,
   "tmin12": 6,
   "gust12": 26.6,
   "dp3": -0.900000000000091,
@@ -121,7 +97,7 @@
   "enabled": true,
   "from": 22,
   "to": 7,
-  "now": true
+  "now": false
  },
  "history": {
   "rows": 85,
@@ -129,6 +105,11 @@
   "since": "2026-10-30T14:04Z"
  },
  "recent": [
+  {
+   "t": "2026-11-03T05:39:43.079Z",
+   "key": "test",
+   "title": "Teszt: a háttérfigyelő működik"
+  },
   {
    "t": "2026-11-02T08:38:47.429Z",
    "key": "test",
@@ -221,11 +202,6 @@
   },
   {
    "t": "2026-10-30T19:45:47.924Z",
-   "key": "test",
-   "title": "Teszt: a háttérfigyelő működik"
-  },
-  {
-   "t": "2026-10-30T19:42:07.167Z",
    "key": "test",
    "title": "Teszt: a háttérfigyelő működik"
   }
