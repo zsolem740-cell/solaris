@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M5_FINANCE",
   "version": "1.0.0",
-  "timestamp": 1793736429,
+  "timestamp": 1793741287,
   "p8_signature": "OFFICIAL_RATES"
  },
  "core_metrics": {
@@ -216,30 +216,36 @@
     "hour": "2026-11-03T20",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-03T21:28:07.490Z",
+    "hour": "2026-11-03T21",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
    {
     "date": "2026-11-03",
-    "n": 16,
-    "v_sum": 15.6,
-    "n_g": 16,
-    "g_sum": 16,
+    "n": 17,
+    "v_sum": 16.6,
+    "n_g": 17,
+    "g_sum": 17,
     "G_min": 1,
     "G_avg": 1,
-    "V_avg": 0.975
+    "V_avg": 0.976
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 16,
-    "v_sum": 15.6,
-    "n_g": 16,
-    "g_sum": 16,
+    "n": 17,
+    "v_sum": 16.6,
+    "n_g": 17,
+    "g_sum": 17,
     "G_min": 1,
     "G_avg": 1,
-    "V_avg": 0.975
+    "V_avg": 0.976
    }
   ]
  },
