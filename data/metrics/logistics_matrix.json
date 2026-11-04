@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1793805017,
+  "timestamp": 1793808740,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -883,6 +883,20 @@
      "danube_passau": null,
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-04T16:12:20.957Z",
+    "hour": "2026-11-04T16",
+    "G": 0.368,
+    "V": 0.5,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 23,
+      "g": 0.368
+     },
+     "danube_passau": null,
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -908,10 +922,10 @@
    },
    {
     "date": "2026-11-04",
-    "n": 15,
-    "v_sum": 7.5,
-    "n_g": 15,
-    "g_sum": 5.504,
+    "n": 16,
+    "v_sum": 8,
+    "n_g": 16,
+    "g_sum": 5.872,
     "G_min": 0.336,
     "G_avg": 0.367,
     "V_avg": 0.5
@@ -920,13 +934,13 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 60,
-    "v_sum": 32.202,
-    "n_g": 60,
-    "g_sum": 20.869,
+    "n": 61,
+    "v_sum": 32.702,
+    "n_g": 61,
+    "g_sum": 21.237,
     "G_min": 0.256,
     "G_avg": 0.348,
-    "V_avg": 0.537
+    "V_avg": 0.536
    }
   ],
   "channels": {
@@ -934,7 +948,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 23,
-    "measured_at": "2026-11-04T16:00:00+01:00",
+    "measured_at": "2026-11-04T17:00:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
