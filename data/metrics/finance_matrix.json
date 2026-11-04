@@ -2,12 +2,12 @@
  "header": {
   "module_id": "M5_FINANCE",
   "version": "1.0.0",
-  "timestamp": 1793801183,
+  "timestamp": 1793804999,
   "p8_signature": "OFFICIAL_RATES"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 1,
+  "stationarity_G": 0.996,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
@@ -51,15 +51,15 @@
     "type": "official",
     "source": "EKB adatportál, EXR/D.USD.EUR.SP00.A (hivatalos referencia-árfolyam)",
     "unit": "USD/EUR",
-    "value": 1.1179,
-    "prev": 1.1216,
-    "date": "2026-11-03",
-    "prev_date": "2026-11-02",
-    "age_days": 1,
-    "chg_pct": -0.33,
-    "percentile": 0.615,
+    "value": 1.1267,
+    "prev": 1.1179,
+    "date": "2026-11-04",
+    "prev_date": "2026-11-03",
+    "age_days": 0,
+    "chg_pct": 0.787,
+    "percentile": 0.902,
     "baseline_n": 1268,
-    "g": 1,
+    "g": 0.98,
     "note": null
    }
   },
@@ -318,6 +318,12 @@
     "hour": "2026-11-04T14",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-04T15:09:59.752Z",
+    "hour": "2026-11-04T15",
+    "G": 0.996,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -333,11 +339,11 @@
    },
    {
     "date": "2026-11-04",
-    "n": 14,
-    "v_sum": 14,
-    "n_g": 14,
-    "g_sum": 14,
-    "G_min": 1,
+    "n": 15,
+    "v_sum": 15,
+    "n_g": 15,
+    "g_sum": 14.996,
+    "G_min": 0.996,
     "G_avg": 1,
     "V_avg": 1
    }
@@ -345,11 +351,11 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 33,
-    "v_sum": 32.6,
-    "n_g": 33,
-    "g_sum": 33,
-    "G_min": 1,
+    "n": 34,
+    "v_sum": 33.6,
+    "n_g": 34,
+    "g_sum": 33.996,
+    "G_min": 0.996,
     "G_avg": 1,
     "V_avg": 0.988
    }
