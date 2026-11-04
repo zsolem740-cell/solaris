@@ -2,15 +2,15 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1793773851,
+  "timestamp": 1793778612,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "ANOMALY",
-  "stationarity_G": 0.384,
+  "stationarity_G": 0.368,
   "noise_S": 0.5,
   "validity_V": 0.5,
-  "atm_score": 0.096
+  "atm_score": 0.092
  },
  "dynamic_payload": {
   "live_24h": [
@@ -771,6 +771,20 @@
      "danube_passau": null,
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-04T07:50:12.635Z",
+    "hour": "2026-11-04T07",
+    "G": 0.368,
+    "V": 0.5,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 23,
+      "g": 0.368
+     },
+     "danube_passau": null,
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -796,24 +810,24 @@
    },
    {
     "date": "2026-11-04",
-    "n": 7,
-    "v_sum": 3.5,
-    "n_g": 7,
-    "g_sum": 2.544,
+    "n": 8,
+    "v_sum": 4,
+    "n_g": 8,
+    "g_sum": 2.912,
     "G_min": 0.336,
-    "G_avg": 0.363,
+    "G_avg": 0.364,
     "V_avg": 0.5
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 52,
-    "v_sum": 28.202,
-    "n_g": 52,
-    "g_sum": 17.909,
+    "n": 53,
+    "v_sum": 28.702,
+    "n_g": 53,
+    "g_sum": 18.277,
     "G_min": 0.256,
-    "G_avg": 0.344,
+    "G_avg": 0.345,
     "V_avg": 0.542
    }
   ],
@@ -821,8 +835,8 @@
    "rhine_kaub": {
     "label": "Rajna · Kaub",
     "station": "KAUB",
-    "cm": 24,
-    "measured_at": "2026-11-04T07:15:00+01:00",
+    "cm": 23,
+    "measured_at": "2026-11-04T08:45:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -842,7 +856,7 @@
      "MNW": 65,
      "MHW": 544
     },
-    "g": 0.384,
+    "g": 0.368,
     "basis": "MNW/NNW (hivatalos statisztika)"
    },
    "danube_passau": {
