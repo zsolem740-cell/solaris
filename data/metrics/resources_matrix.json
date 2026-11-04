@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1793778609,
+  "timestamp": 1793781703,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -20,10 +20,10 @@
     "type": "measured",
     "source": "GeoSphere Austria TAWES (órás sorok a data/obs_at.json-ból)",
     "unit": "mm/24 h",
-    "value": 0.1,
+    "value": 0,
     "hours_valid": 24,
     "station": "GUESSING (23 km)",
-    "percentile": 0.551,
+    "percentile": 0.269,
     "g": 1,
     "basis": "klimatológiai percentilis, felső farok (P90 fölött csökken)"
    },
@@ -34,7 +34,7 @@
     "unit": "m³/m³",
     "value": 0.366,
     "valid_at": "2026-11-04T23:00:00.000Z",
-    "lag_h": -15,
+    "lag_h": -14,
     "percentile": 0.069,
     "g": 0.725,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -46,7 +46,7 @@
     "unit": "m³/m³",
     "value": 0.395,
     "valid_at": "2026-11-04T23:00:00.000Z",
-    "lag_h": -15,
+    "lag_h": -14,
     "percentile": 0.28,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -343,6 +343,12 @@
     "hour": "2026-11-04T07",
     "G": 0.917,
     "V": 1
+   },
+   {
+    "t": "2026-11-04T08:41:43.087Z",
+    "hour": "2026-11-04T08",
+    "G": 0.917,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -368,24 +374,24 @@
    },
    {
     "date": "2026-11-04",
-    "n": 8,
-    "v_sum": 8,
-    "n_g": 8,
-    "g_sum": 7.917,
+    "n": 9,
+    "v_sum": 9,
+    "n_g": 9,
+    "g_sum": 8.834,
     "G_min": 0.917,
-    "G_avg": 0.99,
+    "G_avg": 0.982,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 46,
-    "v_sum": 46,
-    "n_g": 46,
-    "g_sum": 45.917,
+    "n": 47,
+    "v_sum": 47,
+    "n_g": 47,
+    "g_sum": 46.834,
     "G_min": 0.917,
-    "G_avg": 0.998,
+    "G_avg": 0.996,
     "V_avg": 1
    }
   ]
