@@ -2,15 +2,15 @@
  "header": {
   "module_id": "M5_FINANCE",
   "version": "1.0.0",
-  "timestamp": 1793828111,
+  "timestamp": 1793831031,
   "p8_signature": "OFFICIAL_RATES"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 0.996,
-  "noise_S": 0,
-  "validity_V": 1,
-  "atm_score": 0
+  "stationarity_G": 1,
+  "noise_S": 0.2,
+  "validity_V": 0.8,
+  "atm_score": 0.04
  },
  "dynamic_payload": {
   "channels": {
@@ -51,19 +51,19 @@
     "type": "official",
     "source": "EKB adatportál, EXR/D.USD.EUR.SP00.A (hivatalos referencia-árfolyam)",
     "unit": "USD/EUR",
-    "value": 1.1267,
-    "prev": 1.1179,
-    "date": "2026-11-04",
-    "prev_date": "2026-11-03",
-    "age_days": 0,
-    "chg_pct": 0.787,
-    "percentile": 0.902,
+    "value": null,
+    "prev": null,
+    "date": null,
+    "prev_date": null,
+    "age_days": null,
+    "chg_pct": null,
+    "percentile": null,
     "baseline_n": 1268,
-    "g": 0.98,
-    "note": null
+    "g": null,
+    "note": "nincs elég friss hivatalos adat"
    }
   },
-  "coverage": "3/3",
+  "coverage": "2/3",
   "flags": [],
   "v_min": 0.5,
   "weights_basis": "szakértői becslés",
@@ -118,7 +118,8 @@
   },
   "notes": [
    "Hivatalosan közzétett adatok (MNB, EKB), nem előrejelzés és nem ajánlás.",
-   "A csatornák súlyai szakértői becslések."
+   "A csatornák súlyai szakértői becslések.",
+   "Lekérdezési hiba: EKB EXR: This operation was aborted"
   ],
   "live_24h": [
    {
@@ -360,6 +361,12 @@
     "hour": "2026-11-04T21",
     "G": 0.996,
     "V": 1
+   },
+   {
+    "t": "2026-11-04T22:23:51.118Z",
+    "hour": "2026-11-04T22",
+    "G": 1,
+    "V": 0.8
    }
   ],
   "daily_30d": [
@@ -375,25 +382,25 @@
    },
    {
     "date": "2026-11-04",
-    "n": 21,
-    "v_sum": 20.8,
-    "n_g": 21,
-    "g_sum": 20.976,
+    "n": 22,
+    "v_sum": 21.6,
+    "n_g": 22,
+    "g_sum": 21.976,
     "G_min": 0.996,
     "G_avg": 0.999,
-    "V_avg": 0.99
+    "V_avg": 0.982
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 40,
-    "v_sum": 39.4,
-    "n_g": 40,
-    "g_sum": 39.976,
+    "n": 41,
+    "v_sum": 40.2,
+    "n_g": 41,
+    "g_sum": 40.976,
     "G_min": 0.996,
     "G_avg": 0.999,
-    "V_avg": 0.985
+    "V_avg": 0.98
    }
   ]
  },
