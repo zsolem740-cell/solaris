@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M5_FINANCE",
   "version": "1.0.0",
-  "timestamp": 1793785300,
+  "timestamp": 1793789546,
   "p8_signature": "OFFICIAL_RATES"
  },
  "core_metrics": {
@@ -19,13 +19,13 @@
     "type": "official",
     "source": "MNB hivatalos devizaárfolyam (arfolyamok.asmx)",
     "unit": "HUF/EUR",
-    "value": 364.88,
+    "value": 363.32,
     "prev": 364.88,
-    "date": "2026-11-03",
-    "prev_date": "2026-11-02",
-    "age_days": 1,
-    "chg_pct": 0,
-    "percentile": 0.001,
+    "date": "2026-11-04",
+    "prev_date": "2026-11-03",
+    "age_days": 0,
+    "chg_pct": -0.428,
+    "percentile": 0.674,
     "baseline_n": 1240,
     "g": 1,
     "note": null
@@ -35,13 +35,13 @@
     "type": "official",
     "source": "MNB hivatalos devizaárfolyam (arfolyamok.asmx)",
     "unit": "HUF/USD",
-    "value": 326.05,
-    "prev": 325.26,
-    "date": "2026-11-03",
-    "prev_date": "2026-11-02",
-    "age_days": 1,
-    "chg_pct": 0.243,
-    "percentile": 0.29,
+    "value": 322.72,
+    "prev": 326.05,
+    "date": "2026-11-04",
+    "prev_date": "2026-11-03",
+    "age_days": 0,
+    "chg_pct": -1.021,
+    "percentile": 0.819,
     "baseline_n": 1240,
     "g": 1,
     "note": null
@@ -294,6 +294,12 @@
     "hour": "2026-11-04T09",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-04T10:52:26.296Z",
+    "hour": "2026-11-04T10",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -309,10 +315,10 @@
    },
    {
     "date": "2026-11-04",
-    "n": 10,
-    "v_sum": 10,
-    "n_g": 10,
-    "g_sum": 10,
+    "n": 11,
+    "v_sum": 11,
+    "n_g": 11,
+    "g_sum": 11,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 1
@@ -321,13 +327,13 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 29,
-    "v_sum": 28.6,
-    "n_g": 29,
-    "g_sum": 29,
+    "n": 30,
+    "v_sum": 29.6,
+    "n_g": 30,
+    "g_sum": 30,
     "G_min": 1,
     "G_avg": 1,
-    "V_avg": 0.986
+    "V_avg": 0.987
    }
   ]
  },
