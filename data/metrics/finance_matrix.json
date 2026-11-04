@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M5_FINANCE",
   "version": "1.0.0",
-  "timestamp": 1793747010,
+  "timestamp": 1793751771,
   "p8_signature": "OFFICIAL_RATES"
  },
  "core_metrics": {
@@ -23,7 +23,7 @@
     "prev": 364.88,
     "date": "2026-11-03",
     "prev_date": "2026-11-02",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": 0,
     "percentile": 0.001,
     "baseline_n": 1240,
@@ -39,7 +39,7 @@
     "prev": 325.26,
     "date": "2026-11-03",
     "prev_date": "2026-11-02",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": 0.243,
     "percentile": 0.29,
     "baseline_n": 1240,
@@ -55,7 +55,7 @@
     "prev": 1.1216,
     "date": "2026-11-03",
     "prev_date": "2026-11-02",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": -0.33,
     "percentile": 0.615,
     "baseline_n": 1268,
@@ -72,7 +72,7 @@
     "mrr": {
      "value": 2.65,
      "date": "2026-09-16",
-     "age_days": 48,
+     "age_days": 49,
      "last_change": {
       "date": "2026-09-16",
       "from": 2.4,
@@ -83,7 +83,7 @@
     "dfr": {
      "value": 2.5,
      "date": "2026-09-16",
-     "age_days": 48,
+     "age_days": 49,
      "last_change": {
       "date": "2026-09-16",
       "from": 2.25,
@@ -94,7 +94,7 @@
     "mlf": {
      "value": 2.9,
      "date": "2026-09-16",
-     "age_days": 48,
+     "age_days": 49,
      "last_change": {
       "date": "2026-09-16",
       "from": 2.65,
@@ -234,6 +234,12 @@
     "hour": "2026-11-03T23",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-04T00:22:51.549Z",
+    "hour": "2026-11-04T00",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -246,18 +252,28 @@
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 0.979
+   },
+   {
+    "date": "2026-11-04",
+    "n": 1,
+    "v_sum": 1,
+    "n_g": 1,
+    "g_sum": 1,
+    "G_min": 1,
+    "G_avg": 1,
+    "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 19,
-    "v_sum": 18.6,
-    "n_g": 19,
-    "g_sum": 19,
+    "n": 20,
+    "v_sum": 19.6,
+    "n_g": 20,
+    "g_sum": 20,
     "G_min": 1,
     "G_avg": 1,
-    "V_avg": 0.979
+    "V_avg": 0.98
    }
   ]
  },
