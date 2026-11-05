@@ -2,15 +2,15 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1793911773,
+  "timestamp": 1793914140,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "ANOMALY",
-  "stationarity_G": 0.462,
+  "stationarity_G": 0.47,
   "noise_S": 0.2,
   "validity_V": 0.8,
-  "atm_score": 0.018
+  "atm_score": 0.019
  },
  "dynamic_payload": {
   "live_24h": [
@@ -1262,6 +1262,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-05T21:29:00.898Z",
+    "hour": "2026-11-05T21",
+    "G": 0.47,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 20,
+      "g": 0.32
+     },
+     "danube_passau": {
+      "cm": 389,
+      "g": 0.719
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1297,25 +1314,25 @@
    },
    {
     "date": "2026-11-05",
-    "n": 18,
-    "v_sum": 10.5,
-    "n_g": 18,
-    "g_sum": 6.316,
+    "n": 19,
+    "v_sum": 11.3,
+    "n_g": 19,
+    "g_sum": 6.786,
     "G_min": 0.272,
-    "G_avg": 0.351,
-    "V_avg": 0.583
+    "G_avg": 0.357,
+    "V_avg": 0.595
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 86,
-    "v_sum": 46.702,
-    "n_g": 86,
-    "g_sum": 29.841,
+    "n": 87,
+    "v_sum": 47.502,
+    "n_g": 87,
+    "g_sum": 30.311,
     "G_min": 0.256,
-    "G_avg": 0.347,
-    "V_avg": 0.543
+    "G_avg": 0.348,
+    "V_avg": 0.546
    }
   ],
   "channels": {
@@ -1323,7 +1340,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 20,
-    "measured_at": "2026-11-05T21:45:00+01:00",
+    "measured_at": "2026-11-05T22:15:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -1349,8 +1366,8 @@
    "danube_passau": {
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
-    "cm": 388,
-    "measured_at": "2026-11-05T21:45:00+01:00",
+    "cm": 389,
+    "measured_at": "2026-11-05T22:15:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 780,
@@ -1368,7 +1385,7 @@
      "MHW": 841,
      "HW": 1081
     },
-    "g": 0.7,
+    "g": 0.719,
     "basis": "MNW/NNW (hivatalos statisztika)"
    },
    "border_hu": {
