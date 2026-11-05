@@ -2,12 +2,12 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1793898607,
+  "timestamp": 1793901731,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "ANOMALY",
-  "stationarity_G": 0.487,
+  "stationarity_G": 0.48,
   "noise_S": 0.2,
   "validity_V": 0.8,
   "atm_score": 0.019
@@ -1211,6 +1211,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-05T18:02:11.407Z",
+    "hour": "2026-11-05T18",
+    "G": 0.48,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 21,
+      "g": 0.336
+     },
+     "danube_passau": {
+      "cm": 389,
+      "g": 0.719
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1246,25 +1263,25 @@
    },
    {
     "date": "2026-11-05",
-    "n": 15,
-    "v_sum": 8.1,
-    "n_g": 15,
-    "g_sum": 4.894,
+    "n": 16,
+    "v_sum": 8.9,
+    "n_g": 16,
+    "g_sum": 5.374,
     "G_min": 0.272,
-    "G_avg": 0.326,
-    "V_avg": 0.54
+    "G_avg": 0.336,
+    "V_avg": 0.556
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 83,
-    "v_sum": 44.302,
-    "n_g": 83,
-    "g_sum": 28.419,
+    "n": 84,
+    "v_sum": 45.102,
+    "n_g": 84,
+    "g_sum": 28.899,
     "G_min": 0.256,
-    "G_avg": 0.342,
-    "V_avg": 0.534
+    "G_avg": 0.344,
+    "V_avg": 0.537
    }
   ],
   "channels": {
@@ -1272,7 +1289,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 21,
-    "measured_at": "2026-11-05T18:00:00+01:00",
+    "measured_at": "2026-11-05T19:00:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -1298,8 +1315,8 @@
    "danube_passau": {
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
-    "cm": 390,
-    "measured_at": "2026-11-05T18:00:00+01:00",
+    "cm": 389,
+    "measured_at": "2026-11-05T19:00:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 780,
@@ -1317,7 +1334,7 @@
      "MHW": 841,
      "HW": 1081
     },
-    "g": 0.738,
+    "g": 0.719,
     "basis": "MNW/NNW (hivatalos statisztika)"
    },
    "border_hu": {
