@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05T18:02:01.148Z",
+ "updated": "2026-11-05T18:52:34.273Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
@@ -10,55 +10,31 @@
  "sources": {
   "noaa_wind": {
    "ok": true,
-   "ms": 67
-  },
-  "noaa_kp_forecast": {
-   "ok": true,
-   "ms": 202
-  },
-  "noaa_kp": {
-   "ok": true,
-   "ms": 240
-  },
-  "noaa_goes_flux": {
-   "ok": true,
-   "ms": 207
+   "ms": 83
   },
   "noaa_mag": {
    "ok": true,
-   "ms": 49
+   "ms": 51
   },
-  "usgs": {
+  "noaa_kp_forecast": {
    "ok": true,
-   "ms": 367
+   "ms": 189
+  },
+  "noaa_kp": {
+   "ok": true,
+   "ms": 256
+  },
+  "noaa_goes_flux": {
+   "ok": true,
+   "ms": 197
   },
   "open_meteo": {
    "ok": true,
-   "ms": 739
+   "ms": 233
   },
-  "om_daily": {
+  "usgs": {
    "ok": true,
-   "ms": 69
-  },
-  "om_pressure": {
-   "ok": true,
-   "ms": 52
-  },
-  "om_flood": {
-   "ok": true,
-   "ms": 516
-  },
-  "hungaromet": {
-   "ok": true,
-   "ms": 2040
-  },
-  "om_models": {
-   "ok": true,
-   "ms": 52
-  },
-  "om_models_15811": {
-   "ok": true,
-   "ms": 54
+   "ms": 518
   },
   "geosphere": {
    "ok": true,
@@ -68,14 +44,14 @@
  "current": {
   "kp": 0.67,
   "kpMax24": 4,
-  "flux": 0.0000012973662251170026,
-  "flare": "C1.3",
-  "speed": 397.8,
-  "bz": -0.6000000000000001,
+  "flux": 0.00003597702016122639,
+  "flare": "M3.6",
+  "speed": 402.2,
+  "bz": -1.642,
   "tmin12": 1.1,
   "gust12": 6.1,
-  "dp3": -1.599999999999909,
-  "pressure": 1029.4
+  "dp3": -1.2999999999999545,
+  "pressure": 1029.3
  },
  "csi": {
   "t": "2026-11-05T18:02:01.148Z",
@@ -131,6 +107,11 @@
   "since": "2026-10-30T14:04Z"
  },
  "recent": [
+  {
+   "t": "2026-11-05T18:52:34.273Z",
+   "key": "flare",
+   "title": "Napkitörés: M3.6 (R1)"
+  },
   {
    "t": "2026-11-05T18:02:01.148Z",
    "key": "roadIce",
@@ -225,11 +206,6 @@
    "t": "2026-11-01T06:27:43.266Z",
    "key": "digest",
    "title": "Reggeli összefoglaló · Körmend"
-  },
-  {
-   "t": "2026-10-31T22:25:42.728Z",
-   "key": "test",
-   "title": "Teszt: a háttérfigyelő működik"
   }
  ],
  "thresholds": {
