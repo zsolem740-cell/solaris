@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1793914140,
+  "timestamp": 1793917383,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -1279,6 +1279,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-05T22:23:03.139Z",
+    "hour": "2026-11-05T22",
+    "G": 0.47,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 20,
+      "g": 0.32
+     },
+     "danube_passau": {
+      "cm": 389,
+      "g": 0.719
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1314,25 +1331,25 @@
    },
    {
     "date": "2026-11-05",
-    "n": 19,
-    "v_sum": 11.3,
-    "n_g": 19,
-    "g_sum": 6.786,
+    "n": 20,
+    "v_sum": 12.1,
+    "n_g": 20,
+    "g_sum": 7.256,
     "G_min": 0.272,
-    "G_avg": 0.357,
-    "V_avg": 0.595
+    "G_avg": 0.363,
+    "V_avg": 0.605
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 87,
-    "v_sum": 47.502,
-    "n_g": 87,
-    "g_sum": 30.311,
+    "n": 88,
+    "v_sum": 48.302,
+    "n_g": 88,
+    "g_sum": 30.781,
     "G_min": 0.256,
-    "G_avg": 0.348,
-    "V_avg": 0.546
+    "G_avg": 0.35,
+    "V_avg": 0.549
    }
   ],
   "channels": {
@@ -1340,7 +1357,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 20,
-    "measured_at": "2026-11-05T22:15:00+01:00",
+    "measured_at": "2026-11-05T23:15:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -1367,7 +1384,7 @@
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
     "cm": 389,
-    "measured_at": "2026-11-05T22:15:00+01:00",
+    "measured_at": "2026-11-05T23:15:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 780,
