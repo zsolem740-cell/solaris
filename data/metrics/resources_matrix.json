@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1793848135,
+  "timestamp": 1793852121,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -34,7 +34,7 @@
     "unit": "m³/m³",
     "value": 0.362,
     "valid_at": "2026-11-05T23:00:00.000Z",
-    "lag_h": -20,
+    "lag_h": -19,
     "percentile": 0.048,
     "g": 0.534,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -46,7 +46,7 @@
     "unit": "m³/m³",
     "value": 0.391,
     "valid_at": "2026-11-05T23:00:00.000Z",
-    "lag_h": -20,
+    "lag_h": -19,
     "percentile": 0.24,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -453,6 +453,12 @@
     "hour": "2026-11-05T03",
     "G": 0.86,
     "V": 1
+   },
+   {
+    "t": "2026-11-05T04:15:21.218Z",
+    "hour": "2026-11-05T04",
+    "G": 0.86,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -488,10 +494,10 @@
    },
    {
     "date": "2026-11-05",
-    "n": 3,
-    "v_sum": 3,
-    "n_g": 3,
-    "g_sum": 2.58,
+    "n": 4,
+    "v_sum": 4,
+    "n_g": 4,
+    "g_sum": 3.44,
     "G_min": 0.86,
     "G_avg": 0.86,
     "V_avg": 1
@@ -500,12 +506,12 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 64,
-    "v_sum": 64,
-    "n_g": 64,
-    "g_sum": 62.131,
+    "n": 65,
+    "v_sum": 65,
+    "n_g": 65,
+    "g_sum": 62.991,
     "G_min": 0.86,
-    "G_avg": 0.971,
+    "G_avg": 0.969,
     "V_avg": 1
    }
   ]
