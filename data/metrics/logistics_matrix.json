@@ -2,12 +2,12 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1793920714,
+  "timestamp": 1793926821,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "ANOMALY",
-  "stationarity_G": 0.452,
+  "stationarity_G": 0.46,
   "noise_S": 0.2,
   "validity_V": 0.8,
   "atm_score": 0.018
@@ -1313,6 +1313,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-06T01:00:21.767Z",
+    "hour": "2026-11-06T01",
+    "G": 0.46,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 19,
+      "g": 0.304
+     },
+     "danube_passau": {
+      "cm": 389,
+      "g": 0.719
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1355,18 +1372,28 @@
     "G_min": 0.272,
     "G_avg": 0.367,
     "V_avg": 0.614
+   },
+   {
+    "date": "2026-11-06",
+    "n": 1,
+    "v_sum": 0.8,
+    "n_g": 1,
+    "g_sum": 0.46,
+    "G_min": 0.46,
+    "G_avg": 0.46,
+    "V_avg": 0.8
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 89,
-    "v_sum": 49.102,
-    "n_g": 89,
-    "g_sum": 31.233,
+    "n": 90,
+    "v_sum": 49.902,
+    "n_g": 90,
+    "g_sum": 31.693,
     "G_min": 0.256,
-    "G_avg": 0.351,
-    "V_avg": 0.552
+    "G_avg": 0.352,
+    "V_avg": 0.554
    }
   ],
   "channels": {
@@ -1374,7 +1401,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 19,
-    "measured_at": "2026-11-06T00:15:00+01:00",
+    "measured_at": "2026-11-06T01:45:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -1400,8 +1427,8 @@
    "danube_passau": {
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
-    "cm": 388,
-    "measured_at": "2026-11-06T00:15:00+01:00",
+    "cm": 389,
+    "measured_at": "2026-11-06T01:45:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 780,
@@ -1419,7 +1446,7 @@
      "MHW": 841,
      "HW": 1081
     },
-    "g": 0.7,
+    "g": 0.719,
     "basis": "MNW/NNW (hivatalos statisztika)"
    },
    "border_hu": {

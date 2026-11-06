@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M5_FINANCE",
   "version": "1.0.0",
-  "timestamp": 1793920693,
+  "timestamp": 1793926812,
   "p8_signature": "OFFICIAL_RATES"
  },
  "core_metrics": {
@@ -23,7 +23,7 @@
     "prev": 363.32,
     "date": "2026-11-05",
     "prev_date": "2026-11-04",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": -0.055,
     "percentile": 0.1,
     "baseline_n": 1240,
@@ -39,7 +39,7 @@
     "prev": 322.72,
     "date": "2026-11-05",
     "prev_date": "2026-11-04",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": 0.177,
     "percentile": 0.216,
     "baseline_n": 1240,
@@ -55,7 +55,7 @@
     "prev": 1.1267,
     "date": "2026-11-05",
     "prev_date": "2026-11-04",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": -0.382,
     "percentile": 0.686,
     "baseline_n": 1268,
@@ -72,11 +72,33 @@
     "mrr": {
      "value": 2.65,
      "date": "2026-09-16",
-     "age_days": 50,
+     "age_days": 51,
      "last_change": {
       "date": "2026-09-16",
       "from": 2.4,
       "to": 2.65
+     },
+     "changed_recently": false
+    },
+    "dfr": {
+     "value": 2.5,
+     "date": "2026-09-16",
+     "age_days": 51,
+     "last_change": {
+      "date": "2026-09-16",
+      "from": 2.25,
+      "to": 2.5
+     },
+     "changed_recently": false
+    },
+    "mlf": {
+     "value": 2.9,
+     "date": "2026-09-16",
+     "age_days": 51,
+     "last_change": {
+      "date": "2026-09-16",
+      "from": 2.65,
+      "to": 2.9
      },
      "changed_recently": false
     }
@@ -476,6 +498,12 @@
     "hour": "2026-11-05T23",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-06T01:00:12.006Z",
+    "hour": "2026-11-06T01",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -508,15 +536,25 @@
     "G_min": 0.996,
     "G_avg": 0.998,
     "V_avg": 0.99
+   },
+   {
+    "date": "2026-11-06",
+    "n": 1,
+    "v_sum": 1,
+    "n_g": 1,
+    "g_sum": 1,
+    "G_min": 1,
+    "G_avg": 1,
+    "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 63,
-    "v_sum": 61.8,
-    "n_g": 63,
-    "g_sum": 62.924,
+    "n": 64,
+    "v_sum": 62.8,
+    "n_g": 64,
+    "g_sum": 63.924,
     "G_min": 0.996,
     "G_avg": 0.999,
     "V_avg": 0.981
