@@ -1,8 +1,8 @@
 {
- "timestamp": 1793961923,
+ "timestamp": 1793965034,
  "spec": "P8 v1.2",
  "summary": {
-  "checked": 5,
+  "checked": 4,
   "errors": 0,
   "deviations": 0,
   "warnings": 0
@@ -45,13 +45,8 @@
    "warnings": []
   },
   "M2": {
-   "available": true,
-   "source": "letöltve",
-   "module": "M2_MEDIA_ZAJ",
-   "kind": "information",
-   "errors": [],
-   "deviations": [],
-   "warnings": []
+   "available": false,
+   "note": "HTTP 404"
   }
  }
 }
