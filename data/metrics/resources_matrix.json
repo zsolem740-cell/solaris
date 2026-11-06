@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1793975941,
+  "timestamp": 1793979018,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -34,7 +34,7 @@
     "unit": "m³/m³",
     "value": 0.365,
     "valid_at": "2026-11-06T23:00:00.000Z",
-    "lag_h": -9,
+    "lag_h": -7,
     "percentile": 0.063,
     "g": 0.668,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -46,7 +46,7 @@
     "unit": "m³/m³",
     "value": 0.392,
     "valid_at": "2026-11-06T23:00:00.000Z",
-    "lag_h": -9,
+    "lag_h": -7,
     "percentile": 0.247,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -65,16 +65,9 @@
   },
   "notes": [
    "A talajnedvesség reanalízis-elemzés (ERA5-Land), nem mérés, és néhány napos késéssel érkezik.",
-   "A csatornák súlyai szakértői becslések.",
-   "Talajnedvesség lekérdezési hiba: This operation was aborted"
+   "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-02T08:23:57.549Z",
-    "hour": "2026-11-02T08",
-    "G": 1,
-    "V": 1
-   },
    {
     "t": "2026-11-02T10:00:12.805Z",
     "hour": "2026-11-02T10",
@@ -644,6 +637,12 @@
     "hour": "2026-11-06T14",
     "G": 0.9,
     "V": 1
+   },
+   {
+    "t": "2026-11-06T15:30:18.951Z",
+    "hour": "2026-11-06T15",
+    "G": 0.9,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -689,24 +688,24 @@
    },
    {
     "date": "2026-11-06",
-    "n": 14,
-    "v_sum": 14,
-    "n_g": 14,
-    "g_sum": 12.462,
+    "n": 15,
+    "v_sum": 15,
+    "n_g": 15,
+    "g_sum": 13.362,
     "G_min": 0.86,
-    "G_avg": 0.89,
+    "G_avg": 0.891,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 96,
-    "v_sum": 96,
-    "n_g": 96,
-    "g_sum": 90.908,
+    "n": 97,
+    "v_sum": 97,
+    "n_g": 97,
+    "g_sum": 91.808,
     "G_min": 0.86,
-    "G_avg": 0.947,
+    "G_avg": 0.946,
     "V_avg": 1
    }
   ]
