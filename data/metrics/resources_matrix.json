@@ -2,12 +2,12 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1793945846,
+  "timestamp": 1793950673,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 0.86,
+  "stationarity_G": 0.917,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
@@ -32,11 +32,11 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.362,
+    "value": 0.366,
     "valid_at": "2026-11-06T23:00:00.000Z",
-    "lag_h": -17,
-    "percentile": 0.048,
-    "g": 0.534,
+    "lag_h": -15,
+    "percentile": 0.069,
+    "g": 0.725,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    },
    "soil_rootzone": {
@@ -44,18 +44,16 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.389,
+    "value": 0.393,
     "valid_at": "2026-11-06T23:00:00.000Z",
-    "lag_h": -17,
-    "percentile": 0.222,
+    "lag_h": -15,
+    "percentile": 0.26,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    }
   },
   "coverage": "3/3",
-  "flags": [
-   "soil_surface_dry"
-  ],
+  "flags": [],
   "v_min": 0.5,
   "weights_basis": "szakértői becslés",
   "climatology": {
@@ -597,6 +595,12 @@
     "hour": "2026-11-06T06",
     "G": 0.86,
     "V": 1
+   },
+   {
+    "t": "2026-11-06T07:37:53.693Z",
+    "hour": "2026-11-06T07",
+    "G": 0.917,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -642,22 +646,22 @@
    },
    {
     "date": "2026-11-06",
-    "n": 6,
-    "v_sum": 6,
-    "n_g": 6,
-    "g_sum": 5.16,
+    "n": 7,
+    "v_sum": 7,
+    "n_g": 7,
+    "g_sum": 6.077,
     "G_min": 0.86,
-    "G_avg": 0.86,
+    "G_avg": 0.868,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 88,
-    "v_sum": 88,
-    "n_g": 88,
-    "g_sum": 83.606,
+    "n": 89,
+    "v_sum": 89,
+    "n_g": 89,
+    "g_sum": 84.523,
     "G_min": 0.86,
     "G_avg": 0.95,
     "V_avg": 1
