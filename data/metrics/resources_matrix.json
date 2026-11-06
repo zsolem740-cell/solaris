@@ -2,12 +2,12 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1793968207,
+  "timestamp": 1793972659,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 0.917,
+  "stationarity_G": 0.9,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
@@ -32,11 +32,11 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.366,
+    "value": 0.365,
     "valid_at": "2026-11-06T23:00:00.000Z",
-    "lag_h": -10,
-    "percentile": 0.069,
-    "g": 0.725,
+    "lag_h": -9,
+    "percentile": 0.063,
+    "g": 0.668,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    },
    "soil_rootzone": {
@@ -44,10 +44,10 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.393,
+    "value": 0.392,
     "valid_at": "2026-11-06T23:00:00.000Z",
-    "lag_h": -10,
-    "percentile": 0.26,
+    "lag_h": -9,
+    "percentile": 0.247,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    }
@@ -631,6 +631,12 @@
     "hour": "2026-11-06T12",
     "G": 0.917,
     "V": 1
+   },
+   {
+    "t": "2026-11-06T13:44:19.245Z",
+    "hour": "2026-11-06T13",
+    "G": 0.9,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -676,10 +682,10 @@
    },
    {
     "date": "2026-11-06",
-    "n": 12,
-    "v_sum": 12,
-    "n_g": 12,
-    "g_sum": 10.662,
+    "n": 13,
+    "v_sum": 13,
+    "n_g": 13,
+    "g_sum": 11.562,
     "G_min": 0.86,
     "G_avg": 0.889,
     "V_avg": 1
@@ -688,12 +694,12 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 94,
-    "v_sum": 94,
-    "n_g": 94,
-    "g_sum": 89.108,
+    "n": 95,
+    "v_sum": 95,
+    "n_g": 95,
+    "g_sum": 90.008,
     "G_min": 0.86,
-    "G_avg": 0.948,
+    "G_avg": 0.947,
     "V_avg": 1
    }
   ]

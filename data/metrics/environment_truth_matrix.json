@@ -2,43 +2,43 @@
  "header": {
   "module_id": "M1_SOLARIS",
   "version": "1.1.0",
-  "timestamp": 1793968221,
+  "timestamp": 1793972673,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 0.726,
-  "noise_S": 0,
-  "validity_V": 1,
-  "atm_score": 0
+  "stationarity_G": 0.91,
+  "noise_S": 0.071,
+  "validity_V": 0.929,
+  "atm_score": 0.0046
  },
  "dynamic_payload": {
   "place": "Körmend",
-  "solar_wind_speed_kms": 326,
-  "bz_vector_nt": 1.563,
+  "solar_wind_speed_kms": 331.1,
+  "bz_vector_nt": 1.283,
   "kp_index": 2.33,
   "kp_max_24h": 5,
-  "flare_level": "C1.2",
-  "wind_gust_kmh": 8,
-  "pressure_drop_3h": 0.8,
+  "flare_level": null,
+  "wind_gust_kmh": 9,
+  "pressure_drop_3h": 0,
   "pressure_hpa": 1025.9,
   "earthquake_max_mag": 0,
   "earthquake_count_local_24h": 0,
   "earthquake_global_max_mag_24h": 6.1,
-  "csi_sigma": 0.173,
-  "sources_ok": "14/14",
+  "csi_sigma": 0.174,
+  "sources_ok": "13/14",
   "flags": [],
   "stress_components": {
    "kp": 0.1,
    "bz": 0,
    "wind": 0,
-   "flare": 0.225,
+   "flare": 0,
    "quake": 0,
    "gust": 0,
    "dp": 0,
    "csi": 0
   },
-  "risk_score": 27,
+  "risk_score": 9,
   "live_24h": [
    {
     "t": "2026-11-02T07:28:13.370Z",
@@ -609,6 +609,12 @@
     "hour": "2026-11-06T12",
     "G": 0.726,
     "V": 1
+   },
+   {
+    "t": "2026-11-06T13:44:33.402Z",
+    "hour": "2026-11-06T13",
+    "G": 0.91,
+    "V": 0.929
    }
   ],
   "daily_30d": [
@@ -654,25 +660,25 @@
    },
    {
     "date": "2026-11-06",
-    "n": 12,
-    "v_sum": 12,
-    "n_g": 12,
-    "g_sum": 7.893,
+    "n": 13,
+    "v_sum": 12.929,
+    "n_g": 13,
+    "g_sum": 8.803,
     "G_min": 0.5,
-    "G_avg": 0.658,
-    "V_avg": 1
+    "G_avg": 0.677,
+    "V_avg": 0.995
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 95,
-    "v_sum": 95,
-    "n_g": 95,
-    "g_sum": 80.3,
+    "n": 96,
+    "v_sum": 95.929,
+    "n_g": 96,
+    "g_sum": 81.21,
     "G_min": 0.5,
-    "G_avg": 0.845,
-    "V_avg": 1
+    "G_avg": 0.846,
+    "V_avg": 0.999
    }
   ]
  },
