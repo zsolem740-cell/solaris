@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1794067929,
+  "timestamp": 1794072908,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -67,15 +67,10 @@
   },
   "notes": [
    "A talajnedvesség reanalízis-elemzés (ERA5-Land), nem mérés, és néhány napos késéssel érkezik.",
-   "A csatornák súlyai szakértői becslések."
+   "A csatornák súlyai szakértői becslések.",
+   "Talajnedvesség lekérdezési hiba: HTTP 429"
   ],
   "live_24h": [
-   {
-    "t": "2026-11-03T12:28:39.367Z",
-    "hour": "2026-11-03T12",
-    "G": 1,
-    "V": 1
-   },
    {
     "t": "2026-11-03T13:42:16.866Z",
     "hour": "2026-11-03T13",
@@ -645,6 +640,12 @@
     "hour": "2026-11-07T16",
     "G": 0.871,
     "V": 1
+   },
+   {
+    "t": "2026-11-07T17:35:08.569Z",
+    "hour": "2026-11-07T17",
+    "G": 0.871,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -700,10 +701,10 @@
    },
    {
     "date": "2026-11-07",
-    "n": 17,
-    "v_sum": 17,
-    "n_g": 17,
-    "g_sum": 15.016,
+    "n": 18,
+    "v_sum": 18,
+    "n_g": 18,
+    "g_sum": 15.887,
     "G_min": 0.871,
     "G_avg": 0.883,
     "V_avg": 1
@@ -712,10 +713,10 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 122,
-    "v_sum": 122,
-    "n_g": 122,
-    "g_sum": 114.109,
+    "n": 123,
+    "v_sum": 123,
+    "n_g": 123,
+    "g_sum": 114.98,
     "G_min": 0.86,
     "G_avg": 0.935,
     "V_avg": 1
