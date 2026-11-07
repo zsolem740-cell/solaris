@@ -2,52 +2,44 @@
  "header": {
   "module_id": "M1_SOLARIS",
   "version": "1.1.0",
-  "timestamp": 1794078360,
+  "timestamp": 1794082732,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
-  "status": "ANOMALY",
-  "stationarity_G": 0.335,
+  "status": "NOMINAL",
+  "stationarity_G": 0.637,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
  },
  "dynamic_payload": {
   "place": "Körmend",
-  "solar_wind_speed_kms": 382.9,
-  "bz_vector_nt": 1.054,
+  "solar_wind_speed_kms": 404.2,
+  "bz_vector_nt": 0.20099999999999998,
   "kp_index": 3,
   "kp_max_24h": 4.67,
-  "flare_level": "M2.0",
-  "wind_gust_kmh": 6,
-  "pressure_drop_3h": 1.1,
-  "pressure_hpa": 1029.6,
+  "flare_level": "C2.6",
+  "wind_gust_kmh": 4,
+  "pressure_drop_3h": 1.2,
+  "pressure_hpa": 1029.7,
   "earthquake_max_mag": 0,
   "earthquake_count_local_24h": 0,
   "earthquake_global_max_mag_24h": 5.5,
-  "csi_sigma": 0.284,
+  "csi_sigma": 0.289,
   "sources_ok": "15/15",
-  "flags": [
-   "solar"
-  ],
+  "flags": [],
   "stress_components": {
    "kp": 0.054,
    "bz": 0,
    "wind": 0,
-   "flare": 0.72,
+   "flare": 0.367,
    "quake": 0,
    "gust": 0,
    "dp": 0,
    "csi": 0
   },
-  "risk_score": 66,
+  "risk_score": 36,
   "live_24h": [
-   {
-    "t": "2026-11-03T15:29:46.286Z",
-    "hour": "2026-11-03T15",
-    "G": 0.983,
-    "V": 1
-   },
    {
     "t": "2026-11-03T16:27:05.060Z",
     "hour": "2026-11-03T16",
@@ -617,6 +609,12 @@
     "hour": "2026-11-07T19",
     "G": 0.335,
     "V": 1
+   },
+   {
+    "t": "2026-11-07T20:18:52.639Z",
+    "hour": "2026-11-07T20",
+    "G": 0.637,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -672,24 +670,24 @@
    },
    {
     "date": "2026-11-07",
-    "n": 20,
-    "v_sum": 19.866,
-    "n_g": 20,
-    "g_sum": 11.599,
+    "n": 21,
+    "v_sum": 20.866,
+    "n_g": 21,
+    "g_sum": 12.236,
     "G_min": 0.335,
-    "G_avg": 0.58,
-    "V_avg": 0.993
+    "G_avg": 0.583,
+    "V_avg": 0.994
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 126,
-    "v_sum": 125.795,
-    "n_g": 126,
-    "g_sum": 99.027,
+    "n": 127,
+    "v_sum": 126.795,
+    "n_g": 127,
+    "g_sum": 99.664,
     "G_min": 0.335,
-    "G_avg": 0.786,
+    "G_avg": 0.785,
     "V_avg": 0.998
    }
   ]
