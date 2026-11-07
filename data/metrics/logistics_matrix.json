@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1794021014,
+  "timestamp": 1794024567,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -14,20 +14,6 @@
  },
  "dynamic_payload": {
   "live_24h": [
-   {
-    "t": "2026-11-02T23:24:25.508Z",
-    "hour": "2026-11-02T23",
-    "G": 0.256,
-    "V": 0.5,
-    "ch": {
-     "rhine_kaub": {
-      "cm": 16,
-      "g": 0.256
-     },
-     "danube_passau": null,
-     "border_hu": null
-    }
-   },
    {
     "t": "2026-11-03T00:08:39.955Z",
     "hour": "2026-11-03T00",
@@ -1462,6 +1448,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-07T04:09:27.992Z",
+    "hour": "2026-11-07T04",
+    "G": 0.459,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 21,
+      "g": 0.336
+     },
+     "danube_passau": {
+      "cm": 386,
+      "g": 0.663
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1517,25 +1520,25 @@
    },
    {
     "date": "2026-11-07",
-    "n": 4,
-    "v_sum": 3.2,
-    "n_g": 4,
-    "g_sum": 1.933,
+    "n": 5,
+    "v_sum": 4,
+    "n_g": 5,
+    "g_sum": 2.392,
     "G_min": 0.459,
-    "G_avg": 0.483,
+    "G_avg": 0.478,
     "V_avg": 0.8
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 116,
-    "v_sum": 70.702,
-    "n_g": 116,
-    "g_sum": 44.614,
+    "n": 117,
+    "v_sum": 71.502,
+    "n_g": 117,
+    "g_sum": 45.073,
     "G_min": 0.256,
     "G_avg": 0.385,
-    "V_avg": 0.609
+    "V_avg": 0.611
    }
   ],
   "channels": {
@@ -1543,7 +1546,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 21,
-    "measured_at": "2026-11-07T04:00:00+01:00",
+    "measured_at": "2026-11-07T05:00:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -1570,7 +1573,7 @@
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
     "cm": 386,
-    "measured_at": "2026-11-07T04:00:00+01:00",
+    "measured_at": "2026-11-07T05:00:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 780,
