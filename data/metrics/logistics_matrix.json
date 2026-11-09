@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1794181033,
+  "timestamp": 1794183107,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -14,20 +14,6 @@
  },
  "dynamic_payload": {
   "live_24h": [
-   {
-    "t": "2026-11-04T20:51:42.766Z",
-    "hour": "2026-11-04T20",
-    "G": 0.32,
-    "V": 0.5,
-    "ch": {
-     "rhine_kaub": {
-      "cm": 20,
-      "g": 0.32
-     },
-     "danube_passau": null,
-     "border_hu": null
-    }
-   },
    {
     "t": "2026-11-04T21:35:28.319Z",
     "hour": "2026-11-04T21",
@@ -1594,6 +1580,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-09T00:11:47.559Z",
+    "hour": "2026-11-09T00",
+    "G": 0.323,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 11,
+      "g": 0.176
+     },
+     "danube_passau": {
+      "cm": 381,
+      "g": 0.569
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1666,18 +1669,28 @@
     "G_min": 0.299,
     "G_avg": 0.349,
     "V_avg": 0.8
+   },
+   {
+    "date": "2026-11-09",
+    "n": 1,
+    "v_sum": 0.8,
+    "n_g": 1,
+    "g_sum": 0.323,
+    "G_min": 0.323,
+    "G_avg": 0.323,
+    "V_avg": 0.8
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 160,
-    "v_sum": 105.902,
-    "n_g": 160,
-    "g_sum": 60.98,
+    "n": 161,
+    "v_sum": 106.702,
+    "n_g": 161,
+    "g_sum": 61.303,
     "G_min": 0.256,
     "G_avg": 0.381,
-    "V_avg": 0.662
+    "V_avg": 0.663
    }
   ],
   "channels": {
@@ -1685,7 +1698,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 11,
-    "measured_at": "2026-11-09T00:30:00+01:00",
+    "measured_at": "2026-11-09T01:00:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -1712,7 +1725,7 @@
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
     "cm": 381,
-    "measured_at": "2026-11-09T00:30:00+01:00",
+    "measured_at": "2026-11-09T01:00:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 780,
