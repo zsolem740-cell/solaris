@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1794199013,
+  "timestamp": 1794202725,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -14,20 +14,6 @@
  },
  "dynamic_payload": {
   "live_24h": [
-   {
-    "t": "2026-11-05T02:08:12.381Z",
-    "hour": "2026-11-05T02",
-    "G": 0.272,
-    "V": 0.5,
-    "ch": {
-     "rhine_kaub": {
-      "cm": 17,
-      "g": 0.272
-     },
-     "danube_passau": null,
-     "border_hu": null
-    }
-   },
    {
     "t": "2026-11-05T03:09:09.337Z",
     "hour": "2026-11-05T03",
@@ -1609,6 +1595,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-09T05:38:45.659Z",
+    "hour": "2026-11-09T05",
+    "G": 0.323,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 11,
+      "g": 0.176
+     },
+     "danube_passau": {
+      "cm": 381,
+      "g": 0.569
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1684,10 +1687,10 @@
    },
    {
     "date": "2026-11-09",
-    "n": 5,
-    "v_sum": 4,
-    "n_g": 5,
-    "g_sum": 1.636,
+    "n": 6,
+    "v_sum": 4.8,
+    "n_g": 6,
+    "g_sum": 1.959,
     "G_min": 0.323,
     "G_avg": 0.327,
     "V_avg": 0.8
@@ -1696,13 +1699,13 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 165,
-    "v_sum": 109.902,
-    "n_g": 165,
-    "g_sum": 62.616,
+    "n": 166,
+    "v_sum": 110.702,
+    "n_g": 166,
+    "g_sum": 62.939,
     "G_min": 0.256,
     "G_avg": 0.379,
-    "V_avg": 0.666
+    "V_avg": 0.667
    }
   ],
   "channels": {
@@ -1710,7 +1713,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 11,
-    "measured_at": "2026-11-09T05:30:00+01:00",
+    "measured_at": "2026-11-09T06:30:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -1737,7 +1740,7 @@
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
     "cm": 381,
-    "measured_at": "2026-11-09T05:30:00+01:00",
+    "measured_at": "2026-11-09T06:30:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 780,
