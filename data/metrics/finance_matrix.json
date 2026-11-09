@@ -2,15 +2,15 @@
  "header": {
   "module_id": "M5_FINANCE",
   "version": "1.0.0",
-  "timestamp": 1794223615,
+  "timestamp": 1794227419,
   "p8_signature": "OFFICIAL_RATES"
  },
  "core_metrics": {
   "status": "NOMINAL",
   "stationarity_G": 1,
-  "noise_S": 0.2,
-  "validity_V": 0.8,
-  "atm_score": 0.04
+  "noise_S": 0,
+  "validity_V": 1,
+  "atm_score": 0
  },
  "dynamic_payload": {
   "channels": {
@@ -51,19 +51,19 @@
     "type": "official",
     "source": "EKB adatportál, EXR/D.USD.EUR.SP00.A (hivatalos referencia-árfolyam)",
     "unit": "USD/EUR",
-    "value": null,
-    "prev": null,
-    "date": null,
-    "prev_date": null,
-    "age_days": null,
-    "chg_pct": null,
-    "percentile": null,
+    "value": 1.1165,
+    "prev": 1.1224,
+    "date": "2026-11-06",
+    "prev_date": "2026-11-05",
+    "age_days": 3,
+    "chg_pct": -0.526,
+    "percentile": 0.795,
     "baseline_n": 1268,
-    "g": null,
-    "note": "nincs elég friss hivatalos adat"
+    "g": 1,
+    "note": null
    }
   },
-  "coverage": "2/3",
+  "coverage": "3/3",
   "flags": [],
   "v_min": 0.5,
   "weights_basis": "szakértői becslés",
@@ -118,16 +118,9 @@
   },
   "notes": [
    "Hivatalosan közzétett adatok (MNB, EKB), nem előrejelzés és nem ajánlás.",
-   "A csatornák súlyai szakértői becslések.",
-   "Lekérdezési hiba: EKB EXR: This operation was aborted"
+   "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-05T08:42:11.447Z",
-    "hour": "2026-11-05T08",
-    "G": 0.996,
-    "V": 1
-   },
    {
     "t": "2026-11-05T09:42:36.488Z",
     "hour": "2026-11-05T09",
@@ -697,6 +690,12 @@
     "hour": "2026-11-09T11",
     "G": 1,
     "V": 0.8
+   },
+   {
+    "t": "2026-11-09T12:30:19.009Z",
+    "hour": "2026-11-09T12",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -762,22 +761,22 @@
    },
    {
     "date": "2026-11-09",
-    "n": 11,
-    "v_sum": 10.6,
-    "n_g": 11,
-    "g_sum": 11,
+    "n": 12,
+    "v_sum": 11.6,
+    "n_g": 12,
+    "g_sum": 12,
     "G_min": 1,
     "G_avg": 1,
-    "V_avg": 0.964
+    "V_avg": 0.967
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 145,
-    "v_sum": 143.4,
-    "n_g": 145,
-    "g_sum": 144.924,
+    "n": 146,
+    "v_sum": 144.4,
+    "n_g": 146,
+    "g_sum": 145.924,
     "G_min": 0.996,
     "G_avg": 0.999,
     "V_avg": 0.989
