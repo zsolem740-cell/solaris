@@ -2,32 +2,18 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1794207114,
+  "timestamp": 1794211804,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "ANOMALY",
-  "stationarity_G": 0.323,
+  "stationarity_G": 0.337,
   "noise_S": 0.2,
   "validity_V": 0.8,
   "atm_score": 0.013
  },
  "dynamic_payload": {
   "live_24h": [
-   {
-    "t": "2026-11-05T04:15:35.749Z",
-    "hour": "2026-11-05T04",
-    "G": 0.288,
-    "V": 0.5,
-    "ch": {
-     "rhine_kaub": {
-      "cm": 18,
-      "g": 0.288
-     },
-     "danube_passau": null,
-     "border_hu": null
-    }
-   },
    {
     "t": "2026-11-05T05:18:11.338Z",
     "hour": "2026-11-05T05",
@@ -1615,6 +1601,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-09T08:10:04.381Z",
+    "hour": "2026-11-09T08",
+    "G": 0.337,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 11,
+      "g": 0.176
+     },
+     "danube_passau": {
+      "cm": 383,
+      "g": 0.606
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1690,22 +1693,22 @@
    },
    {
     "date": "2026-11-09",
-    "n": 7,
-    "v_sum": 5.6,
-    "n_g": 7,
-    "g_sum": 2.282,
+    "n": 8,
+    "v_sum": 6.4,
+    "n_g": 8,
+    "g_sum": 2.619,
     "G_min": 0.323,
-    "G_avg": 0.326,
+    "G_avg": 0.327,
     "V_avg": 0.8
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 167,
-    "v_sum": 111.502,
-    "n_g": 167,
-    "g_sum": 63.262,
+    "n": 168,
+    "v_sum": 112.302,
+    "n_g": 168,
+    "g_sum": 63.599,
     "G_min": 0.256,
     "G_avg": 0.379,
     "V_avg": 0.668
@@ -1716,7 +1719,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 11,
-    "measured_at": "2026-11-09T07:45:00+01:00",
+    "measured_at": "2026-11-09T09:00:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -1742,8 +1745,8 @@
    "danube_passau": {
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
-    "cm": 381,
-    "measured_at": "2026-11-09T07:45:00+01:00",
+    "cm": 383,
+    "measured_at": "2026-11-09T09:00:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 780,
@@ -1761,7 +1764,7 @@
      "MHW": 841,
      "HW": 1081
     },
-    "g": 0.569,
+    "g": 0.606,
     "basis": "MNW/NNW (hivatalos statisztika)"
    },
    "border_hu": {
@@ -1772,8 +1775,7 @@
   },
   "coverage": "2/3",
   "flags": [
-   "rhine_low_water",
-   "danube_low_water"
+   "rhine_low_water"
   ],
   "v_min": 0.5,
   "weights_basis": "szakértői becslés",
