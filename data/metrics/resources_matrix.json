@@ -2,12 +2,12 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1794333627,
+  "timestamp": 1794339483,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 1,
+  "stationarity_G": 0.998,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
@@ -32,11 +32,11 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.4,
+    "value": 0.381,
     "valid_at": "2026-11-10T23:00:00.000Z",
-    "lag_h": -5,
-    "percentile": 0.227,
-    "g": 1,
+    "lag_h": -3,
+    "percentile": 0.099,
+    "g": 0.992,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    },
    "soil_rootzone": {
@@ -44,10 +44,10 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.385,
+    "value": 0.386,
     "valid_at": "2026-11-10T23:00:00.000Z",
-    "lag_h": -5,
-    "percentile": 0.125,
+    "lag_h": -3,
+    "percentile": 0.126,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    }
@@ -68,12 +68,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-06T18:18:58.474Z",
-    "hour": "2026-11-06T18",
-    "G": 0.9,
-    "V": 1
-   },
    {
     "t": "2026-11-06T19:17:13.040Z",
     "hour": "2026-11-06T19",
@@ -643,6 +637,12 @@
     "hour": "2026-11-10T18",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-10T19:38:03.952Z",
+    "hour": "2026-11-10T19",
+    "G": 0.998,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -728,22 +728,22 @@
    },
    {
     "date": "2026-11-10",
-    "n": 19,
-    "v_sum": 19,
-    "n_g": 19,
-    "g_sum": 17.701,
+    "n": 20,
+    "v_sum": 20,
+    "n_g": 20,
+    "g_sum": 18.699,
     "G_min": 0.865,
-    "G_avg": 0.932,
+    "G_avg": 0.935,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 195,
-    "v_sum": 195,
-    "n_g": 195,
-    "g_sum": 175.889,
+    "n": 196,
+    "v_sum": 196,
+    "n_g": 196,
+    "g_sum": 176.887,
     "G_min": 0.76,
     "G_avg": 0.902,
     "V_avg": 1
