@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M5_FINANCE",
   "version": "1.0.0",
-  "timestamp": 1794408809,
+  "timestamp": 1794412252,
   "p8_signature": "OFFICIAL_RATES"
  },
  "core_metrics": {
@@ -51,13 +51,13 @@
     "type": "official",
     "source": "EKB adatportál, EXR/D.USD.EUR.SP00.A (hivatalos referencia-árfolyam)",
     "unit": "USD/EUR",
-    "value": 1.1214,
-    "prev": 1.1193,
-    "date": "2026-11-10",
-    "prev_date": "2026-11-09",
-    "age_days": 1,
-    "chg_pct": 0.188,
-    "percentile": 0.393,
+    "value": 1.1127,
+    "prev": 1.1214,
+    "date": "2026-11-11",
+    "prev_date": "2026-11-10",
+    "age_days": 0,
+    "chg_pct": -0.776,
+    "percentile": 0.899,
     "baseline_n": 1268,
     "g": 1,
     "note": null
@@ -110,12 +110,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-07T14:02:28.689Z",
-    "hour": "2026-11-07T14",
-    "G": 1,
-    "V": 1
-   },
    {
     "t": "2026-11-07T15:22:20.227Z",
     "hour": "2026-11-07T15",
@@ -685,6 +679,12 @@
     "hour": "2026-11-11T14",
     "G": 0.974,
     "V": 1
+   },
+   {
+    "t": "2026-11-11T15:50:52.313Z",
+    "hour": "2026-11-11T15",
+    "G": 0.974,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -770,22 +770,22 @@
    },
    {
     "date": "2026-11-11",
-    "n": 15,
-    "v_sum": 14.8,
-    "n_g": 15,
-    "g_sum": 14.87,
+    "n": 16,
+    "v_sum": 15.8,
+    "n_g": 16,
+    "g_sum": 15.844,
     "G_min": 0.974,
-    "G_avg": 0.991,
-    "V_avg": 0.987
+    "G_avg": 0.99,
+    "V_avg": 0.988
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 196,
-    "v_sum": 192.8,
-    "n_g": 196,
-    "g_sum": 195.794,
+    "n": 197,
+    "v_sum": 193.8,
+    "n_g": 197,
+    "g_sum": 196.768,
     "G_min": 0.974,
     "G_avg": 0.999,
     "V_avg": 0.984
