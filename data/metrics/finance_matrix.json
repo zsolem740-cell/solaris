@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M5_FINANCE",
   "version": "1.0.0",
-  "timestamp": 1794352850,
+  "timestamp": 1794358727,
   "p8_signature": "OFFICIAL_RATES"
  },
  "core_metrics": {
@@ -23,7 +23,7 @@
     "prev": 363.18,
     "date": "2026-11-10",
     "prev_date": "2026-11-09",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": -0.176,
     "percentile": 0.332,
     "baseline_n": 1240,
@@ -39,7 +39,7 @@
     "prev": 324.47,
     "date": "2026-11-10",
     "prev_date": "2026-11-09",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": -0.478,
     "percentile": 0.512,
     "baseline_n": 1240,
@@ -55,7 +55,7 @@
     "prev": 1.1193,
     "date": "2026-11-10",
     "prev_date": "2026-11-09",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": 0.188,
     "percentile": 0.393,
     "baseline_n": 1268,
@@ -72,7 +72,7 @@
     "mrr": {
      "value": 2.65,
      "date": "2026-09-16",
-     "age_days": 55,
+     "age_days": 56,
      "last_change": {
       "date": "2026-09-16",
       "from": 2.4,
@@ -83,22 +83,11 @@
     "dfr": {
      "value": 2.5,
      "date": "2026-09-16",
-     "age_days": 55,
+     "age_days": 56,
      "last_change": {
       "date": "2026-09-16",
       "from": 2.25,
       "to": 2.5
-     },
-     "changed_recently": false
-    },
-    "mlf": {
-     "value": 2.9,
-     "date": "2026-09-16",
-     "age_days": 55,
-     "last_change": {
-      "date": "2026-09-16",
-      "from": 2.65,
-      "to": 2.9
      },
      "changed_recently": false
     }
@@ -118,15 +107,10 @@
   },
   "notes": [
    "Hivatalosan közzétett adatok (MNB, EKB), nem előrejelzés és nem ajánlás.",
-   "A csatornák súlyai szakértői becslések."
+   "A csatornák súlyai szakértői becslések.",
+   "Lekérdezési hiba: EKB mlf: This operation was aborted"
   ],
   "live_24h": [
-   {
-    "t": "2026-11-06T23:37:05.594Z",
-    "hour": "2026-11-06T23",
-    "G": 1,
-    "V": 1
-   },
    {
     "t": "2026-11-07T00:13:27.187Z",
     "hour": "2026-11-07T00",
@@ -696,6 +680,12 @@
     "hour": "2026-11-10T23",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-11T00:58:47.141Z",
+    "hour": "2026-11-11T00",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -778,18 +768,28 @@
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 0.975
+   },
+   {
+    "date": "2026-11-11",
+    "n": 1,
+    "v_sum": 1,
+    "n_g": 1,
+    "g_sum": 1,
+    "G_min": 1,
+    "G_avg": 1,
+    "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 181,
-    "v_sum": 178,
-    "n_g": 181,
-    "g_sum": 180.924,
+    "n": 182,
+    "v_sum": 179,
+    "n_g": 182,
+    "g_sum": 181.924,
     "G_min": 0.996,
     "G_avg": 1,
-    "V_avg": 0.983
+    "V_avg": 0.984
    }
   ]
  },
