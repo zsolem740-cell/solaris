@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M1_SOLARIS",
   "version": "1.1.0",
-  "timestamp": 1794378580,
+  "timestamp": 1794383313,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -14,38 +14,32 @@
  },
  "dynamic_payload": {
   "place": "Körmend",
-  "solar_wind_speed_kms": 655,
-  "bz_vector_nt": 2.0770000000000004,
+  "solar_wind_speed_kms": 642.8,
+  "bz_vector_nt": -0.502,
   "kp_index": 0.67,
   "kp_max_24h": 3,
-  "flare_level": "B8.3",
+  "flare_level": "B8.9",
   "wind_gust_kmh": 16,
-  "pressure_drop_3h": 2.8,
-  "pressure_hpa": 1012.7,
+  "pressure_drop_3h": 2.9,
+  "pressure_hpa": 1012.3,
   "earthquake_max_mag": 0,
   "earthquake_count_local_24h": 0,
   "earthquake_global_max_mag_24h": 5.6,
-  "csi_sigma": 0.549,
+  "csi_sigma": 0.555,
   "sources_ok": "15/15",
   "flags": [],
   "stress_components": {
    "kp": 0,
    "bz": 0,
-   "wind": 0.456,
-   "flare": 0.168,
+   "wind": 0.428,
+   "flare": 0.18,
    "quake": 0,
    "gust": 0,
-   "dp": 0.1,
-   "csi": 0.125
+   "dp": 0.112,
+   "csi": 0.128
   },
   "risk_score": 45,
   "live_24h": [
-   {
-    "t": "2026-11-07T05:08:39.787Z",
-    "hour": "2026-11-07T05",
-    "G": 0.769,
-    "V": 1
-   },
    {
     "t": "2026-11-07T06:02:30.116Z",
     "hour": "2026-11-07T06",
@@ -615,6 +609,12 @@
     "hour": "2026-11-11T06",
     "G": 0.55,
     "V": 1
+   },
+   {
+    "t": "2026-11-11T07:48:33.636Z",
+    "hour": "2026-11-11T07",
+    "G": 0.55,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -710,22 +710,22 @@
    },
    {
     "date": "2026-11-11",
-    "n": 6,
-    "v_sum": 6,
-    "n_g": 6,
-    "g_sum": 2.968,
+    "n": 7,
+    "v_sum": 7,
+    "n_g": 7,
+    "g_sum": 3.518,
     "G_min": 0.441,
-    "G_avg": 0.495,
+    "G_avg": 0.503,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 207,
-    "v_sum": 206.661,
-    "n_g": 207,
-    "g_sum": 134.622,
+    "n": 208,
+    "v_sum": 207.661,
+    "n_g": 208,
+    "g_sum": 135.172,
     "G_min": 0.245,
     "G_avg": 0.65,
     "V_avg": 0.998
