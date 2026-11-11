@@ -2,12 +2,12 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1794401031,
+  "timestamp": 1794405494,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 1,
+  "stationarity_G": 0.998,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
@@ -20,10 +20,10 @@
     "type": "measured",
     "source": "GeoSphere Austria TAWES (órás sorok a data/obs_at.json-ból)",
     "unit": "mm/24 h",
-    "value": 0.1,
+    "value": 0,
     "hours_valid": 24,
     "station": "GUESSING (23 km)",
-    "percentile": 0.544,
+    "percentile": 0.264,
     "g": 1,
     "basis": "klimatológiai percentilis, felső farok (P90 fölött csökken)"
    },
@@ -32,11 +32,11 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.382,
+    "value": 0.381,
     "valid_at": "2026-11-11T23:00:00.000Z",
-    "lag_h": -10,
-    "percentile": 0.1,
-    "g": 1,
+    "lag_h": -9,
+    "percentile": 0.099,
+    "g": 0.992,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    },
    "soil_rootzone": {
@@ -46,7 +46,7 @@
     "unit": "m³/m³",
     "value": 0.384,
     "valid_at": "2026-11-11T23:00:00.000Z",
-    "lag_h": -10,
+    "lag_h": -9,
     "percentile": 0.124,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -68,12 +68,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-07T11:36:52.260Z",
-    "hour": "2026-11-07T11",
-    "G": 0.886,
-    "V": 1
-   },
    {
     "t": "2026-11-07T12:15:09.577Z",
     "hour": "2026-11-07T12",
@@ -643,6 +637,12 @@
     "hour": "2026-11-11T12",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-11T13:58:14.857Z",
+    "hour": "2026-11-11T13",
+    "G": 0.998,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -738,24 +738,24 @@
    },
    {
     "date": "2026-11-11",
-    "n": 12,
-    "v_sum": 12,
-    "n_g": 12,
-    "g_sum": 11.664,
+    "n": 13,
+    "v_sum": 13,
+    "n_g": 13,
+    "g_sum": 12.662,
     "G_min": 0.944,
-    "G_avg": 0.972,
+    "G_avg": 0.974,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 212,
-    "v_sum": 212,
-    "n_g": 212,
-    "g_sum": 192.543,
+    "n": 213,
+    "v_sum": 213,
+    "n_g": 213,
+    "g_sum": 193.541,
     "G_min": 0.76,
-    "G_avg": 0.908,
+    "G_avg": 0.909,
     "V_avg": 1
    }
   ]
