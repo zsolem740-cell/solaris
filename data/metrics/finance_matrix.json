@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M5_FINANCE",
   "version": "1.0.0",
-  "timestamp": 1794358727,
+  "timestamp": 1794362399,
   "p8_signature": "OFFICIAL_RATES"
  },
  "core_metrics": {
@@ -107,16 +107,9 @@
   },
   "notes": [
    "Hivatalosan közzétett adatok (MNB, EKB), nem előrejelzés és nem ajánlás.",
-   "A csatornák súlyai szakértői becslések.",
-   "Lekérdezési hiba: EKB mlf: This operation was aborted"
+   "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-07T00:13:27.187Z",
-    "hour": "2026-11-07T00",
-    "G": 1,
-    "V": 1
-   },
    {
     "t": "2026-11-07T01:23:16.915Z",
     "hour": "2026-11-07T01",
@@ -686,6 +679,12 @@
     "hour": "2026-11-11T00",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-11T01:59:59.181Z",
+    "hour": "2026-11-11T01",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -771,10 +770,10 @@
    },
    {
     "date": "2026-11-11",
-    "n": 1,
-    "v_sum": 1,
-    "n_g": 1,
-    "g_sum": 1,
+    "n": 2,
+    "v_sum": 2,
+    "n_g": 2,
+    "g_sum": 2,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 1
@@ -783,10 +782,10 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 182,
-    "v_sum": 179,
-    "n_g": 182,
-    "g_sum": 181.924,
+    "n": 183,
+    "v_sum": 180,
+    "n_g": 183,
+    "g_sum": 182.924,
     "G_min": 0.996,
     "G_avg": 1,
     "V_avg": 0.984
