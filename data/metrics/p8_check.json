@@ -1,5 +1,5 @@
 {
- "timestamp": 1794502790,
+ "timestamp": 1794505933,
  "spec": "P8 v1.2",
  "summary": {
   "checked": 4,
@@ -46,7 +46,7 @@
   },
   "M2": {
    "available": false,
-   "note": "HTTP 404"
+   "note": "HTTP 503"
   }
  }
 }
