@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12T18:36:55.374Z",
+ "updated": "2026-11-12T19:33:50.029Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
@@ -8,37 +8,37 @@
   "sent": 0
  },
  "sources": {
-  "noaa_kp_forecast": {
-   "ok": true,
-   "ms": 175
-  },
   "noaa_kp": {
    "ok": true,
-   "ms": 218
+   "ms": 252
+  },
+  "noaa_kp_forecast": {
+   "ok": true,
+   "ms": 214
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 179
-  },
-  "noaa_mag": {
-   "ok": true,
-   "ms": 39
+   "ms": 217
   },
   "noaa_wind": {
    "ok": true,
-   "ms": 29
+   "ms": 62
+  },
+  "noaa_mag": {
+   "ok": true,
+   "ms": 42
   },
   "open_meteo": {
    "ok": true,
-   "ms": 309
+   "ms": 455
   },
   "usgs": {
    "ok": true,
-   "ms": 570
+   "ms": 561
   },
   "om_daily": {
    "ok": true,
-   "ms": 44
+   "ms": 42
   },
   "om_pressure": {
    "ok": true,
@@ -46,61 +46,59 @@
   },
   "om_flood": {
    "ok": true,
-   "ms": 494
+   "ms": 492
   },
   "hungaromet": {
    "ok": true,
-   "ms": 2232
+   "ms": 2033
   },
   "om_models": {
    "ok": true,
-   "ms": 37
+   "ms": 36
   },
   "om_era5": {
    "ok": true,
-   "ms": 505
+   "ms": 516
   },
   "om_models_15811": {
    "ok": true,
-   "ms": 38
+   "ms": 37
   },
   "geosphere": {
    "ok": true,
-   "ms": 2240
+   "ms": 2412
   }
  },
  "current": {
   "kp": 0.33,
   "kpMax24": 1.67,
-  "flux": 6.482924845840898e-7,
-  "flare": "B6.5",
-  "speed": 512.5,
-  "bz": 2.564,
-  "tmin12": 7.2,
-  "gust12": 56.2,
-  "dp3": -2.5,
-  "pressure": 995
+  "flux": 9.388709258928429e-7,
+  "flare": "B9.4",
+  "speed": 488.8,
+  "bz": 0.548,
+  "tmin12": 6.8,
+  "gust12": 51.1,
+  "dp3": -2.2000000000000455,
+  "pressure": 994
  },
  "csi": {
-  "t": "2026-11-12T18:36:55.374Z",
-  "csi": 0.631,
+  "t": "2026-11-12T19:33:50.029Z",
+  "csi": 0.637,
   "comp": {
    "p1": 0,
    "p2": 0,
-   "p3": 3.209,
+   "p3": 3.248,
    "p4": 0,
    "p5": 1
   }
  },
  "score": {
   "records": 165,
-  "verified": 140,
+  "verified": 141,
   "since": "2026-10-30T16"
  },
  "rules": {
-  "active": [
-   "riverGust"
-  ],
+  "active": [],
   "stats": {
    "roadIce": {
     "n": 14,
@@ -110,7 +108,7 @@
  },
  "scoreObs": {
   "records": 23,
-  "verified": 254,
+  "verified": 255,
   "since": "2026-10-30T19"
  },
  "obs": {
@@ -122,7 +120,7 @@
    "elev": 227,
    "distKm": 17.745291119911155
   },
-  "last": "2026-11-12T18",
+  "last": "2026-11-12T19",
   "rows": 96,
   "via": "SYNOP órás fájl",
   "stale": false,
@@ -135,8 +133,8 @@
   "now": false
  },
  "history": {
-  "rows": 307,
-  "withCsi": 306,
+  "rows": 308,
+  "withCsi": 307,
   "since": "2026-10-30T14:04Z"
  },
  "recent": [
@@ -266,7 +264,7 @@
    "elev": 215,
    "distKm": 22.84307300494139
   },
-  "last": "2026-11-12T18",
+  "last": "2026-11-12T19",
   "rows": 96,
   "via": "GeoSphere TAWES 10 perces",
   "stale": false,
