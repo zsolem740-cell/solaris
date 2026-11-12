@@ -2,35 +2,18 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1794438667,
+  "timestamp": 1794441802,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 0.625,
+  "stationarity_G": 0.644,
   "noise_S": 0.2,
   "validity_V": 0.8,
-  "atm_score": 0.025
+  "atm_score": 0.026
  },
  "dynamic_payload": {
   "live_24h": [
-   {
-    "t": "2026-11-07T21:37:00.197Z",
-    "hour": "2026-11-07T21",
-    "G": 0.281,
-    "V": 0.8,
-    "ch": {
-     "rhine_kaub": {
-      "cm": 6,
-      "g": 0.096
-     },
-     "danube_passau": {
-      "cm": 382,
-      "g": 0.588
-     },
-     "border_hu": null
-    }
-   },
    {
     "t": "2026-11-07T22:13:26.243Z",
     "hour": "2026-11-07T22",
@@ -1645,6 +1628,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-12T00:03:22.319Z",
+    "hour": "2026-11-12T00",
+    "G": 0.644,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 27,
+      "g": 0.43
+     },
+     "danube_passau": {
+      "cm": 412,
+      "g": 1
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1747,17 +1747,27 @@
     "G_min": 0.511,
     "G_avg": 0.55,
     "V_avg": 0.8
+   },
+   {
+    "date": "2026-11-12",
+    "n": 1,
+    "v_sum": 0.8,
+    "n_g": 1,
+    "g_sum": 0.644,
+    "G_min": 0.644,
+    "G_avg": 0.644,
+    "V_avg": 0.8
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 229,
-    "v_sum": 161.102,
-    "n_g": 229,
-    "g_sum": 92.892,
+    "n": 230,
+    "v_sum": 161.902,
+    "n_g": 230,
+    "g_sum": 93.536,
     "G_min": 0.256,
-    "G_avg": 0.406,
+    "G_avg": 0.407,
     "V_avg": 0.704
    }
   ],
@@ -1765,8 +1775,8 @@
    "rhine_kaub": {
     "label": "Rajna · Kaub",
     "station": "KAUB",
-    "cm": 25,
-    "measured_at": "2026-11-12T00:00:00+01:00",
+    "cm": 27,
+    "measured_at": "2026-11-12T01:00:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -1786,14 +1796,14 @@
      "MNW": 65,
      "MHW": 544
     },
-    "g": 0.4,
+    "g": 0.43,
     "basis": "MNW/NNW (hivatalos statisztika)"
    },
    "danube_passau": {
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
-    "cm": 409,
-    "measured_at": "2026-11-12T00:00:00+01:00",
+    "cm": 412,
+    "measured_at": "2026-11-12T01:00:00+01:00",
     "state": "normal",
     "nsw": null,
     "hsw": 780,
