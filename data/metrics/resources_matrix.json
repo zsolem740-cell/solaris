@@ -2,12 +2,12 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1794524692,
+  "timestamp": 1794529721,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "ANOMALY",
-  "stationarity_G": 0.568,
+  "stationarity_G": 0.439,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
@@ -20,11 +20,11 @@
     "type": "measured",
     "source": "GeoSphere Austria TAWES (órás sorok a data/obs_at.json-ból)",
     "unit": "mm/24 h",
-    "value": 12.4,
+    "value": 15.8,
     "hours_valid": 24,
     "station": "GUESSING (23 km)",
-    "percentile": 0.954,
-    "g": 0.52,
+    "percentile": 0.977,
+    "g": 0.316,
     "basis": "klimatológiai percentilis, felső farok (P90 fölött csökken)"
    },
    "soil_surface": {
@@ -32,11 +32,11 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.507,
-    "valid_at": "2026-11-12T23:00:00.000Z",
-    "lag_h": 0,
-    "percentile": 0.994,
-    "g": 0.2,
+    "value": 0.478,
+    "valid_at": "2026-11-13T23:00:00.000Z",
+    "lag_h": -23,
+    "percentile": 0.959,
+    "g": 0.475,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    },
    "soil_rootzone": {
@@ -44,18 +44,19 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.389,
-    "valid_at": "2026-11-12T23:00:00.000Z",
-    "lag_h": 0,
-    "percentile": 0.145,
-    "g": 1,
+    "value": 0.469,
+    "valid_at": "2026-11-13T23:00:00.000Z",
+    "lag_h": -23,
+    "percentile": 0.949,
+    "g": 0.568,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    }
   },
   "coverage": "3/3",
   "flags": [
    "heavy_rain",
-   "soil_surface_wet"
+   "soil_surface_wet",
+   "soil_rootzone_wet"
   ],
   "v_min": 0.5,
   "weights_basis": "szakértői becslés",
@@ -71,12 +72,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-08T21:36:16.689Z",
-    "hour": "2026-11-08T21",
-    "G": 0.765,
-    "V": 1
-   },
    {
     "t": "2026-11-08T22:13:41.944Z",
     "hour": "2026-11-08T22",
@@ -646,6 +641,12 @@
     "hour": "2026-11-12T23",
     "G": 0.568,
     "V": 1
+   },
+   {
+    "t": "2026-11-13T00:28:41.607Z",
+    "hour": "2026-11-13T00",
+    "G": 0.439,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -758,17 +759,27 @@
     "G_min": 0.568,
     "G_avg": 0.772,
     "V_avg": 1
+   },
+   {
+    "date": "2026-11-13",
+    "n": 1,
+    "v_sum": 1,
+    "n_g": 1,
+    "g_sum": 0.439,
+    "G_min": 0.439,
+    "G_avg": 0.439,
+    "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 246,
-    "v_sum": 246,
-    "n_g": 246,
-    "g_sum": 221.048,
-    "G_min": 0.568,
-    "G_avg": 0.899,
+    "n": 247,
+    "v_sum": 247,
+    "n_g": 247,
+    "g_sum": 221.487,
+    "G_min": 0.439,
+    "G_avg": 0.897,
     "V_avg": 1
    }
   ]
