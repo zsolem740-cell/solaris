@@ -1,68 +1,40 @@
 {
- "updated": "2026-11-14T10:08:06.404Z",
+ "updated": "2026-11-14T10:59:13.224Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
   "configured": true,
-  "attempted": 0,
-  "sent": 0
+  "attempted": 1,
+  "sent": 1
  },
  "sources": {
-  "noaa_kp_forecast": {
+  "noaa_mag": {
    "ok": true,
-   "ms": 216
+   "ms": 41
   },
   "noaa_kp": {
    "ok": true,
-   "ms": 251
+   "ms": 268
   },
-  "noaa_wind": {
+  "noaa_kp_forecast": {
    "ok": true,
-   "ms": 42
-  },
-  "noaa_mag": {
-   "ok": true,
-   "ms": 52
+   "ms": 221
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 220
+   "ms": 226
   },
-  "open_meteo": {
+  "noaa_wind": {
    "ok": true,
-   "ms": 442
+   "ms": 49
   },
   "usgs": {
    "ok": true,
-   "ms": 510
+   "ms": 334
   },
-  "om_daily": {
+  "open_meteo": {
    "ok": true,
-   "ms": 45
-  },
-  "om_pressure": {
-   "ok": true,
-   "ms": 37
-  },
-  "om_flood": {
-   "ok": true,
-   "ms": 506
-  },
-  "hungaromet": {
-   "ok": true,
-   "ms": 2207
-  },
-  "om_models": {
-   "ok": true,
-   "ms": 37
-  },
-  "om_era5": {
-   "ok": true,
-   "ms": 528
-  },
-  "om_models_15811": {
-   "ok": true,
-   "ms": 39
+   "ms": 379
   },
   "geosphere": {
    "ok": true,
@@ -72,14 +44,14 @@
  "current": {
   "kp": 1,
   "kpMax24": 1.67,
-  "flux": 6.898051196913002e-7,
-  "flare": "B6.9",
-  "speed": 384.5,
-  "bz": 1.7410000000000003,
+  "flux": 6.95489859481313e-7,
+  "flare": "B7.0",
+  "speed": 387.8,
+  "bz": 2.32,
   "tmin12": -0.2,
-  "gust12": 9.7,
-  "dp3": -1.7999999999999545,
-  "pressure": 1026.3
+  "gust12": 11.5,
+  "dp3": -1.400000000000091,
+  "pressure": 1026
  },
  "csi": {
   "t": "2026-11-14T10:08:06.404Z",
@@ -144,6 +116,11 @@
   "since": "2026-10-31T02:45Z"
  },
  "recent": [
+  {
+   "t": "2026-11-14T10:59:13.224Z",
+   "key": "roadIce",
+   "title": "Fekete jég veszély"
+  },
   {
    "t": "2026-11-14T06:23:16.482Z",
    "key": "digest",
@@ -238,11 +215,6 @@
    "t": "2026-11-08T16:13:36.403Z",
    "key": "flare",
    "title": "Napkitörés: M1.2 (R1)"
-  },
-  {
-   "t": "2026-11-08T14:16:00.536Z",
-   "key": "roadIce",
-   "title": "Fekete jég veszély"
   }
  ],
  "thresholds": {
