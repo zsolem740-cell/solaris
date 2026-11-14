@@ -2,12 +2,12 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1794623534,
+  "timestamp": 1794626588,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
-  "status": "ANOMALY",
-  "stationarity_G": 0.596,
+  "status": "NOMINAL",
+  "stationarity_G": 0.805,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
@@ -20,11 +20,11 @@
     "type": "measured",
     "source": "GeoSphere Austria TAWES (órás sorok a data/obs_at.json-ból)",
     "unit": "mm/24 h",
-    "value": 13.1,
+    "value": 4.5,
     "hours_valid": 24,
     "station": "GUESSING (23 km)",
-    "percentile": 0.959,
-    "g": 0.478,
+    "percentile": 0.861,
+    "g": 1,
     "basis": "klimatológiai percentilis, felső farok (P90 fölött csökken)"
    },
    "soil_surface": {
@@ -53,9 +53,7 @@
    }
   },
   "coverage": "3/3",
-  "flags": [
-   "heavy_rain"
-  ],
+  "flags": [],
   "v_min": 0.5,
   "weights_basis": "szakértői becslés",
   "climatology": {
@@ -70,12 +68,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-10T01:29:07.734Z",
-    "hour": "2026-11-10T01",
-    "G": 0.916,
-    "V": 1
-   },
    {
     "t": "2026-11-10T02:28:00.003Z",
     "hour": "2026-11-10T02",
@@ -645,6 +637,12 @@
     "hour": "2026-11-14T02",
     "G": 0.596,
     "V": 1
+   },
+   {
+    "t": "2026-11-14T03:23:08.113Z",
+    "hour": "2026-11-14T03",
+    "G": 0.805,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -770,22 +768,22 @@
    },
    {
     "date": "2026-11-14",
-    "n": 3,
-    "v_sum": 3,
-    "n_g": 3,
-    "g_sum": 1.589,
+    "n": 4,
+    "v_sum": 4,
+    "n_g": 4,
+    "g_sum": 2.394,
     "G_min": 0.485,
-    "G_avg": 0.53,
+    "G_avg": 0.599,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 273,
-    "v_sum": 273,
-    "n_g": 273,
-    "g_sum": 230.349,
+    "n": 274,
+    "v_sum": 274,
+    "n_g": 274,
+    "g_sum": 231.154,
     "G_min": 0.291,
     "G_avg": 0.844,
     "V_avg": 1
