@@ -1,68 +1,40 @@
 {
- "updated": "2026-11-14T17:13:11.296Z",
+ "updated": "2026-11-14T17:52:20.137Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
   "configured": true,
-  "attempted": 0,
-  "sent": 0
+  "attempted": 1,
+  "sent": 1
  },
  "sources": {
-  "noaa_wind": {
+  "noaa_mag": {
    "ok": true,
-   "ms": 55
+   "ms": 28
   },
   "noaa_kp": {
    "ok": true,
-   "ms": 250
-  },
-  "noaa_kp_forecast": {
-   "ok": true,
-   "ms": 196
+   "ms": 183
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 200
+   "ms": 141
   },
-  "noaa_mag": {
+  "noaa_kp_forecast": {
    "ok": true,
-   "ms": 39
+   "ms": 146
+  },
+  "noaa_wind": {
+   "ok": true,
+   "ms": 25
   },
   "open_meteo": {
    "ok": true,
-   "ms": 392
+   "ms": 476
   },
   "usgs": {
    "ok": true,
-   "ms": 508
-  },
-  "om_daily": {
-   "ok": true,
-   "ms": 175
-  },
-  "om_pressure": {
-   "ok": true,
-   "ms": 36
-  },
-  "om_flood": {
-   "ok": true,
-   "ms": 546
-  },
-  "hungaromet": {
-   "ok": true,
-   "ms": 1847
-  },
-  "om_models": {
-   "ok": true,
-   "ms": 35
-  },
-  "om_era5": {
-   "ok": true,
-   "ms": 524
-  },
-  "om_models_15811": {
-   "ok": true,
-   "ms": 36
+   "ms": 500
   },
   "geosphere": {
    "ok": true,
@@ -72,14 +44,14 @@
  "current": {
   "kp": 1.67,
   "kpMax24": 1.67,
-  "flux": 9.411574524165189e-7,
-  "flare": "B9.4",
-  "speed": 369.4,
-  "bz": 0.441,
-  "tmin12": 0.3,
-  "gust12": 10.4,
+  "flux": 9.825457709666807e-7,
+  "flare": "B9.8",
+  "speed": 383.8,
+  "bz": -0.02699999999999996,
+  "tmin12": -0.2,
+  "gust12": 9.7,
   "dp3": -1.7000000000000455,
-  "pressure": 1025.8
+  "pressure": 1026
  },
  "csi": {
   "t": "2026-11-14T17:13:11.296Z",
@@ -142,6 +114,11 @@
   "since": "2026-10-31T09:38Z"
  },
  "recent": [
+  {
+   "t": "2026-11-14T17:52:20.137Z",
+   "key": "frost",
+   "title": "Fagyveszély: -0.2 °C"
+  },
   {
    "t": "2026-11-14T10:59:13.224Z",
    "key": "roadIce",
@@ -236,11 +213,6 @@
    "t": "2026-11-08T20:19:28.883Z",
    "key": "roadIce",
    "title": "Fekete jég veszély"
-  },
-  {
-   "t": "2026-11-08T16:13:36.403Z",
-   "key": "flare",
-   "title": "Napkitörés: M1.2 (R1)"
   }
  ],
  "thresholds": {
