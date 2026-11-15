@@ -168,7 +168,7 @@ body.alert #tiles .t{border-color:#ef444477}
 <div id="btns"><button id="bRef">⟳ Frissítés</button><button id="bRot" class="on">⟲ Önforgás</button><button id="bPick">◎ Kijelöl</button><button id="bSearch">🔍 Keresés</button><button id="bLeg">🗺 Jelmagyarázat</button><button id="bHelp">❓ Súgó</button><button id="bQuake">🌋 Rengések</button><button id="bAi" class="on">🤖 Elemző</button><button id="bOcean">🌊 Óceán</button><button id="bNotif">🔔 Értesítés</button><button id="bWake">☀ Ébren</button><button id="bLog">📈 Napló</button><button id="bEonet">🌍 Események</button><button id="bAc">✈ Repülők</button><button id="bOv">🌌 Oval</button><button id="bWx">☁ Időjárás: ki</button><button id="bGps">📍 GPS</button><button id="bBuoy">🛟 Bóják</button><button id="bFc">🌡 Előrejelzés</button><button id="bNight">🌃 Éj-fények</button><button id="bBloom">✨ Fény</button><button id="bSon">🔊 Hangok: ki</button><button id="bHf">📡 HF-csend</button><button id="bPerf">📊 Teljesítmény</button><button id="bTwin">🧬 Twin</button><button id="bSrc">📶 Források</button></div>
 <div id="aiConsole"><div class="hdr">🤖 AI konzol <select id="aiProv" aria-label="AI szolgáltató"><option value="auto">Auto (legjobb)</option><option value="claude">Claude</option><option value="gemini">Gemini</option><option value="openai">OpenAI</option><option value="openrouter">OpenRouter</option><option value="local">Helyi AI (offline)</option><option value="all">Összehasonlít (mind)</option></select></div><div class="log" id="aiCmdLog">AI konzol kész. Helyi parancsok: állapot, gíza, körmend, európa. Kulcs nélkül is válaszol: kp, napszél, bz, napkitörés, nyomás, hullám, rengés, hold, nap. Több AI: /kulcs claude|gemini|openai|openrouter &lt;kulcs&gt;, a választóval te döntesz, az Auto a feladathoz illőt veszi. A Claude a Claude appon belül kulcs nélkül is megy. A Helyi AI kulcs és szerver nélkül, az eszközön fut (WebGPU kell).</div><div class="inpRow"><input id="aiCmdInp" type="text" placeholder="Kérdés vagy parancs..." aria-label="AI parancs"><button id="aiCmdBtn">Küld</button><button id="aiTestBtn">Teszt</button></div>
 <div class="inpRow" style="margin-top:4px"><button id="aiMicBtn" style="flex:1">🎤 Beszélj</button><button id="aiSpkBtn" style="flex:1">🔊 Felolvas: ki</button></div>
-<div class="inpRow" style="margin-top:4px"><button id="aiSumBtn" style="flex:1">📰 Napi összefoglaló</button></div></div>
+<div class="inpRow" style="margin-top:4px"><button id="aiSumBtn" style="flex:1">📰 Napi összefoglaló</button><button id="aiShareBtn" style="flex:1">📤 Küldés a Telefonasszisztensnek</button></div></div>
 </div>
 <div id="logPanel"><div class="lh"><b>📈 Napló és grafikon</b><button id="logClose">✕</button></div><select id="logSel" aria-label="Adatsor"><option value="score">AI kockázati index</option><option value="kp">Kp-index</option><option value="speed">Napszél (km/s)</option><option value="bz">Bz (nT)</option></select><canvas id="logCanvas"></canvas><div class="small" id="logInfo" style="color:#8193a5;font-size:10px"></div><div id="evList" style="margin-top:6px;font-size:10px;color:#cbd5e1"></div><div class="row"><button id="logJson">Export JSON</button><button id="logCsv">Export CSV</button><button id="logClr">Törlés</button></div></div>
 <div id="drawer"><div id="dbar"><div id="dtabs"><button id="tData" class="on">Adatok</button><button id="tLog">Napló</button><button id="tExp">Export</button></div><button id="bClose">✕ 3D</button></div><iframe id="pf" title="Részletes adatok"></iframe></div>
@@ -2591,6 +2591,25 @@ async function dailySummary(){
  aiPrint("📰 "+data);
 }
 $("aiSumBtn").onclick=dailySummary;
+
+/* ===== ÁTADÁS A TELEFONASSZISZTENSNEK (rendszer-megosztás, szerver és kulcs nélkül) ===== */
+function shareText(){
+ const data=localSummary();
+ const parts=["SOLARIS-ÖSSZEFOGLALÓ","Készült: "+new Date(lastSum.t).toISOString(),"Hely: "+loc.name,"Forrás: "+lastSum.src,"","ÖSSZEFOGLALÓ:",lastSum.text];
+ if(lastSum.text.trim()!==data.trim())parts.push("","MÉRT ADATOK:",data);
+ return parts.join("\n");
+}
+async function shareSummary(){
+ if(!lastSum){aiPrint("📤 Előbb készíts összefoglalót a „📰 Napi összefoglaló” gombbal.");return}
+ const text=shareText();
+ if(navigator.share){
+  try{await navigator.share({title:"Solaris-összefoglaló",text});aiPrint("📤 Megosztás elindítva. A listából válaszd a Telefonasszisztenst.");return}
+  catch(e){if(e&&e.name==="AbortError"){aiPrint("📤 Megosztás megszakítva.");return}}
+ }
+ try{await navigator.clipboard.writeText(text);aiPrint("📤 Ez a böngésző nem tud megosztani, ezért az összefoglalót a vágólapra másoltam.")}
+ catch(e){aiPrint("📤 A megosztás és a másolás sem sikerült ebben a böngészőben.")}
+}
+$("aiShareBtn").onclick=shareSummary;
 
 /* ===== ADATFIÓK-KÁRTYÁK ADATA (ISS · OVATION · időjárási rács · összefoglaló) ===== */
 let lastSum=null;
