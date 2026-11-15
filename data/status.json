@@ -1,68 +1,40 @@
 {
- "updated": "2026-11-15T21:13:58.210Z",
+ "updated": "2026-11-15T21:55:23.284Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
   "configured": true,
-  "attempted": 0,
-  "sent": 0
+  "attempted": 1,
+  "sent": 1
  },
  "sources": {
-  "noaa_kp": {
-   "ok": true,
-   "ms": 144
-  },
-  "noaa_kp_forecast": {
-   "ok": true,
-   "ms": 99
-  },
-  "noaa_goes_flux": {
-   "ok": true,
-   "ms": 105
-  },
   "noaa_mag": {
    "ok": true,
-   "ms": 42
-  },
-  "open_meteo": {
-   "ok": true,
-   "ms": 185
+   "ms": 58
   },
   "noaa_wind": {
    "ok": true,
-   "ms": 39
+   "ms": 73
+  },
+  "noaa_kp_forecast": {
+   "ok": true,
+   "ms": 184
+  },
+  "noaa_kp": {
+   "ok": true,
+   "ms": 242
+  },
+  "noaa_goes_flux": {
+   "ok": true,
+   "ms": 192
   },
   "usgs": {
    "ok": true,
-   "ms": 398
+   "ms": 255
   },
-  "om_daily": {
+  "open_meteo": {
    "ok": true,
-   "ms": 40
-  },
-  "om_pressure": {
-   "ok": true,
-   "ms": 37
-  },
-  "om_flood": {
-   "ok": true,
-   "ms": 517
-  },
-  "hungaromet": {
-   "ok": true,
-   "ms": 2234
-  },
-  "om_models": {
-   "ok": true,
-   "ms": 39
-  },
-  "om_era5": {
-   "ok": true,
-   "ms": 532
-  },
-  "om_models_15811": {
-   "ok": true,
-   "ms": 40
+   "ms": 278
   },
   "geosphere": {
    "ok": true,
@@ -72,10 +44,10 @@
  "current": {
   "kp": 1,
   "kpMax24": 3.67,
-  "flux": 0.0000010592092394290376,
-  "flare": "C1.1",
-  "speed": 406.5,
-  "bz": 2.9859999999999998,
+  "flux": 0.0000015794139471836388,
+  "flare": "C1.6",
+  "speed": 407.7,
+  "bz": 0.9949999999999998,
   "tmin12": 1.4,
   "gust12": 12.6,
   "dp3": -2.6000000000000227,
@@ -144,6 +116,11 @@
   "since": "2026-11-01T13:25Z"
  },
  "recent": [
+  {
+   "t": "2026-11-15T21:55:23.284Z",
+   "key": "roadIce",
+   "title": "Fekete jég veszély"
+  },
   {
    "t": "2026-11-15T15:24:24.168Z",
    "key": "roadIce",
@@ -238,11 +215,6 @@
    "t": "2026-11-12T06:22:26.091Z",
    "key": "digest",
    "title": "Reggeli összefoglaló · Körmend"
-  },
-  {
-   "t": "2026-11-11T22:19:22.795Z",
-   "key": "flare",
-   "title": "Napkitörés: M1.8 (R1)"
   }
  ],
  "thresholds": {
