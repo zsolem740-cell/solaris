@@ -1,100 +1,100 @@
 {
- "updated": "2026-11-15T05:15:12.997Z",
+ "updated": "2026-11-15T06:08:23.705Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
   "configured": true,
-  "attempted": 0,
-  "sent": 0
+  "attempted": 2,
+  "sent": 2
  },
  "sources": {
-  "noaa_kp_forecast": {
+  "noaa_wind": {
    "ok": true,
-   "ms": 182
-  },
-  "noaa_kp": {
-   "ok": true,
-   "ms": 223
+   "ms": 77
   },
   "noaa_mag": {
    "ok": true,
-   "ms": 45
+   "ms": 101
+  },
+  "noaa_kp_forecast": {
+   "ok": true,
+   "ms": 181
+  },
+  "noaa_kp": {
+   "ok": true,
+   "ms": 221
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 188
-  },
-  "noaa_wind": {
-   "ok": true,
-   "ms": 46
+   "ms": 183
   },
   "open_meteo": {
    "ok": true,
-   "ms": 294
+   "ms": 409
   },
   "usgs": {
    "ok": true,
-   "ms": 648
+   "ms": 498
   },
   "om_daily": {
    "ok": true,
-   "ms": 55
+   "ms": 41
   },
   "om_pressure": {
    "ok": true,
-   "ms": 52
+   "ms": 36
   },
   "om_flood": {
    "ok": true,
-   "ms": 523
+   "ms": 503
   },
   "hungaromet": {
    "ok": true,
-   "ms": 2080
+   "ms": 3465
   },
   "om_models": {
    "ok": true,
-   "ms": 53
+   "ms": 149
   },
   "om_era5": {
    "ok": true,
-   "ms": 519
+   "ms": 520
   },
   "om_models_15811": {
    "ok": true,
-   "ms": 54
+   "ms": 50
   },
   "geosphere": {
    "ok": true,
-   "ms": 2694
+   "ms": 4283
   }
  },
  "current": {
-  "kp": 2,
+  "kp": 1,
   "kpMax24": 3.33,
-  "flux": 7.596950126753654e-7,
-  "flare": "B7.6",
-  "speed": 357.2,
-  "bz": 2.003,
+  "flux": 5.558551947615342e-7,
+  "flare": "B5.6",
+  "speed": 377.3,
+  "bz": -1.6620000000000001,
   "tmin12": -0.7,
-  "gust12": 19.4,
-  "dp3": -3,
-  "pressure": 1023.8
+  "gust12": 19.1,
+  "dp3": -2.8999999999999773,
+  "pressure": 1023.3
  },
  "csi": {
-  "t": "2026-11-15T05:15:12.997Z",
-  "csi": 0.221,
+  "t": "2026-11-15T06:08:23.705Z",
+  "csi": 0.213,
   "comp": {
    "p1": 0,
    "p2": 0,
-   "p3": 0.476,
+   "p3": 0.423,
    "p4": 0,
    "p5": 1
   }
  },
  "score": {
   "records": 157,
-  "verified": 198,
+  "verified": 199,
   "since": "2026-10-30T16"
  },
  "rules": {
@@ -114,7 +114,7 @@
  },
  "scoreObs": {
   "records": 21,
-  "verified": 306,
+  "verified": 307,
   "since": "2026-10-30T19"
  },
  "obs": {
@@ -126,7 +126,7 @@
    "elev": 227,
    "distKm": 17.745291119911155
   },
-  "last": "2026-11-15T04",
+  "last": "2026-11-15T05",
   "rows": 96,
   "via": "SYNOP órás fájl",
   "stale": false,
@@ -136,14 +136,24 @@
   "enabled": true,
   "from": 22,
   "to": 7,
-  "now": true
+  "now": false
  },
  "history": {
   "rows": 336,
   "withCsi": 326,
-  "since": "2026-10-31T21:35Z"
+  "since": "2026-10-31T22:09Z"
  },
  "recent": [
+  {
+   "t": "2026-11-15T06:08:23.705Z",
+   "key": "frost",
+   "title": "Fagyveszély: -0.7 °C"
+  },
+  {
+   "t": "2026-11-15T06:08:23.705Z",
+   "key": "digest",
+   "title": "Reggeli összefoglaló · Körmend"
+  },
   {
    "t": "2026-11-15T02:26:37.713Z",
    "key": "roadIce",
@@ -233,16 +243,6 @@
    "t": "2026-11-10T06:11:02.208Z",
    "key": "digest",
    "title": "Reggeli összefoglaló · Körmend"
-  },
-  {
-   "t": "2026-11-09T06:51:30.995Z",
-   "key": "digest",
-   "title": "Reggeli összefoglaló · Körmend"
-  },
-  {
-   "t": "2026-11-09T02:30:40.041Z",
-   "key": "roadIce",
-   "title": "Fekete jég veszély"
   }
  ],
  "thresholds": {
@@ -258,7 +258,7 @@
  },
  "scoreObsAt": {
   "records": 21,
-  "verified": 233,
+  "verified": 234,
   "since": "2026-10-31T20"
  },
  "obsAt": {
@@ -270,7 +270,7 @@
    "elev": 215,
    "distKm": 22.84307300494139
   },
-  "last": "2026-11-15T05",
+  "last": "2026-11-15T06",
   "rows": 96,
   "via": "GeoSphere TAWES 10 perces",
   "stale": false,
