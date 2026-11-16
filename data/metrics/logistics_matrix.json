@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1794785416,
+  "timestamp": 1794788580,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -14,23 +14,6 @@
  },
  "dynamic_payload": {
   "live_24h": [
-   {
-    "t": "2026-11-12T00:03:22.319Z",
-    "hour": "2026-11-12T00",
-    "G": 0.644,
-    "V": 0.8,
-    "ch": {
-     "rhine_kaub": {
-      "cm": 27,
-      "g": 0.43
-     },
-     "danube_passau": {
-      "cm": 412,
-      "g": 1
-     },
-     "border_hu": null
-    }
-   },
    {
     "t": "2026-11-12T01:06:27.563Z",
     "hour": "2026-11-12T01",
@@ -1645,6 +1628,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-16T00:23:00.922Z",
+    "hour": "2026-11-16T00",
+    "G": 0.953,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 60,
+      "g": 0.925
+     },
+     "danube_passau": {
+      "cm": 406,
+      "g": 1
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1787,17 +1787,27 @@
     "G_min": 0.925,
     "G_avg": 0.95,
     "V_avg": 0.8
+   },
+   {
+    "date": "2026-11-16",
+    "n": 1,
+    "v_sum": 0.8,
+    "n_g": 1,
+    "g_sum": 0.953,
+    "G_min": 0.953,
+    "G_avg": 0.953,
+    "V_avg": 0.8
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 325,
-    "v_sum": 237.902,
-    "n_g": 325,
-    "g_sum": 181.976,
+    "n": 326,
+    "v_sum": 238.702,
+    "n_g": 326,
+    "g_sum": 182.929,
     "G_min": 0.256,
-    "G_avg": 0.56,
+    "G_avg": 0.561,
     "V_avg": 0.732
    }
   ],
@@ -1806,7 +1816,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 60,
-    "measured_at": "2026-11-16T00:15:00+01:00",
+    "measured_at": "2026-11-16T01:15:00+01:00",
     "state": "low",
     "nsw": null,
     "hsw": 640,
@@ -1833,7 +1843,7 @@
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
     "cm": 406,
-    "measured_at": "2026-11-16T00:15:00+01:00",
+    "measured_at": "2026-11-16T01:15:00+01:00",
     "state": "normal",
     "nsw": null,
     "hsw": 780,
