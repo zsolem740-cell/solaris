@@ -2,23 +2,23 @@
  "header": {
   "module_id": "M1_SOLARIS",
   "version": "1.1.0",
-  "timestamp": 1794877398,
+  "timestamp": 1794881677,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 0.771,
+  "stationarity_G": 0.817,
   "noise_S": 0.333,
   "validity_V": 0.667,
-  "atm_score": 0.0856
+  "atm_score": 0.0908
  },
  "dynamic_payload": {
   "place": "Körmend",
-  "solar_wind_speed_kms": 328.6,
-  "bz_vector_nt": -0.772,
+  "solar_wind_speed_kms": 321.6,
+  "bz_vector_nt": -0.44400000000000006,
   "kp_index": 0.67,
   "kp_max_24h": 4.67,
-  "flare_level": "C1.1",
+  "flare_level": "B7.8",
   "wind_gust_kmh": null,
   "pressure_drop_3h": null,
   "pressure_hpa": null,
@@ -32,20 +32,14 @@
    "kp": 0.054,
    "bz": 0,
    "wind": 0,
-   "flare": 0.211,
+   "flare": 0.157,
    "quake": 0,
    "gust": 0,
    "dp": 0,
    "csi": 0
   },
-  "risk_score": 23,
+  "risk_score": 18,
   "live_24h": [
-   {
-    "t": "2026-11-12T18:37:15.900Z",
-    "hour": "2026-11-12T18",
-    "G": 0.586,
-    "V": 1
-   },
    {
     "t": "2026-11-12T19:34:24.590Z",
     "hour": "2026-11-12T19",
@@ -615,6 +609,12 @@
     "hour": "2026-11-17T01",
     "G": 0.771,
     "V": 0.667
+   },
+   {
+    "t": "2026-11-17T02:14:37.401Z",
+    "hour": "2026-11-17T02",
+    "G": 0.817,
+    "V": 0.667
    }
   ],
   "daily_30d": [
@@ -770,25 +770,25 @@
    },
    {
     "date": "2026-11-17",
-    "n": 1,
-    "v_sum": 0.667,
-    "n_g": 1,
-    "g_sum": 0.771,
+    "n": 2,
+    "v_sum": 1.334,
+    "n_g": 2,
+    "g_sum": 1.588,
     "G_min": 0.771,
-    "G_avg": 0.771,
+    "G_avg": 0.794,
     "V_avg": 0.667
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 337,
-    "v_sum": 331.732,
-    "n_g": 337,
-    "g_sum": 228.531,
+    "n": 338,
+    "v_sum": 332.399,
+    "n_g": 338,
+    "g_sum": 229.348,
     "G_min": 0.245,
-    "G_avg": 0.678,
-    "V_avg": 0.984
+    "G_avg": 0.679,
+    "V_avg": 0.983
    }
   ]
  },
