@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1794957915,
+  "timestamp": 1794961333,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -23,7 +23,7 @@
     "value": 0,
     "hours_valid": 24,
     "station": "GUESSING (23 km)",
-    "percentile": 0.264,
+    "percentile": 0.27,
     "g": 1,
     "basis": "klimatológiai percentilis, felső farok (P90 fölött csökken)"
    },
@@ -32,10 +32,10 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.46,
-    "valid_at": "2026-11-17T23:00:00.000Z",
-    "lag_h": 0,
-    "percentile": 0.874,
+    "value": 0.438,
+    "valid_at": "2026-11-18T23:00:00.000Z",
+    "lag_h": -23,
+    "percentile": 0.608,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    },
@@ -44,10 +44,10 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.448,
-    "valid_at": "2026-11-17T23:00:00.000Z",
-    "lag_h": 0,
-    "percentile": 0.821,
+    "value": 0.442,
+    "valid_at": "2026-11-18T23:00:00.000Z",
+    "lag_h": -23,
+    "percentile": 0.668,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    }
@@ -60,20 +60,14 @@
    "period": "1991–2020",
    "window_days": 10,
    "source": "ERA5-Land (Open-Meteo archívum)",
-   "soil_built": "2026-11-10T00:21:06.626Z",
-   "precip_built": "2026-11-10T00:21:06.626Z"
+   "soil_built": "2026-11-18T00:22:13.040Z",
+   "precip_built": "2026-11-18T00:22:13.040Z"
   },
   "notes": [
    "A talajnedvesség reanalízis-elemzés (ERA5-Land), nem mérés, és néhány napos késéssel érkezik.",
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-13T16:38:06.014Z",
-    "hour": "2026-11-13T16",
-    "G": 0.291,
-    "V": 1
-   },
    {
     "t": "2026-11-13T17:36:49.634Z",
     "hour": "2026-11-13T17",
@@ -643,6 +637,12 @@
     "hour": "2026-11-17T23",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-18T00:22:13.040Z",
+    "hour": "2026-11-18T00",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -805,17 +805,27 @@
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 1
+   },
+   {
+    "date": "2026-11-18",
+    "n": 1,
+    "v_sum": 1,
+    "n_g": 1,
+    "g_sum": 1,
+    "G_min": 1,
+    "G_avg": 1,
+    "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 358,
-    "v_sum": 358,
-    "n_g": 358,
-    "g_sum": 310.914,
+    "n": 359,
+    "v_sum": 359,
+    "n_g": 359,
+    "g_sum": 311.914,
     "G_min": 0.291,
-    "G_avg": 0.868,
+    "G_avg": 0.869,
     "V_avg": 1
    }
   ]
