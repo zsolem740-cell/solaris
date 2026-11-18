@@ -1,100 +1,100 @@
 {
- "updated": "2026-11-18T06:46:41.958Z",
+ "updated": "2026-11-18T08:00:10.409Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
   "configured": true,
-  "attempted": 1,
-  "sent": 1
+  "attempted": 0,
+  "sent": 0
  },
  "sources": {
   "noaa_mag": {
    "ok": true,
-   "ms": 92
-  },
-  "noaa_kp": {
-   "ok": true,
-   "ms": 243
-  },
-  "noaa_kp_forecast": {
-   "ok": true,
-   "ms": 187
-  },
-  "noaa_goes_flux": {
-   "ok": true,
-   "ms": 190
+   "ms": 74
   },
   "noaa_wind": {
    "ok": true,
-   "ms": 42
+   "ms": 35
+  },
+  "noaa_kp": {
+   "ok": true,
+   "ms": 289
+  },
+  "noaa_kp_forecast": {
+   "ok": true,
+   "ms": 246
+  },
+  "noaa_goes_flux": {
+   "ok": true,
+   "ms": 249
   },
   "open_meteo": {
    "ok": true,
-   "ms": 392
+   "ms": 334
   },
   "usgs": {
    "ok": true,
-   "ms": 507
+   "ms": 569
   },
   "om_daily": {
    "ok": true,
-   "ms": 22
+   "ms": 23
   },
   "om_pressure": {
    "ok": true,
-   "ms": 18
+   "ms": 23
   },
   "om_flood": {
    "ok": true,
-   "ms": 383
+   "ms": 464
   },
   "hungaromet": {
    "ok": true,
-   "ms": 1787
+   "ms": 3211
   },
   "om_models": {
    "ok": true,
-   "ms": 20
+   "ms": 22
   },
   "om_era5": {
    "ok": true,
-   "ms": 407
+   "ms": 390
   },
   "om_models_15811": {
    "ok": true,
-   "ms": 19
+   "ms": 24
   },
   "geosphere": {
    "ok": true,
-   "ms": 2134
+   "ms": 2245
   }
  },
  "current": {
   "kp": 3.33,
   "kpMax24": 4.67,
-  "flux": 0.000006663920885330299,
-  "flare": "C6.7",
-  "speed": 285.7,
-  "bz": 1.7639999999999998,
-  "tmin12": 8.1,
-  "gust12": 19.4,
-  "dp3": -1.099999999999909,
-  "pressure": 992.5
+  "flux": 0.0000018349697938901954,
+  "flare": "C1.8",
+  "speed": 303,
+  "bz": -4.349000000000001,
+  "tmin12": 5.8,
+  "gust12": 22,
+  "dp3": -1.2000000000000455,
+  "pressure": 994.7
  },
  "csi": {
-  "t": "2026-11-18T06:46:41.958Z",
-  "csi": 0.447,
+  "t": "2026-11-18T08:00:10.409Z",
+  "csi": 0.414,
   "comp": {
    "p1": 0,
    "p2": 0,
-   "p3": 1.982,
+   "p3": 1.759,
    "p4": 0,
    "p5": 1
   }
  },
  "score": {
-  "records": 140,
-  "verified": 270,
+  "records": 139,
+  "verified": 272,
   "since": "2026-10-30T16"
  },
  "rules": {
@@ -112,7 +112,7 @@
  },
  "scoreObs": {
   "records": 22,
-  "verified": 361,
+  "verified": 362,
   "since": "2026-10-30T19"
  },
  "obs": {
@@ -124,7 +124,7 @@
    "elev": 227,
    "distKm": 17.745291119911155
   },
-  "last": "2026-11-18T06",
+  "last": "2026-11-18T07",
   "rows": 96,
   "via": "SYNOP órás fájl",
   "stale": false,
@@ -139,7 +139,7 @@
  "history": {
   "rows": 336,
   "withCsi": 316,
-  "since": "2026-11-03T16:26Z"
+  "since": "2026-11-03T17:26Z"
  },
  "recent": [
   {
@@ -255,7 +255,7 @@
   "quakeRadiusKm": 600
  },
  "scoreObsAt": {
-  "records": 15,
+  "records": 16,
   "verified": 280,
   "since": "2026-10-31T20"
  },
@@ -268,7 +268,7 @@
    "elev": 215,
    "distKm": 22.84307300494139
   },
-  "last": "2026-11-18T06",
+  "last": "2026-11-18T08",
   "rows": 96,
   "via": "GeoSphere TAWES 10 perces",
   "stale": false,
