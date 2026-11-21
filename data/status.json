@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-21T15:30:13.489Z",
+ "updated": "2026-11-21T16:19:01.987Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
@@ -8,89 +8,93 @@
   "sent": 0
  },
  "sources": {
-  "noaa_mag": {
-   "ok": true,
-   "ms": 34
-  },
   "noaa_kp": {
    "ok": true,
-   "ms": 173
+   "ms": 185
   },
   "noaa_kp_forecast": {
    "ok": true,
-   "ms": 129
-  },
-  "noaa_wind": {
-   "ok": true,
-   "ms": 47
+   "ms": 142
   },
   "noaa_goes_flux": {
    "ok": true,
-   "ms": 135
+   "ms": 144
   },
-  "open_meteo": {
+  "noaa_wind": {
    "ok": true,
-   "ms": 309
+   "ms": 53
+  },
+  "noaa_mag": {
+   "ok": true,
+   "ms": 28
   },
   "usgs": {
    "ok": true,
-   "ms": 515
+   "ms": 532
+  },
+  "open_meteo": {
+   "ok": true,
+   "ms": 588
   },
   "om_daily": {
    "ok": true,
-   "ms": 22
+   "ms": 38
   },
   "om_pressure": {
    "ok": true,
-   "ms": 21
+   "ms": 34
   },
   "om_flood": {
    "ok": true,
-   "ms": 607
+   "ms": 591
   },
   "hungaromet": {
    "ok": true,
-   "ms": 1940
+   "ms": 2357
   },
   "om_models": {
    "ok": true,
-   "ms": 20
+   "ms": 34
+  },
+  "om_era5": {
+   "ok": true,
+   "ms": 565
   },
   "om_models_15811": {
    "ok": true,
-   "ms": 20
+   "ms": 38
   },
   "geosphere": {
    "ok": true,
-   "ms": 2359
+   "ms": 2254
   }
  },
  "current": {
   "kp": 1,
   "kpMax24": 2.33,
-  "flux": 3.2490549983776873e-7,
+  "flux": 3.203331857548619e-7,
   "flare": "B3.2",
-  "speed": 378.4,
-  "bz": -1.759,
-  "tmin12": 3.2,
-  "gust12": 16.9,
+  "speed": 376.5,
+  "bz": -2.008,
+  "tmin12": 2.1,
+  "gust12": 13,
   "dp3": -2.1000000000000227,
-  "pressure": 1018
+  "pressure": 1018.8
  },
  "csi": {
-  "t": "2026-11-21T15:30:13.489Z",
-  "csi": 0.242,
+  "t": "2026-11-21T16:19:01.987Z",
+  "csi": 0.252,
   "comp": {
    "p1": 0,
    "p2": 0,
-   "p3": 0.612,
+   "p3": 0.678,
    "p4": 0,
    "p5": 1
   }
  },
  "score": {
   "records": 130,
-  "verified": 342,
+  "verified": 343,
   "since": "2026-10-30T16"
  },
  "rules": {
@@ -108,7 +112,7 @@
  },
  "scoreObs": {
   "records": 22,
-  "verified": 424,
+  "verified": 425,
   "since": "2026-10-30T19"
  },
  "obs": {
@@ -135,7 +139,7 @@
  "history": {
   "rows": 336,
   "withCsi": 303,
-  "since": "2026-11-07T00:13Z"
+  "since": "2026-11-07T01:23Z"
  },
  "recent": [
   {
@@ -252,7 +256,7 @@
  },
  "scoreObsAt": {
   "records": 11,
-  "verified": 321,
+  "verified": 322,
   "since": "2026-10-31T20"
  },
  "obsAt": {
@@ -264,7 +268,7 @@
    "elev": 215,
    "distKm": 22.84307300494139
   },
-  "last": "2026-11-21T15",
+  "last": "2026-11-21T16",
   "rows": 96,
   "via": "GeoSphere TAWES 10 perces",
   "stale": false,
