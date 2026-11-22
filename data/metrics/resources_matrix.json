@@ -2,12 +2,12 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1795328076,
+  "timestamp": 1795332794,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 0.611,
+  "stationarity_G": 0.696,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
@@ -32,11 +32,11 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.503,
+    "value": 0.499,
     "valid_at": "2026-11-22T23:00:00.000Z",
-    "lag_h": -17,
-    "percentile": 0.988,
-    "g": 0.217,
+    "lag_h": -15,
+    "percentile": 0.985,
+    "g": 0.241,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    },
    "soil_rootzone": {
@@ -44,18 +44,17 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.482,
+    "value": 0.473,
     "valid_at": "2026-11-22T23:00:00.000Z",
-    "lag_h": -17,
-    "percentile": 0.958,
-    "g": 0.486,
+    "lag_h": -15,
+    "percentile": 0.929,
+    "g": 0.746,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    }
   },
   "coverage": "3/3",
   "flags": [
-   "soil_surface_wet",
-   "soil_rootzone_wet"
+   "soil_surface_wet"
   ],
   "v_min": 0.5,
   "weights_basis": "szakértői becslés",
@@ -71,12 +70,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-18T00:22:13.040Z",
-    "hour": "2026-11-18T00",
-    "G": 1,
-    "V": 1
-   },
    {
     "t": "2026-11-18T01:45:26.367Z",
     "hour": "2026-11-18T01",
@@ -646,6 +639,12 @@
     "hour": "2026-11-22T06",
     "G": 0.611,
     "V": 1
+   },
+   {
+    "t": "2026-11-22T07:33:14.760Z",
+    "hour": "2026-11-22T07",
+    "G": 0.696,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -851,24 +850,24 @@
    },
    {
     "date": "2026-11-22",
-    "n": 6,
-    "v_sum": 6,
-    "n_g": 6,
-    "g_sum": 3.666,
+    "n": 7,
+    "v_sum": 7,
+    "n_g": 7,
+    "g_sum": 4.362,
     "G_min": 0.611,
-    "G_avg": 0.611,
+    "G_avg": 0.623,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 454,
-    "v_sum": 454,
-    "n_g": 454,
-    "g_sum": 382.053,
+    "n": 455,
+    "v_sum": 455,
+    "n_g": 455,
+    "g_sum": 382.749,
     "G_min": 0.291,
-    "G_avg": 0.842,
+    "G_avg": 0.841,
     "V_avg": 1
    }
   ]
