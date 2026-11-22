@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1795363526,
+  "timestamp": 1795368498,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -20,10 +20,10 @@
     "type": "measured",
     "source": "GeoSphere Austria TAWES (órás sorok a data/obs_at.json-ból)",
     "unit": "mm/24 h",
-    "value": 0,
+    "value": 0.6,
     "hours_valid": 24,
     "station": "GUESSING (23 km)",
-    "percentile": 0.27,
+    "percentile": 0.686,
     "g": 1,
     "basis": "klimatológiai percentilis, felső farok (P90 fölött csökken)"
    },
@@ -34,7 +34,7 @@
     "unit": "m³/m³",
     "value": 0.496,
     "valid_at": "2026-11-22T23:00:00.000Z",
-    "lag_h": -7,
+    "lag_h": -6,
     "percentile": 0.978,
     "g": 0.306,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -46,7 +46,7 @@
     "unit": "m³/m³",
     "value": 0.47,
     "valid_at": "2026-11-22T23:00:00.000Z",
-    "lag_h": -7,
+    "lag_h": -6,
     "percentile": 0.914,
     "g": 0.876,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -70,12 +70,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-18T13:09:47.586Z",
-    "hour": "2026-11-18T13",
-    "G": 1,
-    "V": 1
-   },
    {
     "t": "2026-11-18T14:25:57.166Z",
     "hour": "2026-11-18T14",
@@ -645,6 +639,12 @@
     "hour": "2026-11-22T16",
     "G": 0.755,
     "V": 1
+   },
+   {
+    "t": "2026-11-22T17:28:18.877Z",
+    "hour": "2026-11-22T17",
+    "G": 0.755,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -850,22 +850,22 @@
    },
    {
     "date": "2026-11-22",
-    "n": 16,
-    "v_sum": 16,
-    "n_g": 16,
-    "g_sum": 10.921,
+    "n": 17,
+    "v_sum": 17,
+    "n_g": 17,
+    "g_sum": 11.676,
     "G_min": 0.611,
-    "G_avg": 0.683,
+    "G_avg": 0.687,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 464,
-    "v_sum": 464,
-    "n_g": 464,
-    "g_sum": 389.308,
+    "n": 465,
+    "v_sum": 465,
+    "n_g": 465,
+    "g_sum": 390.063,
     "G_min": 0.291,
     "G_avg": 0.839,
     "V_avg": 1
