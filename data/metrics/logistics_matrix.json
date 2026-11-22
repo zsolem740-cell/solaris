@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1795382864,
+  "timestamp": 1795385971,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -14,23 +14,6 @@
  },
  "dynamic_payload": {
   "live_24h": [
-   {
-    "t": "2026-11-18T18:22:27.589Z",
-    "hour": "2026-11-18T18",
-    "G": 1,
-    "V": 0.8,
-    "ch": {
-     "rhine_kaub": {
-      "cm": 101,
-      "g": 1
-     },
-     "danube_passau": {
-      "cm": 412,
-      "g": 1
-     },
-     "border_hu": null
-    }
-   },
    {
     "t": "2026-11-18T19:22:58.040Z",
     "hour": "2026-11-18T19",
@@ -1645,6 +1628,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-22T22:19:31.121Z",
+    "hour": "2026-11-22T22",
+    "G": 1,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 222,
+      "g": 1
+     },
+     "danube_passau": {
+      "cm": 423,
+      "g": 1
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1850,10 +1850,10 @@
    },
    {
     "date": "2026-11-22",
-    "n": 21,
-    "v_sum": 16.8,
-    "n_g": 21,
-    "g_sum": 21,
+    "n": 22,
+    "v_sum": 17.6,
+    "n_g": 22,
+    "g_sum": 22,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 0.8
@@ -1862,12 +1862,12 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 476,
-    "v_sum": 358.702,
-    "n_g": 476,
-    "g_sum": 330.871,
+    "n": 477,
+    "v_sum": 359.502,
+    "n_g": 477,
+    "g_sum": 331.871,
     "G_min": 0.256,
-    "G_avg": 0.695,
+    "G_avg": 0.696,
     "V_avg": 0.754
    }
   ],
@@ -1876,7 +1876,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 222,
-    "measured_at": "2026-11-22T22:15:00+01:00",
+    "measured_at": "2026-11-22T23:15:00+01:00",
     "state": "normal",
     "nsw": null,
     "hsw": 640,
@@ -1902,8 +1902,8 @@
    "danube_passau": {
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
-    "cm": 422,
-    "measured_at": "2026-11-22T22:15:00+01:00",
+    "cm": 423,
+    "measured_at": "2026-11-22T23:15:00+01:00",
     "state": "normal",
     "nsw": null,
     "hsw": 780,
