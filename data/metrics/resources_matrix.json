@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1795472763,
+  "timestamp": 1795476351,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -34,7 +34,7 @@
     "unit": "m³/m³",
     "value": 0.471,
     "valid_at": "2026-11-23T23:00:00.000Z",
-    "lag_h": -1,
+    "lag_h": 0,
     "percentile": 0.912,
     "g": 0.893,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -46,7 +46,7 @@
     "unit": "m³/m³",
     "value": 0.465,
     "valid_at": "2026-11-23T23:00:00.000Z",
-    "lag_h": -1,
+    "lag_h": 0,
     "percentile": 0.893,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -68,12 +68,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-19T17:41:20.768Z",
-    "hour": "2026-11-19T17",
-    "G": 0.348,
-    "V": 1
-   },
    {
     "t": "2026-11-19T18:41:39.722Z",
     "hour": "2026-11-19T18",
@@ -643,6 +637,12 @@
     "hour": "2026-11-23T22",
     "G": 0.968,
     "V": 1
+   },
+   {
+    "t": "2026-11-23T23:25:51.460Z",
+    "hour": "2026-11-23T23",
+    "G": 0.968,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -858,22 +858,22 @@
    },
    {
     "date": "2026-11-23",
-    "n": 20,
-    "v_sum": 20,
-    "n_g": 20,
-    "g_sum": 19.872,
+    "n": 21,
+    "v_sum": 21,
+    "n_g": 21,
+    "g_sum": 20.84,
     "G_min": 0.968,
-    "G_avg": 0.994,
+    "G_avg": 0.992,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 491,
-    "v_sum": 491,
-    "n_g": 491,
-    "g_sum": 414.44,
+    "n": 492,
+    "v_sum": 492,
+    "n_g": 492,
+    "g_sum": 415.408,
     "G_min": 0.291,
     "G_avg": 0.844,
     "V_avg": 1
