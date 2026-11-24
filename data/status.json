@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-24T03:41:58.572Z",
+ "updated": "2026-11-24T04:50:20.385Z",
  "ok": true,
  "place": "Körmend",
  "notify": {
@@ -8,79 +8,75 @@
   "sent": 0
  },
  "sources": {
-  "noaa_kp_forecast": {
+  "noaa_mag": {
    "ok": true,
-   "ms": 121
+   "ms": 53
   },
   "noaa_kp": {
    "ok": true,
-   "ms": 181
+   "ms": 185
   },
-  "noaa_mag": {
+  "noaa_kp_forecast": {
    "ok": true,
-   "ms": 32
-  },
-  "noaa_goes_flux": {
-   "ok": true,
-   "ms": 138
+   "ms": 129
   },
   "noaa_wind": {
    "ok": true,
-   "ms": 56
+   "ms": 68
+  },
+  "noaa_goes_flux": {
+   "ok": true,
+   "ms": 135
   },
   "usgs": {
    "ok": true,
-   "ms": 483
+   "ms": 473
   },
   "open_meteo": {
    "ok": false,
-   "ms": 10491,
+   "ms": 10489,
    "error": "fetch failed"
   },
   "om_daily": {
    "ok": false,
-   "ms": 10495,
+   "ms": 10493,
    "error": "fetch failed"
   },
   "om_pressure": {
    "ok": false,
-   "ms": 10495,
+   "ms": 10494,
    "error": "fetch failed"
   },
   "om_flood": {
    "ok": true,
-   "ms": 577
+   "ms": 608
   },
   "hungaromet": {
    "ok": true,
-   "ms": 1897
+   "ms": 2702
   },
   "om_models": {
    "ok": false,
-   "ms": 10331,
+   "ms": 10316,
    "error": "fetch failed"
-  },
-  "om_era5": {
-   "ok": true,
-   "ms": 601
   },
   "om_models_15811": {
    "ok": false,
-   "ms": 10491,
+   "ms": 10494,
    "error": "fetch failed"
   },
   "geosphere": {
    "ok": true,
-   "ms": 3084
+   "ms": 3195
   }
  },
  "current": {
   "kp": 1,
-  "kpMax24": 1.67,
-  "flux": 1.6522108126082458e-7,
-  "flare": "B1.7",
-  "speed": 316.8,
-  "bz": 0.225,
+  "kpMax24": 3,
+  "flux": 1.5426161326104193e-7,
+  "flare": "B1.5",
+  "speed": 319.1,
+  "bz": 1.624,
   "tmin12": null,
   "gust12": null,
   "dp3": null,
@@ -96,8 +92,8 @@
   "active": [],
   "stats": {
    "roadIce": {
-    "n": 28,
-    "hit": 20
+    "n": 29,
+    "hit": 21
    },
    "riverGust": {
     "n": 1,
@@ -119,7 +115,7 @@
    "elev": 227,
    "distKm": 17.745291119911155
   },
-  "last": "2026-11-24T03",
+  "last": "2026-11-24T04",
   "rows": 96,
   "via": "SYNOP órás fájl",
   "stale": false,
@@ -133,8 +129,8 @@
  },
  "history": {
   "rows": 336,
-  "withCsi": 293,
-  "since": "2026-11-09T09:30Z"
+  "withCsi": 292,
+  "since": "2026-11-09T10:24Z"
  },
  "recent": [
   {
@@ -263,7 +259,7 @@
    "elev": 215,
    "distKm": 22.84307300494139
   },
-  "last": "2026-11-24T03",
+  "last": "2026-11-24T04",
   "rows": 96,
   "via": "GeoSphere TAWES 10 perces",
   "stale": false,
