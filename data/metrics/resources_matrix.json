@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1795563333,
+  "timestamp": 1795566404,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -32,10 +32,10 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.465,
-    "valid_at": "2026-11-24T23:00:00.000Z",
-    "lag_h": 1,
-    "percentile": 0.875,
+    "value": 0.467,
+    "valid_at": "2026-11-25T23:00:00.000Z",
+    "lag_h": -23,
+    "percentile": 0.886,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    },
@@ -44,10 +44,10 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.459,
-    "valid_at": "2026-11-24T23:00:00.000Z",
-    "lag_h": 1,
-    "percentile": 0.851,
+    "value": 0.454,
+    "valid_at": "2026-11-25T23:00:00.000Z",
+    "lag_h": -23,
+    "percentile": 0.817,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    }
@@ -68,12 +68,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-20T18:41:34.484Z",
-    "hour": "2026-11-20T18",
-    "G": 0.772,
-    "V": 1
-   },
    {
     "t": "2026-11-20T19:45:55.804Z",
     "hour": "2026-11-20T19",
@@ -643,6 +637,12 @@
     "hour": "2026-11-24T23",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-25T00:26:44.485Z",
+    "hour": "2026-11-25T00",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -875,17 +875,27 @@
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 1
+   },
+   {
+    "date": "2026-11-25",
+    "n": 1,
+    "v_sum": 1,
+    "n_g": 1,
+    "g_sum": 1,
+    "G_min": 1,
+    "G_avg": 1,
+    "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 515,
-    "v_sum": 515,
-    "n_g": 515,
-    "g_sum": 438.408,
+    "n": 516,
+    "v_sum": 516,
+    "n_g": 516,
+    "g_sum": 439.408,
     "G_min": 0.291,
-    "G_avg": 0.851,
+    "G_avg": 0.852,
     "V_avg": 1
    }
   ]
