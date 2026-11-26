@@ -2,12 +2,12 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1795652695,
+  "timestamp": 1795658117,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 0.912,
+  "stationarity_G": 0.702,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
@@ -20,10 +20,10 @@
     "type": "measured",
     "source": "GeoSphere Austria TAWES (órás sorok a data/obs_at.json-ból)",
     "unit": "mm/24 h",
-    "value": 0.1,
+    "value": 1.7,
     "hours_valid": 23,
     "station": "GUESSING (23 km)",
-    "percentile": 0.57,
+    "percentile": 0.763,
     "g": 1,
     "basis": "klimatológiai percentilis, felső farok (P90 fölött csökken)"
    },
@@ -32,11 +32,11 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.477,
-    "valid_at": "2026-11-25T23:00:00.000Z",
-    "lag_h": 0,
-    "percentile": 0.933,
-    "g": 0.708,
+    "value": 0.489,
+    "valid_at": "2026-11-26T23:00:00.000Z",
+    "lag_h": -21,
+    "percentile": 0.979,
+    "g": 0.3,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    },
    "soil_rootzone": {
@@ -44,16 +44,18 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.459,
-    "valid_at": "2026-11-25T23:00:00.000Z",
-    "lag_h": 0,
-    "percentile": 0.83,
-    "g": 1,
+    "value": 0.476,
+    "valid_at": "2026-11-26T23:00:00.000Z",
+    "lag_h": -21,
+    "percentile": 0.933,
+    "g": 0.708,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    }
   },
   "coverage": "3/3",
-  "flags": [],
+  "flags": [
+   "soil_surface_wet"
+  ],
   "v_min": 0.5,
   "weights_basis": "szakértői becslés",
   "climatology": {
@@ -65,16 +67,9 @@
   },
   "notes": [
    "A talajnedvesség reanalízis-elemzés (ERA5-Land), nem mérés, és néhány napos késéssel érkezik.",
-   "A csatornák súlyai szakértői becslések.",
-   "Talajnedvesség lekérdezési hiba: fetch failed"
+   "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-21T18:23:47.210Z",
-    "hour": "2026-11-21T18",
-    "G": 0.882,
-    "V": 1
-   },
    {
     "t": "2026-11-21T19:25:36.279Z",
     "hour": "2026-11-21T19",
@@ -644,6 +639,12 @@
     "hour": "2026-11-26T00",
     "G": 0.912,
     "V": 1
+   },
+   {
+    "t": "2026-11-26T01:55:17.707Z",
+    "hour": "2026-11-26T01",
+    "G": 0.702,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -889,24 +890,24 @@
    },
    {
     "date": "2026-11-26",
-    "n": 1,
-    "v_sum": 1,
-    "n_g": 1,
-    "g_sum": 0.912,
-    "G_min": 0.912,
-    "G_avg": 0.912,
+    "n": 2,
+    "v_sum": 2,
+    "n_g": 2,
+    "g_sum": 1.614,
+    "G_min": 0.702,
+    "G_avg": 0.807,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 538,
-    "v_sum": 538,
-    "n_g": 538,
-    "g_sum": 460.815,
+    "n": 539,
+    "v_sum": 539,
+    "n_g": 539,
+    "g_sum": 461.517,
     "G_min": 0.291,
-    "G_avg": 0.857,
+    "G_avg": 0.856,
     "V_avg": 1
    }
   ]
