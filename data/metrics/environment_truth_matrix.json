@@ -2,25 +2,25 @@
  "header": {
   "module_id": "M1_SOLARIS",
   "version": "1.1.0",
-  "timestamp": 1795658132,
+  "timestamp": 1795661709,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 0.87,
+  "stationarity_G": 0.805,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
  },
  "dynamic_payload": {
   "place": "Körmend",
-  "solar_wind_speed_kms": 330.7,
-  "bz_vector_nt": 1.674,
+  "solar_wind_speed_kms": 336.3,
+  "bz_vector_nt": 0.646,
   "kp_index": 0.67,
   "kp_max_24h": 5,
-  "flare_level": "B2.5",
-  "wind_gust_kmh": 31,
-  "pressure_drop_3h": 2.7,
+  "flare_level": "B5.3",
+  "wind_gust_kmh": 29,
+  "pressure_drop_3h": 2.6,
   "pressure_hpa": 1017.5,
   "earthquake_max_mag": 0,
   "earthquake_count_local_24h": 0,
@@ -32,20 +32,14 @@
    "kp": 0.1,
    "bz": 0,
    "wind": 0,
-   "flare": 0,
+   "flare": 0.09,
    "quake": 0,
    "gust": 0,
-   "dp": 0.087,
+   "dp": 0.075,
    "csi": 0
   },
-  "risk_score": 13,
+  "risk_score": 20,
   "live_24h": [
-   {
-    "t": "2026-11-21T19:25:39.536Z",
-    "hour": "2026-11-21T19",
-    "G": 0.98,
-    "V": 1
-   },
    {
     "t": "2026-11-21T20:16:21.911Z",
     "hour": "2026-11-21T20",
@@ -615,6 +609,12 @@
     "hour": "2026-11-26T01",
     "G": 0.87,
     "V": 1
+   },
+   {
+    "t": "2026-11-26T02:55:09.195Z",
+    "hour": "2026-11-26T02",
+    "G": 0.805,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -860,25 +860,25 @@
    },
    {
     "date": "2026-11-26",
-    "n": 2,
-    "v_sum": 2,
-    "n_g": 2,
-    "g_sum": 1.723,
-    "G_min": 0.853,
-    "G_avg": 0.862,
+    "n": 3,
+    "v_sum": 3,
+    "n_g": 3,
+    "g_sum": 2.528,
+    "G_min": 0.805,
+    "G_avg": 0.843,
     "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 540,
-    "v_sum": 523.509,
-    "n_g": 540,
-    "g_sum": 402.321,
+    "n": 541,
+    "v_sum": 524.509,
+    "n_g": 541,
+    "g_sum": 403.126,
     "G_min": 0.245,
     "G_avg": 0.745,
-    "V_avg": 0.969
+    "V_avg": 0.97
    }
   ]
  },
