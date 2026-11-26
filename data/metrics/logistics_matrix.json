@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1795661709,
+  "timestamp": 1795665567,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -14,23 +14,6 @@
  },
  "dynamic_payload": {
   "live_24h": [
-   {
-    "t": "2026-11-21T20:16:22.129Z",
-    "hour": "2026-11-21T20",
-    "G": 1,
-    "V": 0.8,
-    "ch": {
-     "rhine_kaub": {
-      "cm": 199,
-      "g": 1
-     },
-     "danube_passau": {
-      "cm": 424,
-      "g": 1
-     },
-     "border_hu": null
-    }
-   },
    {
     "t": "2026-11-21T21:39:46.041Z",
     "hour": "2026-11-21T21",
@@ -1645,6 +1628,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-26T03:59:27.663Z",
+    "hour": "2026-11-26T03",
+    "G": 1,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 236,
+      "g": 1
+     },
+     "danube_passau": {
+      "cm": 413,
+      "g": 1
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1890,10 +1890,10 @@
    },
    {
     "date": "2026-11-26",
-    "n": 3,
-    "v_sum": 2.4,
-    "n_g": 3,
-    "g_sum": 3,
+    "n": 4,
+    "v_sum": 3.2,
+    "n_g": 4,
+    "g_sum": 4,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 0.8
@@ -1902,10 +1902,10 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 547,
-    "v_sum": 415.502,
-    "n_g": 547,
-    "g_sum": 401.871,
+    "n": 548,
+    "v_sum": 416.302,
+    "n_g": 548,
+    "g_sum": 402.871,
     "G_min": 0.256,
     "G_avg": 0.735,
     "V_avg": 0.76
@@ -1916,7 +1916,7 @@
     "label": "Rajna · Kaub",
     "station": "KAUB",
     "cm": 236,
-    "measured_at": "2026-11-26T03:45:00+01:00",
+    "measured_at": "2026-11-26T04:45:00+01:00",
     "state": "normal",
     "nsw": null,
     "hsw": 640,
@@ -1943,7 +1943,7 @@
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
     "cm": 413,
-    "measured_at": "2026-11-26T03:45:00+01:00",
+    "measured_at": "2026-11-26T04:45:00+01:00",
     "state": "normal",
     "nsw": null,
     "hsw": 780,
