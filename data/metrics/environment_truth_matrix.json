@@ -2,50 +2,44 @@
  "header": {
   "module_id": "M1_SOLARIS",
   "version": "1.1.0",
-  "timestamp": 1795779591,
+  "timestamp": 1795783747,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 0.902,
-  "noise_S": 0,
-  "validity_V": 1,
-  "atm_score": 0
+  "stationarity_G": 0.83,
+  "noise_S": 0.333,
+  "validity_V": 0.667,
+  "atm_score": 0.0922
  },
  "dynamic_payload": {
   "place": "Körmend",
-  "solar_wind_speed_kms": 324.8,
-  "bz_vector_nt": -0.97,
+  "solar_wind_speed_kms": 315.2,
+  "bz_vector_nt": -1.474,
   "kp_index": 0.33,
   "kp_max_24h": 4.67,
-  "flare_level": "B4.4",
-  "wind_gust_kmh": 20,
-  "pressure_drop_3h": 0,
-  "pressure_hpa": 1021.1,
+  "flare_level": "B7.2",
+  "wind_gust_kmh": null,
+  "pressure_drop_3h": null,
+  "pressure_hpa": null,
   "earthquake_max_mag": 0,
   "earthquake_count_local_24h": 0,
   "earthquake_global_max_mag_24h": 5.7,
-  "csi_sigma": 0.258,
-  "sources_ok": "15/15",
+  "csi_sigma": null,
+  "sources_ok": "10/15",
   "flags": [],
   "stress_components": {
    "kp": 0.054,
    "bz": 0,
    "wind": 0,
-   "flare": 0.058,
+   "flare": 0.142,
    "quake": 0,
    "gust": 0,
    "dp": 0,
    "csi": 0
   },
-  "risk_score": 10,
+  "risk_score": 17,
   "live_24h": [
-   {
-    "t": "2026-11-23T04:04:01.190Z",
-    "hour": "2026-11-23T04",
-    "G": 1,
-    "V": 1
-   },
    {
     "t": "2026-11-23T05:19:33.015Z",
     "hour": "2026-11-23T05",
@@ -615,6 +609,12 @@
     "hour": "2026-11-27T11",
     "G": 0.902,
     "V": 1
+   },
+   {
+    "t": "2026-11-27T12:49:07.139Z",
+    "hour": "2026-11-27T12",
+    "G": 0.83,
+    "V": 0.667
    }
   ],
   "daily_30d": [
@@ -870,22 +870,22 @@
    },
    {
     "date": "2026-11-27",
-    "n": 11,
-    "v_sum": 9.953,
-    "n_g": 11,
-    "g_sum": 9.928,
+    "n": 12,
+    "v_sum": 10.62,
+    "n_g": 12,
+    "g_sum": 10.758,
     "G_min": 0.791,
-    "G_avg": 0.903,
-    "V_avg": 0.905
+    "G_avg": 0.896,
+    "V_avg": 0.885
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 571,
-    "v_sum": 552.862,
-    "n_g": 571,
-    "g_sum": 430.255,
+    "n": 572,
+    "v_sum": 553.529,
+    "n_g": 572,
+    "g_sum": 431.085,
     "G_min": 0.245,
     "G_avg": 0.754,
     "V_avg": 0.968
