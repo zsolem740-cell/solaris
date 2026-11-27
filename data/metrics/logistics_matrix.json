@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1795735711,
+  "timestamp": 1795739363,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -14,23 +14,6 @@
  },
  "dynamic_payload": {
   "live_24h": [
-   {
-    "t": "2026-11-22T16:05:51.923Z",
-    "hour": "2026-11-22T16",
-    "G": 1,
-    "V": 0.8,
-    "ch": {
-     "rhine_kaub": {
-      "cm": 220,
-      "g": 1
-     },
-     "danube_passau": {
-      "cm": 423,
-      "g": 1
-     },
-     "border_hu": null
-    }
-   },
    {
     "t": "2026-11-22T17:28:22.721Z",
     "hour": "2026-11-22T17",
@@ -1645,6 +1628,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-27T00:29:23.707Z",
+    "hour": "2026-11-27T00",
+    "G": 1,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 215,
+      "g": 1
+     },
+     "danube_passau": {
+      "cm": 421,
+      "g": 1
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1897,15 +1897,25 @@
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 0.8
+   },
+   {
+    "date": "2026-11-27",
+    "n": 1,
+    "v_sum": 0.8,
+    "n_g": 1,
+    "g_sum": 1,
+    "G_min": 1,
+    "G_avg": 1,
+    "V_avg": 0.8
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 566,
-    "v_sum": 430.702,
-    "n_g": 566,
-    "g_sum": 420.871,
+    "n": 567,
+    "v_sum": 431.502,
+    "n_g": 567,
+    "g_sum": 421.871,
     "G_min": 0.256,
     "G_avg": 0.744,
     "V_avg": 0.761
@@ -1915,8 +1925,8 @@
    "rhine_kaub": {
     "label": "Rajna · Kaub",
     "station": "KAUB",
-    "cm": 218,
-    "measured_at": "2026-11-27T00:15:00+01:00",
+    "cm": 215,
+    "measured_at": "2026-11-27T01:15:00+01:00",
     "state": "normal",
     "nsw": null,
     "hsw": 640,
@@ -1943,7 +1953,7 @@
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
     "cm": 421,
-    "measured_at": "2026-11-27T00:15:00+01:00",
+    "measured_at": "2026-11-27T01:15:00+01:00",
     "state": "normal",
     "nsw": null,
     "hsw": 780,

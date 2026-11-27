@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M5_FINANCE",
   "version": "1.0.0",
-  "timestamp": 1795735705,
+  "timestamp": 1795739344,
   "p8_signature": "OFFICIAL_RATES"
  },
  "core_metrics": {
@@ -23,7 +23,7 @@
     "prev": 373.4,
     "date": "2026-11-26",
     "prev_date": "2026-11-25",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": -0.375,
     "percentile": 0.623,
     "baseline_n": 1240,
@@ -39,7 +39,7 @@
     "prev": 341.35,
     "date": "2026-11-26",
     "prev_date": "2026-11-25",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": -0.677,
     "percentile": 0.665,
     "baseline_n": 1240,
@@ -55,7 +55,7 @@
     "prev": 1.0935,
     "date": "2026-11-26",
     "prev_date": "2026-11-25",
-    "age_days": 0,
+    "age_days": 1,
     "chg_pct": 0.366,
     "percentile": 0.669,
     "baseline_n": 1268,
@@ -72,7 +72,7 @@
     "mrr": {
      "value": 2.65,
      "date": "2026-09-16",
-     "age_days": 71,
+     "age_days": 72,
      "last_change": {
       "date": "2026-09-16",
       "from": 2.4,
@@ -83,7 +83,7 @@
     "dfr": {
      "value": 2.5,
      "date": "2026-09-16",
-     "age_days": 71,
+     "age_days": 72,
      "last_change": {
       "date": "2026-09-16",
       "from": 2.25,
@@ -94,7 +94,7 @@
     "mlf": {
      "value": 2.9,
      "date": "2026-09-16",
-     "age_days": 71,
+     "age_days": 72,
      "last_change": {
       "date": "2026-09-16",
       "from": 2.65,
@@ -121,12 +121,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-22T16:05:22.101Z",
-    "hour": "2026-11-22T16",
-    "G": 0.774,
-    "V": 1
-   },
    {
     "t": "2026-11-22T17:28:15.518Z",
     "hour": "2026-11-22T17",
@@ -696,6 +690,12 @@
     "hour": "2026-11-26T23",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-27T00:29:04.613Z",
+    "hour": "2026-11-27T00",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -938,15 +938,25 @@
     "G_min": 0.865,
     "G_avg": 0.945,
     "V_avg": 1
+   },
+   {
+    "date": "2026-11-27",
+    "n": 1,
+    "v_sum": 1,
+    "n_g": 1,
+    "g_sum": 1,
+    "G_min": 1,
+    "G_avg": 1,
+    "V_avg": 1
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 541,
-    "v_sum": 537.6,
-    "n_g": 541,
-    "g_sum": 522.214,
+    "n": 542,
+    "v_sum": 538.6,
+    "n_g": 542,
+    "g_sum": 523.214,
     "G_min": 0.774,
     "G_avg": 0.965,
     "V_avg": 0.994
