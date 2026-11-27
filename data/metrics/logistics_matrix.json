@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M3_LOGISTICS",
   "version": "1.1.0",
-  "timestamp": 1795809550,
+  "timestamp": 1795813004,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -14,23 +14,6 @@
  },
  "dynamic_payload": {
   "live_24h": [
-   {
-    "t": "2026-11-23T11:37:02.523Z",
-    "hour": "2026-11-23T11",
-    "G": 1,
-    "V": 0.8,
-    "ch": {
-     "rhine_kaub": {
-      "cm": 223,
-      "g": 1
-     },
-     "danube_passau": {
-      "cm": 425,
-      "g": 1
-     },
-     "border_hu": null
-    }
-   },
    {
     "t": "2026-11-23T12:39:03.412Z",
     "hour": "2026-11-23T12",
@@ -1645,6 +1628,23 @@
      },
      "border_hu": null
     }
+   },
+   {
+    "t": "2026-11-27T20:56:44.204Z",
+    "hour": "2026-11-27T20",
+    "G": 1,
+    "V": 0.8,
+    "ch": {
+     "rhine_kaub": {
+      "cm": 188,
+      "g": 1
+     },
+     "danube_passau": {
+      "cm": 412,
+      "g": 1
+     },
+     "border_hu": null
+    }
    }
   ],
   "daily_30d": [
@@ -1900,10 +1900,10 @@
    },
    {
     "date": "2026-11-27",
-    "n": 17,
-    "v_sum": 13.6,
-    "n_g": 17,
-    "g_sum": 17,
+    "n": 18,
+    "v_sum": 14.4,
+    "n_g": 18,
+    "g_sum": 18,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 0.8
@@ -1912,10 +1912,10 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 583,
-    "v_sum": 444.302,
-    "n_g": 583,
-    "g_sum": 437.871,
+    "n": 584,
+    "v_sum": 445.102,
+    "n_g": 584,
+    "g_sum": 438.871,
     "G_min": 0.256,
     "G_avg": 0.751,
     "V_avg": 0.762
@@ -1925,8 +1925,8 @@
    "rhine_kaub": {
     "label": "Rajna · Kaub",
     "station": "KAUB",
-    "cm": 189,
-    "measured_at": "2026-11-27T20:45:00+01:00",
+    "cm": 188,
+    "measured_at": "2026-11-27T21:45:00+01:00",
     "state": "normal",
     "nsw": null,
     "hsw": 640,
@@ -1953,7 +1953,7 @@
     "label": "Duna · Passau (Németország)",
     "station": "PASSAU DONAU",
     "cm": 412,
-    "measured_at": "2026-11-27T20:45:00+01:00",
+    "measured_at": "2026-11-27T21:45:00+01:00",
     "state": "normal",
     "nsw": null,
     "hsw": 780,
