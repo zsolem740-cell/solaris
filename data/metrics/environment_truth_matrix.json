@@ -2,26 +2,26 @@
  "header": {
   "module_id": "M1_SOLARIS",
   "version": "1.1.0",
-  "timestamp": 1795820239,
+  "timestamp": 1795823579,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
-  "stationarity_G": 0.882,
+  "stationarity_G": 0.93,
   "noise_S": 0,
   "validity_V": 1,
   "atm_score": 0
  },
  "dynamic_payload": {
   "place": "Körmend",
-  "solar_wind_speed_kms": 296.6,
-  "bz_vector_nt": -2.1279999999999997,
+  "solar_wind_speed_kms": 293.9,
+  "bz_vector_nt": -2.44,
   "kp_index": 1,
   "kp_max_24h": 4.67,
-  "flare_level": "B5.0",
+  "flare_level": "B3.7",
   "wind_gust_kmh": 29,
   "pressure_drop_3h": 0,
-  "pressure_hpa": 1026.1,
+  "pressure_hpa": 1026.4,
   "earthquake_max_mag": 0,
   "earthquake_count_local_24h": 0,
   "earthquake_global_max_mag_24h": 5.1,
@@ -32,20 +32,14 @@
    "kp": 0.054,
    "bz": 0,
    "wind": 0,
-   "flare": 0.081,
+   "flare": 0.025,
    "quake": 0,
    "gust": 0,
    "dp": 0,
    "csi": 0.001
   },
-  "risk_score": 12,
+  "risk_score": 7,
   "live_24h": [
-   {
-    "t": "2026-11-23T15:27:54.044Z",
-    "hour": "2026-11-23T15",
-    "G": 1,
-    "V": 1
-   },
    {
     "t": "2026-11-23T16:30:09.569Z",
     "hour": "2026-11-23T16",
@@ -615,6 +609,12 @@
     "hour": "2026-11-27T22",
     "G": 0.882,
     "V": 1
+   },
+   {
+    "t": "2026-11-27T23:52:59.904Z",
+    "hour": "2026-11-27T23",
+    "G": 0.93,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -870,22 +870,22 @@
    },
    {
     "date": "2026-11-27",
-    "n": 20,
-    "v_sum": 18.287,
-    "n_g": 20,
-    "g_sum": 17.55,
+    "n": 21,
+    "v_sum": 19.287,
+    "n_g": 21,
+    "g_sum": 18.48,
     "G_min": 0.577,
-    "G_avg": 0.878,
-    "V_avg": 0.914
+    "G_avg": 0.88,
+    "V_avg": 0.918
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 580,
-    "v_sum": 561.196,
-    "n_g": 580,
-    "g_sum": 437.877,
+    "n": 581,
+    "v_sum": 562.196,
+    "n_g": 581,
+    "g_sum": 438.807,
     "G_min": 0.245,
     "G_avg": 0.755,
     "V_avg": 0.968
