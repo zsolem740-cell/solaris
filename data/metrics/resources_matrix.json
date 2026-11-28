@@ -2,7 +2,7 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1795852185,
+  "timestamp": 1795855116,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
@@ -32,10 +32,10 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.464,
+    "value": 0.463,
     "valid_at": "2026-11-28T23:00:00.000Z",
-    "lag_h": -15,
-    "percentile": 0.847,
+    "lag_h": -14,
+    "percentile": 0.836,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    },
@@ -44,10 +44,10 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.461,
+    "value": 0.46,
     "valid_at": "2026-11-28T23:00:00.000Z",
-    "lag_h": -15,
-    "percentile": 0.843,
+    "lag_h": -14,
+    "percentile": 0.835,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    }
@@ -68,12 +68,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-23T23:25:51.460Z",
-    "hour": "2026-11-23T23",
-    "G": 0.968,
-    "V": 1
-   },
    {
     "t": "2026-11-24T00:24:06.402Z",
     "hour": "2026-11-24T00",
@@ -643,6 +637,12 @@
     "hour": "2026-11-28T07",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-28T08:38:36.903Z",
+    "hour": "2026-11-28T08",
+    "G": 1,
+    "V": 1
    }
   ],
   "daily_30d": [
@@ -908,10 +908,10 @@
    },
    {
     "date": "2026-11-28",
-    "n": 7,
-    "v_sum": 7,
-    "n_g": 7,
-    "g_sum": 7,
+    "n": 8,
+    "v_sum": 8,
+    "n_g": 8,
+    "g_sum": 8,
     "G_min": 1,
     "G_avg": 1,
     "V_avg": 1
@@ -920,10 +920,10 @@
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 587,
-    "v_sum": 587,
-    "n_g": 587,
-    "g_sum": 499.981,
+    "n": 588,
+    "v_sum": 588,
+    "n_g": 588,
+    "g_sum": 500.981,
     "G_min": 0.291,
     "G_avg": 0.852,
     "V_avg": 1
