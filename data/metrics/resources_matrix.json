@@ -2,15 +2,15 @@
  "header": {
   "module_id": "M7_RESOURCES",
   "version": "1.0.0",
-  "timestamp": 1795865738,
+  "timestamp": 1795892834,
   "p8_signature": "PHYSICAL_GROUND_TRUTH"
  },
  "core_metrics": {
   "status": "NOMINAL",
   "stationarity_G": 1,
-  "noise_S": 0,
-  "validity_V": 1,
-  "atm_score": 0
+  "noise_S": 0.4,
+  "validity_V": 0.6,
+  "atm_score": 0.16
  },
  "dynamic_payload": {
   "place": "Körmend",
@@ -20,12 +20,13 @@
     "type": "measured",
     "source": "GeoSphere Austria TAWES (órás sorok a data/obs_at.json-ból)",
     "unit": "mm/24 h",
-    "value": 0,
-    "hours_valid": 24,
-    "station": "GUESSING (23 km)",
-    "percentile": 0.278,
-    "g": 1,
-    "basis": "klimatológiai percentilis, felső farok (P90 fölött csökken)"
+    "value": null,
+    "hours_valid": null,
+    "station": null,
+    "percentile": null,
+    "g": null,
+    "basis": "klimatológiai percentilis, felső farok (P90 fölött csökken)",
+    "note": "a Güssing-adat elavult (> 6 óra)"
    },
    "soil_surface": {
     "label": "Talajnedvesség 0–7 cm",
@@ -34,7 +35,7 @@
     "unit": "m³/m³",
     "value": 0.463,
     "valid_at": "2026-11-28T23:00:00.000Z",
-    "lag_h": -11,
+    "lag_h": -4,
     "percentile": 0.836,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
@@ -44,15 +45,15 @@
     "type": "analysis",
     "source": "ERA5-Land reanalízis (Open-Meteo archívum)",
     "unit": "m³/m³",
-    "value": 0.46,
+    "value": 0.461,
     "valid_at": "2026-11-28T23:00:00.000Z",
-    "lag_h": -11,
-    "percentile": 0.835,
+    "lag_h": -4,
+    "percentile": 0.843,
     "g": 1,
     "basis": "klimatológiai percentilis (P10–P90 sáv)"
    }
   },
-  "coverage": "3/3",
+  "coverage": "2/3",
   "flags": [],
   "v_min": 0.5,
   "weights_basis": "szakértői becslés",
@@ -68,12 +69,6 @@
    "A csatornák súlyai szakértői becslések."
   ],
   "live_24h": [
-   {
-    "t": "2026-11-24T03:42:58.371Z",
-    "hour": "2026-11-24T03",
-    "G": 1,
-    "V": 1
-   },
    {
     "t": "2026-11-24T04:51:19.028Z",
     "hour": "2026-11-24T04",
@@ -643,6 +638,12 @@
     "hour": "2026-11-28T11",
     "G": 1,
     "V": 1
+   },
+   {
+    "t": "2026-11-28T19:07:14.359Z",
+    "hour": "2026-11-28T19",
+    "G": 1,
+    "V": 0.6
    }
   ],
   "daily_30d": [
@@ -908,25 +909,25 @@
    },
    {
     "date": "2026-11-28",
-    "n": 11,
-    "v_sum": 11,
-    "n_g": 11,
-    "g_sum": 11,
+    "n": 12,
+    "v_sum": 11.6,
+    "n_g": 12,
+    "g_sum": 12,
     "G_min": 1,
     "G_avg": 1,
-    "V_avg": 1
+    "V_avg": 0.967
    }
   ],
   "monthly_12m": [
    {
     "month": "2026-11",
-    "n": 591,
-    "v_sum": 591,
-    "n_g": 591,
-    "g_sum": 503.981,
+    "n": 592,
+    "v_sum": 591.6,
+    "n_g": 592,
+    "g_sum": 504.981,
     "G_min": 0.291,
     "G_avg": 0.853,
-    "V_avg": 1
+    "V_avg": 0.999
    }
   ]
  },

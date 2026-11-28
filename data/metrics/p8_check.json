@@ -1,11 +1,11 @@
 {
- "timestamp": 1795865738,
+ "timestamp": 1795892846,
  "spec": "P8 v1.2",
  "summary": {
   "checked": 4,
   "errors": 0,
   "deviations": 0,
-  "warnings": 0
+  "warnings": 2
  },
  "modules": {
   "M1": {
@@ -15,7 +15,9 @@
    "kind": "physical",
    "errors": [],
    "deviations": [],
-   "warnings": []
+   "warnings": [
+    "a csomag 7.5 órás (> 3)"
+   ]
   },
   "M3": {
    "available": true,
@@ -24,7 +26,9 @@
    "kind": "physical",
    "errors": [],
    "deviations": [],
-   "warnings": []
+   "warnings": [
+    "a csomag 7.5 órás (> 3)"
+   ]
   },
   "M7": {
    "available": true,
